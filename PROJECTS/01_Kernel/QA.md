@@ -10,7 +10,7 @@ Any messy input that needs to be turned into a cleaner frame, for example:
 - a social media post or trend
 - a doomscroll trigger
 - a message dump
-- a project idea or a task/ticket manager
+- a project idea or task/ticket flow
 - an IoT or sensor log
 - an input for an LLM, bot, or other agent
 
@@ -59,3 +59,26 @@ For example:
 
 But it still stays inside the same rule boundary:
 **scope, time, harm/lie, hypocrisy, and citation.**
+
+## Q8. What are cartridges?
+Cartridges are the citeable source packs the Kernel uses in strict mode.
+Without cartridges, the Kernel has nothing reliable to cite.
+That means no real strict operation, only structure without Fuel.
+
+## Q9. What is the Noise Gauntlet?
+The Noise Gauntlet is the stress test.
+It feeds difficult inputs into the Kernel — clickbait, propaganda, fake facts, sensor floods, emotional dumps — and checks whether the Kernel cites, refuses, or labels inference correctly.
+
+## Q10. When should the Kernel return silence?
+When the input cannot be grounded safely, cannot be anchored properly, or does not justify a claimable output.
+Silence is part of the design, not a failure.
+
+## Q11. Is this meant to replace human judgment?
+No.
+It is meant to clean the frame before deeper human or machine judgment happens.
+It reduces noise, drift, bluffing, and compulsive reaction.
+
+## Q12. What counts as “done” right now?
+The governor logic exists.
+The architecture around it is defined.
+The next real milestone is cartridge construction, because strict operation depends on citeable Fuel.

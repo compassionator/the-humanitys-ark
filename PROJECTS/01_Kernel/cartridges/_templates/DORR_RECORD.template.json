@@ -1,0 +1,11 @@
+{
+  "record_id": "dorr_example_001",
+  "scope": "self",
+  "time": "now",
+  "color": "yellow",
+  "hash_tags": ["#example"],
+  "actors": ["@guide"],
+  "percent": 50,
+  "status": "declared",
+  "note": "Minimal shared shape for early testing. Keep field names stable before expansion."
+}
