@@ -107,6 +107,12 @@ Set `ARK_PAGE_CASE=page_6` to run one page fixture. Set `ARK_DEBUG_EXTRACTION=1`
 
 ## Fixture provenance and privacy
 
+### Public-web regression corpus boundary
+
+`tests/fixtures/real-world/` contains sanitized snapshots of publicly visible job pages. The corpus is retained for reproducible extraction and scoring regression testing; personal, account, and session data has been removed.
+
+Fixture content must not be used as product content or regenerated from live pages without another privacy review. Concerns about the corpus may be raised through the repository issue process.
+
 `tests/fixtures/real-world` is generated from private raw page captures by:
 
 ```powershell
