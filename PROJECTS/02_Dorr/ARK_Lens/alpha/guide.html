@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Getting Started · ARK Lens v2026.06.019</title>
+    <link rel="stylesheet" href="guide.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Controlled peer alpha</p>
+        <h1>Welcome to ARK Lens</h1>
+        <p class="hero-text">Capture job listings, rank them with your own transparent rules, and review every result in one local report.</p>
+      </div>
+      <div class="build-card">
+        <span>Build</span>
+        <strong id="buildVersion">v2026.06.019</strong>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel readiness-panel" aria-labelledby="readinessHeading">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Start here</p>
+            <h2 id="readinessHeading">Alpha readiness</h2>
+          </div>
+          <span id="readinessOverall" class="overall-status checking" aria-live="polite">Checking…</span>
+        </div>
+        <div class="check-grid">
+          <article id="checkLens" class="check-card checking">
+            <span class="check-label">Active Lens</span>
+            <strong>Checking…</strong>
+            <p>Your job-search rules.</p>
+          </article>
+          <article id="checkSources" class="check-card checking">
+            <span class="check-label">Sources</span>
+            <strong>Checking…</strong>
+            <p>LinkedIn Jobs and/or SEEK Jobs.</p>
+          </article>
+          <article id="checkStorage" class="check-card checking">
+            <span class="check-label">Saved jobs</span>
+            <strong>Checking…</strong>
+            <p>Stored only in this browser.</p>
+          </article>
+          <article id="checkSession" class="check-card checking">
+            <span class="check-label">Session</span>
+            <strong>Checking…</strong>
+            <p>The main A icon turns green while capture is active.</p>
+          </article>
+        </div>
+        <div class="action-row">
+          <button id="refreshReadiness" type="button" class="secondary">Refresh Check</button>
+          <button id="openLensEditor" type="button" class="primary">Customize My Lens</button>
+          <button id="openReport" type="button" class="secondary">Open My Report</button>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="firstRunHeading">
+        <p class="section-kicker">Simple workflow</p>
+        <h2 id="firstRunHeading">5-minute first run</h2>
+        <ol class="steps">
+          <li>
+            <span class="step-number">1</span>
+            <div><strong>Customize your Lens</strong><p>Add roles you want, related roles, deal-breakers, and preferences. Basic mode is designed for everyday use.</p></div>
+          </li>
+          <li>
+            <span class="step-number">2</span>
+            <div><strong>Open LinkedIn Jobs or SEEK Jobs</strong><p>Open a real job page or supported results page in the tab you want ARK Lens to watch.</p></div>
+          </li>
+          <li>
+            <span class="step-number">3</span>
+            <div><strong>Start Session</strong><p>Open the ARK Lens popup and select Start Session. The main A icon changes from gray to green while the session is active.</p></div>
+          </li>
+          <li>
+            <span class="step-number">4</span>
+            <div><strong>Browse jobs in the same tab</strong><p>ARK Lens captures supported jobs locally. Use Capture Current Job if you want to save the open job immediately.</p></div>
+          </li>
+          <li>
+            <span class="step-number">5</span>
+            <div><strong>Review and give feedback</strong><p>Open the report, select a row, inspect the evidence, and mark it Relevant, Not relevant, or Unsure.</p></div>
+          </li>
+        </ol>
+      </section>
+
+      <div class="two-column">
+        <section class="panel" aria-labelledby="fitHeading">
+          <p class="section-kicker">Transparent ranking</p>
+          <h2 id="fitHeading">What the match percentage means</h2>
+          <p>The match percentage comes deterministically from the phrases and policies in your Lens. It is not a probability, an application recommendation, or an AI opinion.</p>
+          <dl class="definition-list">
+            <div><dt>Strong Match</dt><dd>Meets your configured high-fit threshold.</dd></div>
+            <div><dt>Review</dt><dd>Has mixed or incomplete rule evidence.</dd></div>
+            <div><dt>Low Match · 10.1–49.99%</dt><dd>Has weak evidence or meaningful penalties and may still be worth a quick review.</dd></div>
+            <div><dt>Ignore · 0–10%</dt><dd>Has no useful role-fit evidence, a decisive penalty, or a blocker.</dd></div>
+            <div><dt>Relevance feedback</dt><dd>Your separate judgment; it never silently changes the match percentage or your Lens.</dd></div>
+          </dl>
+        </section>
+
+        <section class="panel" aria-labelledby="captureHeading">
+          <p class="section-kicker">When a site changes</p>
+          <h2 id="captureHeading">Fix Capture</h2>
+          <p>If a title, company, date, or description is missing, open Fix Capture in the popup and select Check Capture.</p>
+          <ol class="compact-steps">
+            <li>Preview the Help File before saving it.</li>
+            <li>Share it only with a trusted helper or your chosen AI.</li>
+            <li>Preview and test any returned Repair File.</li>
+            <li>Activate only after the live-page test passes.</li>
+          </ol>
+          <p class="callout">Never send raw page HTML. The Help File is designed to provide safer examples and diagnostics.</p>
+        </section>
+      </div>
+
+      <section class="panel privacy-panel" aria-labelledby="privacyHeading">
+        <p class="section-kicker">Privacy</p>
+        <h2 id="privacyHeading">Your data stays in this browser</h2>
+        <p>ARK Lens has no account, backend, analytics, or automatic AI connection. Job descriptions, notes, Lens settings, decisions, and relevance feedback remain in Chrome local extension storage unless you explicitly export a file.</p>
+        <p>The Alpha Test Summary below contains aggregate counts and version information only. It excludes job titles, companies, descriptions, URLs, notes, feedback details, Lens names, session IDs, and tab IDs.</p>
+      </section>
+
+      <section class="panel" aria-labelledby="feedbackHeading">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Help improve the alpha</p>
+            <h2 id="feedbackHeading">Send useful feedback safely</h2>
+          </div>
+        </div>
+        <div class="feedback-grid">
+          <div>
+            <h3>Alpha Test Summary</h3>
+            <p>Download a privacy-safe diagnostic summary to attach to your feedback.</p>
+            <button id="downloadAlphaSummary" type="button" class="primary">Download Alpha Test Summary</button>
+          </div>
+          <div>
+            <h3>Feedback template</h3>
+            <p>Copy a short template covering what you tried, expected, and observed.</p>
+            <button id="copyFeedbackTemplate" type="button" class="secondary">Copy Feedback Template</button>
+          </div>
+        </div>
+        <p id="alphaNotice" class="notice" aria-live="polite"></p>
+      </section>
+
+      <section class="panel limits-panel" aria-labelledby="limitsHeading">
+        <p class="section-kicker">Please expect rough edges</p>
+        <h2 id="limitsHeading">Known alpha limits</h2>
+        <ul>
+          <li>Only LinkedIn Jobs and SEEK Jobs are supported.</li>
+          <li>The match percentage is lexical and deterministic; this release does not use semantic AI.</li>
+          <li>Relevance feedback is captured for review but does not automatically retrain or rewrite your Lens.</li>
+          <li>Job sites can change their page structure; use Fix Capture if required fields disappear.</li>
+          <li>A capture session follows one supported tab and stops if that tab closes.</li>
+          <li>Chrome extension storage is local to this browser profile and is not a cloud backup.</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <p>ARK Lens controlled peer alpha · v2026.06.019</p>
+    </footer>
+
+    <script src="../lens-packs/bundled_lens_pack.js"></script>
+    <script src="../lens-packs/lens_pack_runtime.js"></script>
+    <script src="guide.js"></script>
+  </body>
+</html>

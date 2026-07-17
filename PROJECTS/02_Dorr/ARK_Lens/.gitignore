@@ -1,0 +1,44 @@
+# Dependencies and generated release output
+node_modules/
+dist/
+tests/artifacts/
+*.zip
+*.zip.sha256.txt
+
+# Local/private material
+private/
+local-data/
+raw-captures/
+private-reports/
+local-exports/
+ark-lens-report*.json
+ark-lens-report*.csv
+**/*resume*.pdf
+**/*resume*.doc
+**/*resume*.docx
+**/cv.pdf
+**/cv.doc
+**/cv.docx
+**/*-cv.pdf
+**/*-cv.doc
+**/*-cv.docx
+*.private.json
+*.local.json
+.env
+.env.*
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.bak
+*~
+
+# Editor, OS, and local agent state
+.agents/
+.codex/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini

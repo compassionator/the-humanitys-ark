@@ -12,6 +12,10 @@ The Book of 14 defines this as the first Dorr interface proof: the Chrome Extens
 ## Status
 Prototype
 
+## Implementation notice
+
+[ARK Lens Job Search](../ARK_Lens/README.md) now implements local capture, scoring, reporting, Lens configuration, and repair workflows. The feed blur/reveal and optional Layer 2/n8n sections below remain future roadmap material. This file is preserved as the historical engineering specification.
+
 ## MVP boundary
 - choose one site first
 - choose one stable selector set

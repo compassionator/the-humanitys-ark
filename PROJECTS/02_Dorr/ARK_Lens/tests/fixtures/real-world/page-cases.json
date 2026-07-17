@@ -1,0 +1,156 @@
+[
+  {
+    "case_id": "page_1",
+    "fixture": "linkedin_jobs-4430792978.html",
+    "source_id": "linkedin_jobs",
+    "mock_location": {
+      "href": "https://www.linkedin.com/jobs/collections/recommended/?currentJobId=4430792978",
+      "hostname": "www.linkedin.com",
+      "pathname": "/jobs/collections/recommended/"
+    },
+    "expected": {
+      "title": "Engineering Manager",
+      "company": "Hireup",
+      "location": "Sydney, New South Wales, Australia",
+      "posted": "3 weeks ago / Over 100 people clicked apply",
+      "employment_type": "hybrid / full-time",
+      "salary": "n/a",
+      "job_id": "4430792978",
+      "canonical_url": "https://www.linkedin.com/jobs/collections/recommended/?currentJobId=4430792978",
+      "already_applied": false,
+      "capture_ready": true
+    }
+  },
+  {
+    "case_id": "page_2",
+    "fixture": "linkedin_jobs-4439483637.html",
+    "source_id": "linkedin_jobs",
+    "mock_location": {
+      "href": "https://www.linkedin.com/jobs/collections/recommended/?currentJobId=4439483637",
+      "hostname": "www.linkedin.com",
+      "pathname": "/jobs/collections/recommended/"
+    },
+    "expected": {
+      "title": "Head of Engineering - Applied AI",
+      "company": "V2 AI",
+      "location": "Sydney, New South Wales, Australia",
+      "posted": "1 day ago · 44 applicants",
+      "employment_type": "hybrid / full-time",
+      "salary": "n/a",
+      "job_id": "4439483637",
+      "canonical_url": "https://www.linkedin.com/jobs/collections/recommended/?currentJobId=4439483637",
+      "already_applied": true,
+      "capture_ready": false
+    }
+  },
+  {
+    "case_id": "page_3",
+    "fixture": "linkedin_jobs-4432343383.html",
+    "source_id": "linkedin_jobs",
+    "mock_location": {
+      "href": "https://www.linkedin.com/jobs/collections/recommended/?currentJobId=4432343383",
+      "hostname": "www.linkedin.com",
+      "pathname": "/jobs/collections/recommended/"
+    },
+    "expected": {
+      "title": "Director of Engineering",
+      "company": "Freelancer.com",
+      "location": "Sydney, New South Wales, Australia",
+      "posted": "1 month ago",
+      "employment_type": "On-site / Full-time",
+      "salary": "A$180K/yr - A$240K/yr",
+      "job_id": "4432343383",
+      "canonical_url": "https://www.linkedin.com/jobs/collections/recommended/?currentJobId=4432343383",
+      "already_applied": false,
+      "capture_ready": false
+    }
+  },
+  {
+    "case_id": "page_4",
+    "fixture": "seek_jobs-93273832.html",
+    "source_id": "seek_jobs",
+    "mock_location": {
+      "href": "https://au.seek.com/engineering-manager-jobs/in-Sydney-NSW-2000?jobId=93273832&type=standard",
+      "hostname": "au.seek.com",
+      "pathname": "/engineering-manager-jobs/in-Sydney-NSW-2000"
+    },
+    "expected": {
+      "title": "AI Engineering Manager",
+      "company": "Motion Recruitment",
+      "location": "Sydney NSW",
+      "posted": "Posted 2d ago",
+      "employment_type": "Full time",
+      "salary": "n/a",
+      "job_id": "93273832",
+      "canonical_url": "https://au.seek.com/engineering-manager-jobs/in-Sydney-NSW-2000?jobId=93273832&type=standard",
+      "already_applied": false,
+      "capture_ready": true
+    }
+  },
+  {
+    "case_id": "page_5",
+    "fixture": "seek_jobs-93126597.html",
+    "source_id": "seek_jobs",
+    "mock_location": {
+      "href": "https://au.seek.com/engineering-manager-jobs/in-Sydney-NSW-2000?jobId=93126597&type=standard",
+      "hostname": "au.seek.com",
+      "pathname": "/engineering-manager-jobs/in-Sydney-NSW-2000"
+    },
+    "expected": {
+      "title": "Project Manager (Engineering, Manufacturing, NPD, Process Improvement)",
+      "company": "Next Day Recruitment",
+      "location": "Sydney NSW",
+      "posted": "Posted 10d ago",
+      "employment_type": "Full time",
+      "salary": "$130 to $160,000 base + Super DOE",
+      "job_id": "93126597",
+      "canonical_url": "https://au.seek.com/engineering-manager-jobs/in-Sydney-NSW-2000?jobId=93126597&type=standard",
+      "already_applied": false,
+      "capture_ready": true
+    }
+  },
+  {
+    "case_id": "page_6",
+    "fixture": "linkedin_jobs-4422335886.html",
+    "source_id": "linkedin_jobs",
+    "mock_location": {
+      "href": "https://www.linkedin.com/jobs/view/4422335886/",
+      "hostname": "www.linkedin.com",
+      "pathname": "/jobs/view/4422335886/"
+    },
+    "expected": {
+      "title": "Engineering Manager",
+      "company": "Relevance AI",
+      "location": "Sydney, New South Wales, Australia",
+      "posted": "· Reposted 1 day ago ·",
+      "employment_type": "hybrid / full-time",
+      "salary": "n/a",
+      "job_id": "4422335886",
+      "canonical_url": "https://www.linkedin.com/jobs/view/4422335886/",
+      "already_applied": true,
+      "capture_ready": true
+    }
+  },
+  {
+    "case_id": "page_7",
+    "fixture": "seek_jobs-92904230.html",
+    "source_id": "seek_jobs",
+    "mock_location": {
+      "href": "https://au.seek.com/jobs?jobId=92904230&type=promoted",
+      "hostname": "au.seek.com",
+      "pathname": "/jobs"
+    },
+    "expected": {
+      "title": "Registered Nurse - Surgical",
+      "company": "Chris O'Brien Lifehouse",
+      "location": "Camperdown, Sydney NSW",
+      "posted": "Posted 21d ago",
+      "employment_type": "Full time",
+      "salary": "n/a",
+      "job_id": "92904230",
+      "canonical_url": "https://au.seek.com/jobs?jobId=92904230&type=promoted",
+      "already_applied": false,
+      "capture_ready": true
+    }
+  }
+]

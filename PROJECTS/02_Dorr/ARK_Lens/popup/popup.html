@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ARK Lens v2026.06.019</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <h1>ARK Lens</h1>
+      <p class="subtitle">See the web through your own rules.</p>
+    </header>
+
+    <section class="status-panel" aria-label="Session status">
+      <div class="status-row">
+        <span id="statusPill" class="status-pill">Stopped</span>
+        <span id="sessionLabel" class="muted">No active session</span>
+      </div>
+      <p id="sessionMeta" class="session-meta" hidden></p>
+      <dl>
+        <div>
+          <dt id="countLabel">Saved jobs</dt>
+          <dd id="count">0</dd>
+        </div>
+        <div>
+          <dt>Current source</dt>
+          <dd id="activeTab">Checking readiness...</dd>
+        </div>
+        <div>
+          <dt>Last saved</dt>
+          <dd id="lastJob">None yet</dd>
+        </div>
+      </dl>
+      <p id="sessionNote" class="session-note" hidden></p>
+    </section>
+
+    <button id="sessionToggle" class="primary">Start Session</button>
+    <button id="capture" class="secondary">Capture Current Job</button>
+    <button id="report" class="secondary">View Report</button>
+    <button id="alphaGuide" class="secondary guide-button">Getting Started &amp; Alpha Guide</button>
+
+    <section class="lens-panel" aria-label="Active lens pack">
+      <label for="lensSelect">Active Lens</label>
+      <select id="lensSelect"></select>
+      <p id="lensMeta" class="meta-line">Job Search Lens &middot; Captures and ranks jobs locally</p>
+      <div class="source-picker" aria-label="Supported sources">
+        <p class="source-heading">Sources</p>
+        <p class="source-helper">Choose which job sites this Lens can capture from.</p>
+        <div id="sourceOptions" class="source-options"></div>
+      </div>
+      <button id="editLens" class="secondary lens-edit-button">Customize Lens</button>
+    </section>
+
+    <details id="adapterDoctor" class="doctor-panel">
+      <summary>
+        <span>Fix Capture</span>
+        <span id="doctorHealth" class="doctor-health idle">Not checked</span>
+      </summary>
+      <p class="doctor-helper">Check whether ARK Lens can read the current job. Nothing is saved.</p>
+      <dl class="doctor-meta">
+        <div>
+          <dt>Source</dt>
+          <dd id="doctorSource">Not checked</dd>
+        </div>
+        <div>
+          <dt>Profile</dt>
+          <dd id="doctorProfile">Not checked</dd>
+        </div>
+        <div>
+          <dt>Profile source</dt>
+          <dd id="doctorProfileSource">Not checked</dd>
+        </div>
+      </dl>
+      <ul id="doctorChecks" class="doctor-checks" aria-label="Capture health checks"></ul>
+      <p id="doctorMessage" class="doctor-message">Open a supported job page, then run the check.</p>
+
+      <div class="doctor-primary-actions">
+        <button id="doctorTest" class="primary">Check Capture</button>
+        <button id="doctorExportDebug" class="secondary">Preview Help File</button>
+      </div>
+
+      <section id="doctorHelpPreview" class="doctor-stage" hidden>
+        <h3>Before you share this Help File</h3>
+        <p id="doctorHelpSummary" class="doctor-stage-copy"></p>
+        <details class="doctor-output compact">
+          <summary>Preview file contents</summary>
+          <pre id="doctorHelpJsonPreview" class="doctor-result"></pre>
+        </details>
+        <div class="doctor-stage-actions">
+          <button id="doctorDownloadHelp" class="primary">Download Help File</button>
+          <button id="doctorCancelHelp" class="secondary">Cancel</button>
+        </div>
+      </section>
+
+      <details class="doctor-tools">
+        <summary>Use a Repair File</summary>
+        <p class="doctor-helper">Paste the Repair File returned by your chosen AI or a trusted helper. It will not activate automatically.</p>
+        <label class="doctor-input-label" for="doctorRepairJson">Repair File JSON</label>
+        <textarea id="doctorRepairJson" rows="5" placeholder="Paste the complete Repair File JSON"></textarea>
+        <button id="doctorPreviewRepair" class="secondary full-width">Preview Repair File</button>
+
+        <section id="doctorRepairPreview" class="doctor-stage" hidden>
+          <h3>Repair File preview</h3>
+          <p id="doctorRepairValidation" class="doctor-stage-copy"></p>
+          <p id="doctorRepairTestResult" class="doctor-stage-copy muted-copy">Test this repair on the current job before activation.</p>
+          <div class="doctor-stage-actions stacked">
+            <button id="doctorTestRepair" class="secondary" disabled>Test Repair</button>
+            <button id="doctorActivateRepair" class="primary" disabled>Activate Repair</button>
+            <button id="doctorCancelRepair" class="secondary">Cancel</button>
+          </div>
+        </section>
+
+        <button id="doctorRollback" class="secondary full-width" hidden>Undo Last Repair</button>
+
+        <details class="doctor-maintenance">
+          <summary>More options</summary>
+          <div class="doctor-tool-actions">
+            <button id="doctorExportProfile" class="secondary">Save Current Repair File</button>
+            <button id="doctorResetProfile" class="secondary danger">Use Built-in Capture Setup</button>
+          </div>
+        </details>
+      </details>
+
+      <details class="doctor-output">
+        <summary>Technical details</summary>
+        <pre id="doctorResult" class="doctor-result"></pre>
+      </details>
+    </details>
+
+    <p class="build-version">ARK Lens v2026.06.019</p>
+
+    <script src="../lens-packs/bundled_lens_pack.js"></script>
+    <script src="../lens-packs/lens_pack_runtime.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
