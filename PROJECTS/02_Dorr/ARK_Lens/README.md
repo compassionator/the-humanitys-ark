@@ -25,20 +25,17 @@ Job platforms optimize for platform discovery. ARK Lens gives the user a separat
 
 The project is stable enough for controlled testing with trusted peers. It is not a public beta or a finished semantic-ranking product.
 
-The required release gate currently covers 37 frozen scoring cases and seven sanitized browser-extraction fixtures. Public publication is still blocked on an explicit repository license and final migration-link confirmation.
+The required release gate currently covers 37 frozen scoring cases and seven sanitized browser-extraction fixtures. This directory is now the canonical ARK Lens source under Dorr.
 
 ## Canonical references
 
 ARK Lens references canonical meaning; it does not copy or redefine the full Dorr matrix or Microkernel contract.
 
-Until the one-time migration, the following are named future repository paths rather than relative links:
-
-- Dorr: `PROJECTS/02_Dorr/README.md`
-- ARK Lens destination: `PROJECTS/02_Dorr/ARK_Lens/`
-- Browser add-on boundary: `MVP/Browser_Addon.md`
-- Witness proof: `MVP/Witness_Proof.md`
-
-The canonical Microkernel document path is not present in this standalone checkout and must be confirmed in the main ARK repository before a link is added. Required post-migration link updates are recorded in `MIGRATION_MANIFEST.json`.
+- Dorr: [canonical shared grammar](../README.md)
+- ARK Architecture: [canonical Kernel wrapper](../../01_Kernel/01_ARK_ARCHITECTURE.md)
+- Microkernel: [repository reference](../../01_Kernel/02_MICROKERNEL_SPEC.md)
+- Browser add-on boundary: [historical engineering specification](../MVP/Browser_Addon.md)
+- Witness proof: [historical proof definition](../MVP/Witness_Proof.md)
 
 ## Current implementation
 
@@ -86,7 +83,7 @@ For peers, generate the allowlisted package first:
 npm.cmd run package:alpha
 ```
 
-Send the generated ZIP privately with its separate SHA-256 checksum. `dist/` is generated locally and is not part of the migration set.
+Send the generated ZIP privately with its separate SHA-256 checksum. `dist/` is generated locally and is not committed.
 
 ## Tests
 
@@ -139,8 +136,10 @@ manifest.json   Manifest V3 permissions and supported hosts
 - Feedback is reviewable context; it does not currently generate or apply Lens changes.
 - Browser storage is local to the Chrome profile and has no built-in synchronization or backup.
 - Controlled-alpha installation requires Chrome Developer mode and an unpacked extension.
-- Real-world fixtures retain selected public job text needed for regression coverage; redistribution rights must be confirmed before public publication.
+- Real-world fixtures retain sanitized public job text solely for reproducible regression coverage; see `tests/TEST_PLAN.md` for the fixture boundary.
 
 ## License
 
-No license is currently declared in this standalone project. Do not treat the source as licensed for public reuse or publish it publicly until the main ARK repository license is confirmed and an applicable `LICENSE` file or explicit inherited-license statement is added.
+Unless otherwise noted, ARK Lens and the source code in this repository are licensed under the terms of the root LICENSE file.
+
+See the root [LICENSE](../../../LICENSE) file.

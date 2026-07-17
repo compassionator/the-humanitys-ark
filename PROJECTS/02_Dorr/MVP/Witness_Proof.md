@@ -12,6 +12,10 @@ The Book of 14 makes this the concrete proof condition for the extension MVP: sc
 ## Status
 Prototype
 
+## Implementation notice
+
+The current implementation is documented in [ARK Lens](../ARK_Lens/README.md), with automated coverage defined by the [ARK Lens test plan](../ARK_Lens/tests/TEST_PLAN.md). The original Analyze/n8n proof below has not yet been implemented and must not be represented as passed.
+
 ## Success condition
 A single supported site can complete this path:
 

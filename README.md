@@ -12,15 +12,16 @@ It is a repository of foundations, texts, and projects intended to carry forward
 4. `SIMORGH_BOOT_SEQUENCE.md`
 5. `PROJECTS_SONG_SEED_TOOL.md`
 6. `PROJECTS/01_Kernel/README.md`
-7. `PROJECTS/01_Kernel/ARK_Architecture.md`
-8. `PROJECTS/01_Kernel/Microkernel.md`
+7. `PROJECTS/01_Kernel/01_ARK_ARCHITECTURE.md`
+8. `PROJECTS/01_Kernel/02_MICROKERNEL_SPEC.md`
 9. `PROJECTS/02_Dorr/README.md`
+10. `PROJECTS/02_Dorr/ARK_Lens/README.md`
 
 ## Structure
 
 - Root = constitution / intent / high-level philosophy
 - `PROJECTS/01_Kernel/` = governor / council architecture / microkernel
-- `PROJECTS/02_Dorr/` = Dorr framework, bridge logic, and first MVP notes under Kernel governance
+- `PROJECTS/02_Dorr/` = Dorr framework and shared grammar under Kernel governance, with [ARK Lens](PROJECTS/02_Dorr/ARK_Lens/README.md) as its working local-first browser interface
 - `PROJECTS/03_Honarestan/` = education / narrative track
 - `PROJECTS/04_IoT_Hub/` = grouped hardware experiments and practical devices
 - `PROJECTS/05_Mesh_Comms/` onward = the rest of the Book of 14 in the exact Genesis order you specified
@@ -38,6 +39,7 @@ graph TD
     A --> G[PROJECTS]
     G --> K[01_Kernel]
     G --> R[02_Dorr]
+    R --> AL[ARK Lens - local-first Dorr browser interface]
     G --> H[03_Honarestan]
     G --> I[04_IoT_Hub]
     G --> J[05_Mesh_Comms]
@@ -51,6 +53,12 @@ graph TD
     G --> T[13_Nature_Tech]
     G --> U[14_Raw_Vitality]
 ```
+
+## License
+
+Unless otherwise noted, ARK Lens and the source code in this repository are licensed under the terms of the root LICENSE file.
+
+See [LICENSE](LICENSE).
 
 ## Core law
 

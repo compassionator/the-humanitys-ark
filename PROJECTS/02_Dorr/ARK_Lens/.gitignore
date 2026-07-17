@@ -1,6 +1,7 @@
 # Dependencies and generated release output
 node_modules/
 dist/
+tests/artifacts/
 *.zip
 *.zip.sha256.txt
 

@@ -10,13 +10,17 @@ Preserve Dorr as the Ark’s decentralized reasoning, rating, routing, and learn
 Dorr is broader than one app screen. It is the framework that helps turn noisy inputs into timed, scoped, meaningful frames without collapsing into a compulsory system.
 
 ## Current next step
-Build the first narrow bridge: a browser addon that captures current tab content, applies local reflex filtering, and optionally hands selected items to the council path.
+Stabilize the Job Search Lens through controlled peer feedback while preserving Dorr as the canonical shared grammar.
 
 ## Status
 Draft
 
+## Current implementation
+
+[ARK Lens Job Search](ARK_Lens/README.md) is the current controlled-alpha browser implementation. It provides the working local-first product surface while Dorr remains the canonical shared grammar.
+
 ## Canonical references
-- `../01_Kernel/Microkernel.md`
+- `../01_Kernel/02_MICROKERNEL_SPEC.md`
 - `../../HIGH_LEVEL_QA.md`
 - `../../PROJECTS_SONG_SEED_TOOL.md`
 
@@ -70,3 +74,4 @@ The first Dorr MVP is the Browser Addon / Witness path:
 ## MVP files
 - `MVP/Browser_Addon.md` — implementation spec
 - `MVP/Witness_Proof.md` — proof / acceptance test
+- `ARK_Lens/README.md` — current implementation and roadmap
