@@ -19,7 +19,9 @@ A practical blackout-ready communication path based on improving Bitchat Android
 A longer-horizon research path exploring tower-based communication first, and later earth-friendly power transfer concepts.
 
 ## Current next step
-Fork or mirror the Bitchat Android path and lock the first practical upgrades:
+Identify the exact Bitchat Android upstream repository, target revision or fork, and the backlog that owns the intended upgrades. Do not infer or invent those dependencies.
+
+After those references are identified, fork or mirror the agreed path and lock the first practical upgrades:
 - Persian localization
 - SOS / Need / Health Check alerts
 - visible Secret Map entry
@@ -29,12 +31,16 @@ Fork or mirror the Bitchat Android path and lock the first practical upgrades:
 In parallel, begin a clean research notebook for Tesla-style tower communication concepts, starting with communication before power.
 
 ## Status
-Draft
+Draft — blocked only on identifying the exact Bitchat upstream and backlog
+
+## Implementation boundary
+
+No Mesh Comms implementation exists in this repository. The requirements below preserve intended work, but implementation must not begin against an assumed Bitchat source or an unverified backlog.
 
 ## Track A — Bitchat / Mesh Comms Upgrade
 
 ### Immediate scope
-Based on the locked backlog, the first practical upgrades are:
+The preserved intended upgrades are:
 
 1. **Persian (fa) localization + RTL**
    - full Persian locale

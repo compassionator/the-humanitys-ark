@@ -15,13 +15,14 @@ It is a repository of foundations, texts, and projects intended to carry forward
 7. `PROJECTS/01_Kernel/01_ARK_ARCHITECTURE.md`
 8. `PROJECTS/01_Kernel/02_MICROKERNEL_SPEC.md`
 9. `PROJECTS/02_Dorr/README.md`
-10. `PROJECTS/02_Dorr/ARK_Lens/README.md`
+10. `PROJECTS/02_Dorr/DORR_GRAMMAR.md`
+11. `PROJECTS/02_Dorr/ARK_Lens/README.md`
 
 ## Structure
 
 - Root = constitution / intent / high-level philosophy
 - `PROJECTS/01_Kernel/` = governor / council architecture / microkernel
-- `PROJECTS/02_Dorr/` = Dorr framework and shared grammar under Kernel governance, with [ARK Lens](PROJECTS/02_Dorr/ARK_Lens/README.md) as its working local-first browser interface
+- `PROJECTS/02_Dorr/` = Dorr framework and [canonical colour/time grammar](PROJECTS/02_Dorr/DORR_GRAMMAR.md), consumed by [ARK Lens](PROJECTS/02_Dorr/ARK_Lens/README.md) as its working local-first browser interface
 - `PROJECTS/03_Honarestan/` = education / narrative track
 - `PROJECTS/04_IoT_Hub/` = grouped hardware experiments and practical devices
 - `PROJECTS/05_Mesh_Comms/` onward = the rest of the Book of 14 in the exact Genesis order you specified
@@ -53,6 +54,10 @@ graph TD
     G --> T[13_Nature_Tech]
     G --> U[14_Raw_Vitality]
 ```
+
+## Public status
+
+The Humanity's Ark source repository is public. ARK Lens product distribution remains a controlled peer alpha; future Lenses remain roadmap work unless their project documentation and implementation evidence say otherwise.
 
 ## License
 

@@ -13,28 +13,25 @@ Dorr is broader than one app screen. It is the framework that helps turn noisy i
 Stabilize the Job Search Lens through controlled peer feedback while preserving Dorr as the canonical shared grammar.
 
 ## Status
-Draft
+Canonical grammar locked at v1.6; broader Dorr framework Draft; current product implementation in controlled peer alpha.
 
 ## Current implementation
 
 [ARK Lens Job Search](ARK_Lens/README.md) is the current controlled-alpha browser implementation. It provides the working local-first product surface while Dorr remains the canonical shared grammar.
 
 ## Canonical references
+- [Dorr Grammar v1.6](DORR_GRAMMAR.md) — canonical colour/time semantic meaning
 - `../01_Kernel/02_MICROKERNEL_SPEC.md`
 - `../../HIGH_LEVEL_QA.md`
 - `../../PROJECTS_SONG_SEED_TOOL.md`
 
-## Core boundary
-The Dorr matrix is governed by the Kernel.
+## Ownership boundary
 
-Professional reminder:
-- **Potential is not Result**
-- **Need is not Done**
-
-Yellow holds capacity, demand, and opportunity.  
-Green holds fulfilled outcome.
-
-Do not count possibility as achievement.
+- Dorr owns colour/time semantic meaning in `DORR_GRAMMAR.md`.
+- Kernel owns governance, routing, Council nodes, citation/refusal, integrity, and orchestration rules.
+- Kernel references and enforces Dorr; it does not redefine Dorr semantics.
+- ARK Lens consumes Dorr as the browser-facing product.
+- Job Search Lens applies Dorr within ARK Lens.
 
 ## Why Dorr is separate
 Dorr touches many projects, but it should still stay distinct as a core framework.
@@ -62,16 +59,13 @@ Beyond the first browser bridge, Dorr may later grow into:
 
 These directions matter, but they should not blur the current MVP.
 
-## First practical slice
-The first Dorr MVP is the Browser Addon / Witness path:
+## Current practical slice
 
-1. capture current tab or post content
-2. apply local reflex rules first
-3. reveal or blur without blocking the page
-4. optionally send selected content to n8n / council analysis
-5. return a visible result without forcing dependence on Layer 2
+[ARK Lens Job Search](ARK_Lens/README.md) is the current implementation. It captures supported job listings, applies a local deterministic Lens Pack, and presents explainable results without a hosted service.
 
-## MVP files
-- `MVP/Browser_Addon.md` — implementation spec
-- `MVP/Witness_Proof.md` — proof / acceptance test
+## Historical design lineage
+
+- `MVP/Browser_Addon.md` — historical feed blur/reveal design; not the current implementation
+- `MVP/Witness_Proof.md` — historical Analyze/n8n acceptance design; not passed or implemented
+- Feed blur/reveal and optional n8n/council analysis remain future work
 - `ARK_Lens/README.md` — current implementation and roadmap

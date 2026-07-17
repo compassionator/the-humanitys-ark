@@ -1,7 +1,11 @@
-# Protocol 40 Days
+# Protocol 40 Days — Archival Research Record
+
+## Status and safety boundary
+
+This file preserves a personal hypothesis and historical protocol description. It is not public medical advice or operational guidance, and it does not authorize self-experimentation, diagnosis, treatment, cure claims, medication changes, or changes to professional care. Any future investigation requires an independently developed, qualified safety and research plan.
 
 ## Purpose
-Preserve the 40-day raw vitality cycle as a repeatable experiment.
+Preserve the historical description of the 40-day raw vitality cycle for provenance, personal reflection, and future qualified review.
 
 ## Core preserved claim
 A recurring 40-day period of raw plant-based living may act as a reset or cleansing cycle and may improve vitality for some people.
@@ -13,8 +17,8 @@ This protocol is linked in source materials to:
 - later long-form witness traditions
 - repeated personal testing by later practitioners
 
-## Core rules (starter version)
-For 40 days, test:
+## Historical protocol description
+The preserved hypothesis describes a 40-day period with:
 - no animal products
 - no cooked foods
 - no fried foods
@@ -34,7 +38,10 @@ For 40 days, test:
 - the claims deserve preservation
 - the outcomes should be tracked, not guessed
 
-## Suggested cycle structure
+## Historical observation framework
+
+The sections below preserve what the lineage proposes observing. They are not instructions for public use.
+
 ### Before start
 - record baseline
 - note current symptoms
@@ -81,3 +88,4 @@ Compare:
 Do not preserve this as a joke.
 Do not preserve it as a cult.
 Preserve it as a living protocol worthy of future proof or disproof.
+Do not present it as public medical or operational guidance.

@@ -69,33 +69,26 @@ That is enough.
 
 ---
 
-## Provisional Classification of the 14 (Folder-Synced)
+## Project Role Index (Project-Owned)
 
-### SONG
-These are primarily expressive, educational, or witness-bearing.
+Each project README owns its role. This table only summarizes and links to those definitions; it does not force a project into one category when the project spans several.
 
-- **03_Honarestan** — story, history, awakening, narrative hook
-
-### SEED
-These are primarily preserved blueprints, future architectures, or long-horizon ideas.
-
-- **01_Kernel** — governor, council architecture, microkernel, strict boundary lines
-- **02_Dorr** — decentralized reasoning, rating, routing, and matrix framework
-- **08_G_Rank** — competence reputation logic
-- **10_Solar_Farms** — strategic energy and local manufacturing vision
-- **12_The_Cornea** — AR intermediary / glasses bridge
-- **13_Nature_Tech** — biomimicry and protection concepts
-- **14_Raw_Vitality** — protocol, experiment, structured self-witness
-
-### TOOL
-These are primarily practical systems that solve concrete jobs.
-
-- **04_IoT_Hub** — grouped hardware and device MVPs
-- **05_Mesh_Comms** — decentralized communication during blackout
-- **06_Qanat** — sensor network and water detection
-- **07_Agriculture** — soil monitoring and precision farming
-- **09_Bandar_To_Door** — logistics and national flow spine
-- **11_Plastic_Recycling** — filament extruder / sovereign manufacturing
+| Project | Role owned by project README |
+|---|---|
+| [01_Kernel](PROJECTS/01_Kernel/README.md) | Seed |
+| [02_Dorr](PROJECTS/02_Dorr/README.md) | Seed / Tool |
+| [03_Honarestan](PROJECTS/03_Honarestan/README.md) | Song / Seed / Tool |
+| [04_IoT_Hub](PROJECTS/04_IoT_Hub/README.md) | Tool / Seed |
+| [05_Mesh_Comms](PROJECTS/05_Mesh_Comms/README.md) | Tool / Research |
+| [06_Qanat](PROJECTS/06_Qanat/README.md) | Tool / Research |
+| [07_Agriculture](PROJECTS/07_Agriculture/README.md) | Tool / Research |
+| [08_G_Rank](PROJECTS/08_G_Rank/README.md) | Seed / Product |
+| [09_Bandar_To_Door](PROJECTS/09_Bandar_To_Door/README.md) | Tool |
+| [10_Solar_Farms](PROJECTS/10_Solar_Farms/README.md) | Seed / Research |
+| [11_Plastic_Recycling](PROJECTS/11_Plastic_Recycling/README.md) | Tool |
+| [12_The_Cornea](PROJECTS/12_The_Cornea/README.md) | Seed / Research / Prototype |
+| [13_Nature_Tech](PROJECTS/13_Nature_Tech/README.md) | Seed / Research |
+| [14_Raw_Vitality](PROJECTS/14_Raw_Vitality/README.md) | Seed / Research |
 
 ---
 

@@ -11,10 +11,10 @@ It is not designed to "win arguments."
 
 ## 2) The Microkernel
 
-Microkernel v1.6 is the governor.
-It contains:
+Microkernel v1.6 specifies the governor.
+It governs:
 
-- Dorr Time-Anchored Meanings
+- enforcement of the Dorr-owned time-anchored grammar
 - Council Registry (8 Nodes)
 - Strict citation discipline
 - Routing and refusal behavior
@@ -22,13 +22,15 @@ It contains:
 The locked source of truth is external and should be linked, not duplicated:
 - https://docs.google.com/document/d/1n0wAO4gjeER4aNneyOq40rTL_jicTW14HD18ewBsbWM/edit?tab=t.0
 
+The canonical Dorr grammar is repository-owned by Dorr and must be referenced, not redefined:
+- [DORR_GRAMMAR.md](../02_Dorr/DORR_GRAMMAR.md)
 
 ## 3) Roadmap A→E
 
 Pipeline: **Fuel (A) → Gauntlet (B) → Test Rig (C) → Courier (D) → Interface (E)**
 
 ### A) Fuel Depot (Cartridges)
-Build citeable cartridges for:
+An initial citeable cartridge batch exists for:
 
 - Node 1 — Zarathustra
 - Node 2 — Plato
@@ -183,14 +185,17 @@ Anti-spam and anti-gamification requirements:
 
 That means a Green deed/result should not be logged unless a corresponding Yellow need was explicitly declared first.
 
-## 8) Done and next immediate step
+## 8) Current state and next immediate step
 
 Done:
-- the Microkernel exists
+- the Microkernel v1.6 specification exists
 - the architecture exists
 - the support docs exist
+- an initial cartridge batch exists
+
+Not yet implemented:
+- executable governor or courier
+- formal Noise Gauntlet execution results
 
 Next immediate step:
-Populate Phase A.
-Without cartridges, there is no citeable Fuel.
-Without Fuel, there is no real strict operation.
+Validate the initial cartridges, complete integrity metadata, and execute the Noise Gauntlet with recorded results. Executable governor and courier work follows validated specification and Fuel.

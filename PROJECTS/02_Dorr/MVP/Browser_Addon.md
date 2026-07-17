@@ -10,7 +10,7 @@ Build the first practical Dorr bridge: a browser extension that captures visible
 The Book of 14 defines this as the first Dorr interface proof: the Chrome Extension bridge that tracks and filters user content via local logic, n8n, and AI. The first next step is to build the extension MVP that scrapes the current tab’s text and sends it to the webhook as the Witness Proof.
 
 ## Status
-Prototype
+Historical design lineage
 
 ## Implementation notice
 

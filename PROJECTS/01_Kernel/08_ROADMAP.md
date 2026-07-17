@@ -1,11 +1,19 @@
 # 08_ROADMAP — Execution Roadmap (A→E)
 
 Spec v1.5/v1.6 is the **Microkernel** (logic + guardrails).
-It is **empty** without **Fuel (Cartridges)** and **unproven** without a **Stress Test (Noise Gauntlet)**.
+An initial **Fuel (Cartridges)** batch exists. It still needs validation and integrity completion, and the specification remains **unproven** without recorded **Noise Gauntlet** execution.
+
+Current implementation boundary:
+- Microkernel specification: exists
+- initial cartridge batch: exists
+- executable governor / courier: not implemented
+- formal Noise Gauntlet results: not recorded
 
 ## PHASE A — Fuel Depot (Cartridge Construction)
 Goal: Build reference cartridges the Kernel can cite.
 Rule: The Kernel does not invent knowledge — it routes + cites these sources.
+
+Status: initial batches exist for all seven Council nodes and the Dorr enforcement extract. Remaining work is validation, source/integrity completion, and readiness review.
 
 - [FILE 1] Node 1 (Zarathustra) — Constraint / Root Gate  
   Truth (Asha) vs Lie (Druj), explicit Harm/Non-Harm constraints.
@@ -61,4 +69,4 @@ Goal: usable system for humans.
 - Track which Fuel is used most (learning loop **without** hallucination)
 
 ## NEXT IMMEDIATE STEP
-Populate Phase A (Fuel Depot). Without cartridges, the Kernel has nothing to cite.
+Validate the Phase A cartridge batch, complete integrity metadata, and execute the Noise Gauntlet with recorded results. Do not begin executable governor or courier claims before those results exist.

@@ -4,7 +4,11 @@
 Seed / Research
 
 ## Goal
-Preserve and test a structured vitality protocol centered on breath, food, movement, and self-observation, with special attention to the 40-day raw-eating lineage associated with Arshavir Avanesian and later lived practice.
+Preserve an archival research record and personal hypothesis centered on breath, food, movement, and self-observation, with special attention to the 40-day raw-eating lineage associated with Arshavir Avanesian and later lived practice.
+
+## Public-use boundary
+
+Raw Vitality is archival research and personal hypothesis. It is not public medical advice, treatment guidance, or an operational protocol. It must not be used to diagnose, treat, or cure disease, and it must not be used to change medication or professional care. The historical protocol is preserved for provenance and future qualified review, not as instructions for public self-experimentation.
 
 ## Why it matters
 This project exists to preserve a serious hypothesis:
@@ -18,10 +22,10 @@ The goal is not to erase uncertainty.
 The goal is to preserve the protocol clearly enough to test it honestly.
 
 ## Current next step
-Create the first clean tracking sheet for one 40-day cycle and preserve the protocol as an experiment path rather than a dead opinion.
+Organize source provenance, historical claims, uncertainty, and safety questions for future qualified review. Do not recruit or direct public experiments.
 
 ## Status
-Draft
+Archival research / personal hypothesis
 
 ## Source lineage
 Current source materials preserve a strong tradition that ties many forms of decline to three recurring factors:
@@ -95,7 +99,7 @@ Not:
 - cravings
 - pain / relief signals
 - skin / inflammation changes
-- medication changes only with caution and proper responsibility
+- medication and treatment context as historical observation only; no change should be made from this document
 - notes on adherence and deviations
 
 ## Evidence buckets to preserve

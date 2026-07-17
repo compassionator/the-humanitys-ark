@@ -4,7 +4,11 @@ The Kernel is the governor of ARK.
 
 It does not behave like a chatbot that freely improvises. It first governs input through scope, time, harm/lie checks, hypocrisy checks, and citation discipline. Only then does it route, validate, cite, infer, refuse, or return silence.
 
-## Role
+## Project role
+
+Seed
+
+## Architectural role
 Governor, router, validator, and anti-noise boundary.
 
 ## What this folder contains
@@ -40,21 +44,23 @@ A lived inner state can be described without an external citation.
 A factual external claim cannot.
 
 ## Source of truth for the Microkernel
-The locked Microkernel spec lives here:
+The repository pins the locked Microkernel v1.6 reference in `02_MICROKERNEL_SPEC.md`. Its external source lives here:
 - https://docs.google.com/document/d/1n0wAO4gjeER4aNneyOq40rTL_jicTW14HD18ewBsbWM/edit?tab=t.0
 
 This folder is intentionally written as a clean operational package around that source, not as a competing rewrite of it.
 
+Dorr owns colour/time semantic meaning in `../02_Dorr/DORR_GRAMMAR.md`. The Kernel references and enforces that grammar; it does not redefine it.
+
 ## Current implementation state
-The Microkernel logic is locked.
-The architecture around it is defined.
-Initial cartridge batches now exist for strict-mode testing and citation.
+The Microkernel v1.6 specification exists and the architecture around it is defined. Initial cartridge batches exist for strict-mode validation and citation.
+
+An executable governor and courier do not yet exist in this repository. Formal Noise Gauntlet execution results do not yet exist.
 
 This package is ready for:
 - architecture review
-- strict-mode experiments
-- cartridge expansion
-- gauntlet-based validation
+- cartridge validation and integrity completion
+- preparation and execution of the Noise Gauntlet
+- later executable-governor and courier work
 
 ## Operational principle
 The Kernel does not invent knowledge.
@@ -64,7 +70,4 @@ If support is missing, it should refuse, contain, or mark inference explicitly.
 ## Boundary that must not drift
 **Yellow is not Green.**
 
-Yellow is unfulfilled capacity, demand, or possibility.  
-Green is fulfilled outcome, relief, or result.
-
-They must never be treated as the same state.
+This is a Dorr-owned semantic boundary that the Kernel must enforce. See `../02_Dorr/DORR_GRAMMAR.md`; do not copy or redefine the grammar here.
