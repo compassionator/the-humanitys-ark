@@ -10,7 +10,7 @@ Prove that the first Dorr bridge can witness live content, route it safely, and 
 The Book of 14 makes this the concrete proof condition for the extension MVP: scrape current tab text and send it to the n8n webhook as the first witness path.
 
 ## Status
-Prototype
+Historical acceptance design — not implemented or passed
 
 ## Implementation notice
 
@@ -56,5 +56,5 @@ A single supported site can complete this path:
 - extension depends on n8n just to do local reflex
 
 ## Notes
-Browser Addon is the implementation file.  
-Witness Proof is the acceptance file.
+Browser Addon is the historical engineering design.
+Witness Proof is its historical acceptance definition.

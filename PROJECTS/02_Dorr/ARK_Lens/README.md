@@ -31,7 +31,8 @@ The required release gate currently covers 37 frozen scoring cases and seven san
 
 ARK Lens references canonical meaning; it does not copy or redefine the full Dorr matrix or Microkernel contract.
 
-- Dorr: [canonical shared grammar](../README.md)
+- Dorr grammar: [canonical v1.6 semantics](../DORR_GRAMMAR.md)
+- Dorr project: [framework and ownership boundary](../README.md)
 - ARK Architecture: [canonical Kernel wrapper](../../01_Kernel/01_ARK_ARCHITECTURE.md)
 - Microkernel: [repository reference](../../01_Kernel/02_MICROKERNEL_SPEC.md)
 - Browser add-on boundary: [historical engineering specification](../MVP/Browser_Addon.md)

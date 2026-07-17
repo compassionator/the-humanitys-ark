@@ -1,11 +1,13 @@
 # ARK Lens changelog
 
-## Public-source readiness (unreleased)
+## Pre-import public-source readiness history
 
-- Added the standalone root README, public exclusions, and a one-time migration manifest for the future `PROJECTS/02_Dorr/ARK_Lens/` destination.
+This entry records readiness work completed before ARK Lens was imported into its current `PROJECTS/02_Dorr/ARK_Lens/` location. The destination and root repository licence are now resolved; the historical preparation facts below are preserved.
+
+- Added the standalone README, public exclusions, and a one-time migration manifest in preparation for the future destination; that import has since been completed.
 - Re-sanitized real-world fixtures to remove account/conversation identifiers, tracking/search tokens, live recruiter contact details, private activity timestamps, and owner-specific Lens wording.
 - Added regression coverage preventing sensitive fixture data from being reintroduced while preserving all 37 scoring outcomes and seven extraction cases.
-- Recorded the missing public license, unconfirmed canonical Microkernel link, and fixture-redistribution review as publication blockers or follow-up work.
+- Recorded the then-missing public licence, unconfirmed canonical Microkernel link, and fixture-redistribution review as publication follow-up work. The repository location, root licence, and canonical documentation boundaries are now resolved; the approved fixture corpus remains preserved under the boundary in `tests/TEST_PLAN.md`.
 - Kept extension version v2026.6.19 and all scores, thresholds, workflow behavior, storage behavior, source extraction, and schemas unchanged; only the two owner-specific evidence strings changed for public safety.
 
 ## v2026.06.019

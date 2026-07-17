@@ -1,8 +1,8 @@
 # dorr_matrix
 
-This cartridge stores the citeable Dorr grammar used by strict mode.
+This cartridge stores a citeable enforcement extract of the Dorr grammar used by Kernel strict mode.
 
-It is an operational extract of the locked Microkernel source, not a second canonical spec.
+It is not a second canonical specification and must not redefine Dorr meaning.
 
 Use this cartridge for:
 - Color + Time → Meaning lookup
@@ -12,7 +12,9 @@ Use this cartridge for:
 - Yellow vs Green boundary checks
 
 Source of truth:
-- Universal Microkernel v1.6 [Anti-Noise Governor]
+- [Dorr Grammar v1.6](../../../02_Dorr/DORR_GRAMMAR.md)
+
+Kernel governance, citation, refusal, integrity, and orchestration rules remain owned by the Kernel and its Microkernel reference.
 
 Rule:
-If a Dorr mapping is not grounded here or in the locked Microkernel source, strict mode should not treat it as supported.
+If an enforcement mapping here differs from the canonical Dorr grammar, the Dorr grammar wins and this extract must be corrected before strict mode treats it as supported.

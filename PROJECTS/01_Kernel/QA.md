@@ -1,12 +1,12 @@
 # QA
 
 ## Q1. How does the Kernel handle an input?
-The Kernel does not “understand” like a person.
-It first **governs** the input through **scope, time, harm/lie, hypocrisy, and citation rules**,
-then it **routes, validates, and either cites, infers, refuses, or returns silence**.
+The Microkernel specification does not claim human understanding.
+It defines how an eventual governor first checks **scope, time, harm/lie, hypocrisy, and citation rules**,
+then **routes, validates, and either cites, infers, refuses, or returns silence**.
 
 ## Q2. What kinds of input can it handle?
-Any messy input that needs to be turned into a cleaner frame, for example:
+It is designed to govern messy input that needs to be turned into a cleaner frame, for example:
 - a social media post or trend
 - a doomscroll trigger
 - a message dump
@@ -33,10 +33,7 @@ It outputs a cleaner governed route, such as:
 
 ## Q5. Does the Kernel invent knowledge on its own?
 No.
-The Kernel does not invent knowledge.
-It routes and cites from its cartridges.
-Without cartridges, it has nothing to cite.
-Without tests, it is not proven.
+The specification requires the Kernel to route and cite from its cartridges rather than invent knowledge. An initial cartridge batch exists, but it still requires validation and integrity completion. Unsupported claims must be refused, and the Kernel remains unproven until the Noise Gauntlet is executed with recorded results.
 
 ## Q6. What does the Kernel not do?
 It should not:
@@ -62,8 +59,7 @@ But it still stays inside the same rule boundary:
 
 ## Q8. What are cartridges?
 Cartridges are the citeable source packs the Kernel uses in strict mode.
-Without cartridges, the Kernel has nothing reliable to cite.
-That means no real strict operation, only structure without Fuel.
+An initial batch exists. It must pass validation and integrity review before it can support formal strict operation and recorded Gauntlet results.
 
 ## Q9. What is the Noise Gauntlet?
 The Noise Gauntlet is the stress test.
@@ -79,6 +75,6 @@ It is meant to clean the frame before deeper human or machine judgment happens.
 It reduces noise, drift, bluffing, and compulsive reaction.
 
 ## Q12. What counts as “done” right now?
-The governor logic exists.
-The architecture around it is defined.
-The next real milestone is cartridge construction, because strict operation depends on citeable Fuel.
+The Microkernel v1.6 specification and surrounding architecture exist. An initial cartridge batch also exists.
+
+An executable governor and courier do not yet exist, and the repository has no formal Noise Gauntlet execution results. The next milestone is cartridge validation, integrity completion, and recorded Gauntlet execution.
