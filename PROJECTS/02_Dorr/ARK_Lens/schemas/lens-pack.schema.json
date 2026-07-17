@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ark-lens.local/schemas/lens-pack.schema.json",
+  "title": "ARK Lens Pack",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "lens_pack_schema_version",
+    "id",
+    "name",
+    "version",
+    "supported_source_adapters",
+    "scoring_policy",
+    "signal_groups"
+  ],
+  "properties": {
+    "lens_pack_schema_version": { "const": "1.0.0" },
+    "id": { "type": "string", "minLength": 1 },
+    "name": { "type": "string", "minLength": 1 },
+    "version": { "type": "string", "minLength": 1 },
+    "lens_pack_id": { "type": "string", "minLength": 1 },
+    "lens_pack_version": { "type": "string", "minLength": 1 },
+    "source_adapter": { "type": "string", "minLength": 1 },
+    "active_source_adapter": { "type": "string", "minLength": 1 },
+    "supported_source_adapters": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "scoring_policy": { "$ref": "#/$defs/scoringPolicy" },
+    "signal_groups": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "array",
+        "items": { "$ref": "#/$defs/signal" }
+      }
+    }
+  },
+  "$defs": {
+    "score": { "type": "number", "minimum": 0, "maximum": 100 },
+    "signal": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "id",
+        "display_name",
+        "keywords",
+        "match_scope",
+        "blocker",
+        "qualifies_role_fit",
+        "role_fit_kind"
+      ],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "display_name": { "type": "string", "minLength": 1 },
+        "keywords": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "match_scope": {
+          "enum": ["all", "title", "company", "location", "description", "metadata"]
+        },
+        "blocker": { "type": "boolean" },
+        "qualifies_role_fit": { "type": "boolean" },
+        "role_fit_kind": {
+          "enum": ["target", "adjacent", "evidence", "context", "none"]
+        },
+        "editor_section": { "type": "string", "minLength": 1 },
+        "editor_help": { "type": "string" },
+        "weight": { "$ref": "#/$defs/score" },
+        "penalty": { "$ref": "#/$defs/score" },
+        "score_cap": { "$ref": "#/$defs/score" },
+        "score_floor": { "$ref": "#/$defs/score" },
+        "score_floor_when": { "enum": ["always", "no_negative"] },
+        "force_score": { "$ref": "#/$defs/score" },
+        "force_workflow_state": { "enum": ["apply", "review", "ignore", "applied"] },
+        "keyword_score_floor": {
+          "type": "object",
+          "required": ["score", "keywords"],
+          "properties": {
+            "score": { "$ref": "#/$defs/score" },
+            "keywords": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "reason": { "type": "string" },
+        "outcome_reason": { "type": "string" },
+        "reason_priority": { "type": "integer" }
+      }
+    },
+    "scoringPolicy": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "min_score",
+        "max_score",
+        "role_fit_base_score",
+        "any_negative_score_cap",
+        "thresholds",
+        "confidence",
+        "reasons"
+      ],
+      "properties": {
+        "min_score": { "$ref": "#/$defs/score" },
+        "max_score": { "$ref": "#/$defs/score" },
+        "role_fit_base_score": { "$ref": "#/$defs/score" },
+        "any_negative_score_cap": { "$ref": "#/$defs/score" },
+        "thresholds": {
+          "type": "object",
+          "required": ["apply_min", "review_min"],
+          "properties": {
+            "apply_min": { "$ref": "#/$defs/score" },
+            "review_min": { "$ref": "#/$defs/score" }
+          }
+        },
+        "confidence": {
+          "type": "object",
+          "required": ["matched", "unmatched", "blocker", "applied"],
+          "properties": {
+            "matched": { "type": "number", "minimum": 0, "maximum": 1 },
+            "unmatched": { "type": "number", "minimum": 0, "maximum": 1 },
+            "blocker": { "type": "number", "minimum": 0, "maximum": 1 },
+            "applied": { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        },
+        "reasons": {
+          "type": "object",
+          "required": [
+            "blocker",
+            "applied",
+            "default",
+            "context_without_role_fit",
+            "strong_target",
+            "strong_evidence",
+            "adjacent",
+            "adjacent_with_concerns",
+            "good_target",
+            "relevant_evidence",
+            "review_with_concerns",
+            "limited_evidence",
+            "no_signals"
+          ]
+        }
+      }
+    }
+  }
+}

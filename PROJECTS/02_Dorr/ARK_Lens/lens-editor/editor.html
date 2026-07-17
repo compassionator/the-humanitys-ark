@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Edit Lens · ARK Lens v2026.06.019</title>
+    <link rel="stylesheet" href="editor.css" />
+  </head>
+  <body>
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">ARK Lens</p>
+        <h1>Edit Lens</h1>
+        <p class="subtitle">Describe the jobs you want in everyday language. Your settings stay in this browser.</p>
+      </div>
+      <a class="report-link" href="../report/report.html">View report</a>
+    </header>
+
+    <main>
+      <section class="card lens-manager" aria-labelledby="lensManagerHeading">
+        <div class="section-heading">
+          <div>
+            <h2 id="lensManagerHeading">Your Lens</h2>
+            <p>Choose a Lens to edit, or create another for a different search.</p>
+          </div>
+          <div class="manager-actions">
+            <button id="newLens" type="button" class="secondary">New Lens</button>
+            <button id="duplicateLens" type="button" class="secondary">Duplicate</button>
+            <button id="deleteLens" type="button" class="danger">Delete</button>
+          </div>
+        </div>
+
+        <div class="manager-fields">
+          <label>
+            <span>Lens</span>
+            <select id="lensSelect"></select>
+          </label>
+          <label>
+            <span>Lens name</span>
+            <input id="lensName" type="text" maxlength="80" autocomplete="off" />
+          </label>
+        </div>
+      </section>
+
+      <div class="tabs" role="tablist" aria-label="Lens editing mode">
+        <button id="basicTab" type="button" role="tab" aria-selected="true" aria-controls="basicPanel">Basic</button>
+        <button id="advancedTab" type="button" role="tab" aria-selected="false" aria-controls="advancedPanel">Advanced</button>
+      </div>
+
+      <section id="basicPanel" class="tab-panel" role="tabpanel" aria-labelledby="basicTab">
+        <section class="card" aria-labelledby="sourcesHeading">
+          <div class="section-heading compact">
+            <div>
+              <h2 id="sourcesHeading">Job sources</h2>
+              <p>Choose where this Lens can capture jobs.</p>
+            </div>
+          </div>
+          <div id="sourceOptions" class="source-options"></div>
+        </section>
+
+        <p class="line-hint">One phrase per line. Use the wording you expect to see in a job title or description.</p>
+        <div id="basicSections" class="basic-sections"></div>
+
+        <div class="sticky-actions">
+          <button id="saveBasic" type="button" class="primary">Save Changes</button>
+        </div>
+      </section>
+
+      <section id="advancedPanel" class="tab-panel" role="tabpanel" aria-labelledby="advancedTab" hidden>
+        <section class="card advanced-card">
+          <div class="section-heading">
+            <div>
+              <h2>Lens Pack JSON</h2>
+              <p>Edit scoring behavior, weights, matching scope, and other expert settings.</p>
+            </div>
+            <button id="exportLens" type="button" class="secondary">Export JSON</button>
+          </div>
+          <label class="json-label" for="advancedJson">Advanced configuration</label>
+          <textarea id="advancedJson" class="json-editor" spellcheck="false"></textarea>
+          <div class="advanced-actions">
+            <button id="validateAdvanced" type="button" class="secondary">Validate JSON</button>
+            <button id="saveAdvanced" type="button" class="primary">Save JSON</button>
+            <button id="restoreBundled" type="button" class="danger quiet">Restore My Job Search</button>
+          </div>
+        </section>
+      </section>
+
+      <p id="editorNotice" class="notice" aria-live="polite" hidden></p>
+    </main>
+
+    <dialog id="createLensDialog">
+      <form id="createLensForm" method="dialog">
+        <h2>Create a Lens</h2>
+        <p>Start with the bundled setup or copy the Lens you are viewing.</p>
+        <label>
+          <span>Lens name</span>
+          <input id="createLensName" type="text" maxlength="80" required autocomplete="off" />
+        </label>
+        <label>
+          <span>Start from</span>
+          <select id="createLensBasis">
+            <option value="bundled">My Job Search template</option>
+            <option value="current">Current Lens</option>
+          </select>
+        </label>
+        <div class="dialog-actions">
+          <button id="cancelCreateLens" type="button" class="secondary">Cancel</button>
+          <button id="confirmCreateLens" type="submit" class="primary">Create Lens</button>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="../lens-packs/bundled_lens_pack.js"></script>
+    <script src="../lens-packs/lens_pack_runtime.js"></script>
+    <script src="editor.js"></script>
+  </body>
+</html>

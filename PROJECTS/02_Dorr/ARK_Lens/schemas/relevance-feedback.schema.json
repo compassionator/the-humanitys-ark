@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ark-lens.local/schemas/relevance-feedback.schema.json",
+  "title": "ARK Lens Relevance Feedback",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "current": {
+      "anyOf": [
+        { "$ref": "#/$defs/currentFeedback" },
+        { "type": "null" }
+      ]
+    },
+    "events": {
+      "type": "array",
+      "maxItems": 100,
+      "items": { "$ref": "#/$defs/feedbackEvent" }
+    }
+  },
+  "required": ["events"],
+  "$defs": {
+    "feedbackValue": {
+      "enum": ["relevant", "not_relevant", "unsure"]
+    },
+    "feedbackReason": {
+      "type": ["string", "null"],
+      "enum": [
+        "wrong_job_family",
+        "wrong_seniority",
+        "wrong_domain",
+        "wrong_location",
+        "too_hands_on",
+        "too_managerial",
+        "technology_mismatch",
+        "work_rights",
+        "other",
+        null
+      ]
+    },
+    "currentFeedback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "event_id",
+        "value",
+        "reason",
+        "detail",
+        "updated_at"
+      ],
+      "properties": {
+        "schema_version": { "const": "1.0.0" },
+        "event_id": { "type": "string", "minLength": 1 },
+        "value": {
+          "enum": ["relevant", "not_relevant", "unsure"]
+        },
+        "reason": { "$ref": "#/$defs/feedbackReason" },
+        "detail": { "type": "string", "maxLength": 1000 },
+        "updated_at": { "type": "string", "format": "date-time" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "value": { "const": "not_relevant" } },
+            "required": ["value"]
+          },
+          "then": {
+            "properties": {
+              "reason": {
+                "enum": [
+                  "wrong_job_family",
+                  "wrong_seniority",
+                  "wrong_domain",
+                  "wrong_location",
+                  "too_hands_on",
+                  "too_managerial",
+                  "technology_mismatch",
+                  "work_rights",
+                  "other"
+                ]
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "reason": { "const": null },
+              "detail": { "const": "" }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": { "reason": { "const": "other" } },
+            "required": ["reason"]
+          },
+          "then": {
+            "properties": { "detail": { "type": "string", "minLength": 1, "maxLength": 1000 } }
+          }
+        }
+      ]
+    },
+    "feedbackEvent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "id",
+        "type",
+        "value",
+        "reason",
+        "detail",
+        "created_at",
+        "context"
+      ],
+      "properties": {
+        "schema_version": { "const": "1.0.0" },
+        "id": { "type": "string", "minLength": 1 },
+        "type": {
+          "enum": ["relevance_feedback", "relevance_feedback_cleared"]
+        },
+        "value": {
+          "type": ["string", "null"],
+          "enum": ["relevant", "not_relevant", "unsure", null]
+        },
+        "reason": { "$ref": "#/$defs/feedbackReason" },
+        "detail": { "type": "string", "maxLength": 1000 },
+        "created_at": { "type": "string", "format": "date-time" },
+        "context": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "local_match_score",
+            "original_workflow_state",
+            "effective_workflow_state",
+            "lens_pack_id",
+            "lens_pack_version",
+            "source_id",
+            "title"
+          ],
+          "properties": {
+            "local_match_score": { "type": ["number", "null"], "minimum": 0, "maximum": 100 },
+            "original_workflow_state": { "type": ["string", "null"] },
+            "effective_workflow_state": { "type": ["string", "null"] },
+            "lens_pack_id": { "type": ["string", "null"] },
+            "lens_pack_version": { "type": ["string", "null"] },
+            "source_id": { "type": ["string", "null"] },
+            "title": { "type": ["string", "null"] }
+          }
+        }
+      }
+    }
+  }
+}

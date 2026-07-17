@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "ARK Lens",
+  "version": "2026.6.19",
+  "description": "See the web through your own rules.",
+  "icons": {
+    "16": "icons/ark-lens-16.png",
+    "32": "icons/ark-lens-32.png",
+    "48": "icons/ark-lens-48.png",
+    "128": "icons/ark-lens-128.png"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "ARK Lens",
+    "default_icon": {
+      "16": "icons/ark-lens-16.png",
+      "32": "icons/ark-lens-32.png",
+      "48": "icons/ark-lens-48.png",
+      "128": "icons/ark-lens-128.png"
+    }
+  },
+  "permissions": ["activeTab", "scripting", "storage"],
+  "host_permissions": [
+    "https://www.linkedin.com/*",
+    "https://www.seek.com.au/*",
+    "https://au.seek.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}

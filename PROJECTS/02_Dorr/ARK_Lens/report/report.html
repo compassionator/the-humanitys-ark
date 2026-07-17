@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ARK Lens Report</title>
+    <link rel="stylesheet" href="report.css" />
+  </head>
+  <body>
+    <main class="report-shell">
+      <h1>ARK Lens Report</h1>
+
+      <div class="lens-summary" aria-label="Lens summary">
+        <span id="reportLensName">Active Lens: My Job Search</span>
+        <span id="reportRecordCount">Records: 0</span>
+        <span id="reportStateCounts">Strong Match 0 &middot; Review 0 &middot; Low Match 0 &middot; Ignore 0 &middot; Applied 0</span>
+        <span id="reportFeedbackCounts">Relevant 0 &middot; Not relevant 0 &middot; Unsure 0 &middot; Unrated 0</span>
+      </div>
+
+      <div class="toolbar">
+        <div class="toolbar-main">
+          <div class="toolbar-left">
+            <label class="search-label">
+              Search
+              <input id="searchText" type="search" placeholder="Title, company, location..." />
+            </label>
+            <label>
+              State
+              <select id="filterState">
+                <option value="all">All</option>
+                <option value="apply">Strong Match</option>
+                <option value="review">Review</option>
+                <option value="low_match">Low Match (10.1–49.99%)</option>
+                <option value="ignore">Ignore (10% or below)</option>
+                <option value="applied">Applied</option>
+              </select>
+            </label>
+            <label>
+              Relevance
+              <select id="filterRelevance">
+                <option value="all">All</option>
+                <option value="relevant">Relevant</option>
+                <option value="not_relevant">Not relevant</option>
+                <option value="unsure">Unsure</option>
+                <option value="unrated">Unrated</option>
+              </select>
+            </label>
+            <label>
+              Source
+              <select id="filterSource">
+                <option value="all">All Sources</option>
+              </select>
+            </label>
+            <label>
+              Sort
+              <select id="sortMode">
+                <option value="match_desc">Best match</option>
+                <option value="newest_first">Newest</option>
+                <option value="last_seen">Recently seen</option>
+                <option value="company">Company</option>
+              </select>
+            </label>
+          </div>
+          <div class="toolbar-right">
+            <button id="refresh" class="secondary">Refresh</button>
+            <button id="exportJson" class="secondary">Export JSON</button>
+            <button id="exportCsv" class="secondary">Export CSV</button>
+            <button id="clearAll" class="danger-outline">Clear All</button>
+          </div>
+        </div>
+
+        <div id="selectionBar" class="selection-bar" hidden>
+          <span id="selectedCount" class="selected-count">0 selected</span>
+          <span class="selection-label">Open</span>
+          <button id="bulkOpen" class="workflow-button">Jobs</button>
+          <span class="selection-label">Set fit to</span>
+          <button id="bulkRelevant" class="workflow-button">Strong Match</button>
+          <button id="bulkReview" class="workflow-button">Review</button>
+          <button id="bulkIgnore" class="workflow-button">Low Match</button>
+          <button id="bulkApplied" class="workflow-button">Applied</button>
+          <span class="selection-spacer"></span>
+          <button id="bulkNote" class="workflow-button">Note</button>
+          <button id="bulkReset" class="workflow-button">Reset</button>
+          <button id="bulkDelete" class="workflow-button danger">Delete</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="col-select">
+                <input id="selectAll" type="checkbox" aria-label="Select all visible rows" />
+              </th>
+              <th class="col-fit">Fit</th>
+              <th class="col-percentage" aria-label="Match percentage">%</th>
+              <th class="col-job">Job</th>
+              <th class="col-location">Location</th>
+              <th class="col-activity">Activity</th>
+              <th class="col-why">Why</th>
+              <th class="col-seen">Seen</th>
+              <th class="col-date">Updated</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+    </main>
+
+    <div id="drawerBackdrop" class="drawer-backdrop" hidden></div>
+    <aside
+      id="recordDrawer"
+      class="record-drawer"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="drawerTitle"
+      tabindex="-1"
+      hidden
+    >
+      <header class="drawer-header">
+        <div class="drawer-heading-copy">
+          <p class="drawer-eyebrow">Job details</p>
+          <h2 id="drawerTitle">Untitled job</h2>
+          <p id="drawerCompany" class="drawer-company"></p>
+        </div>
+        <div class="drawer-header-actions">
+          <a id="drawerOpenJob" class="drawer-link" target="_blank" rel="noopener noreferrer">Open job</a>
+          <button id="drawerClose" type="button" class="drawer-close" aria-label="Close job details">Close</button>
+        </div>
+      </header>
+
+      <div class="drawer-body">
+        <section class="drawer-section drawer-score-section" aria-labelledby="drawerScoreHeading">
+          <h3 id="drawerScoreHeading">Fit decision</h3>
+          <div class="drawer-score-summary fit-presentation">
+            <span id="drawerPercentage" class="fit-percentage fit-percentage-review">0%</span>
+            <span id="drawerState" class="badge badge-state-review fit-label">REVIEW</span>
+            <span id="drawerManual" class="manual" hidden>Manual</span>
+          </div>
+          <p id="drawerReason" class="drawer-reason"></p>
+          <p class="drawer-helper">The fit label and percentage are separate from your relevance feedback below.</p>
+          <div id="drawerWorkflow" class="drawer-choice-row" aria-label="Set fit decision">
+            <button type="button" data-drawer-workflow="apply">Strong Match</button>
+            <button type="button" data-drawer-workflow="review">Review</button>
+            <button type="button" data-drawer-workflow="ignore">Low Match</button>
+            <button type="button" data-drawer-workflow="applied">Applied</button>
+            <button type="button" data-drawer-workflow="">Use match result</button>
+          </div>
+        </section>
+
+        <section class="drawer-section feedback-section" aria-labelledby="feedbackHeading">
+          <h3 id="feedbackHeading">Your relevance feedback</h3>
+          <p class="drawer-helper">Teach us what you consider relevant. This does not automatically change your Lens, match percentage, or fit decision.</p>
+          <div id="relevanceFeedback" class="feedback-choices" aria-label="Job relevance">
+            <button id="feedbackRelevant" type="button" data-feedback-value="relevant" aria-pressed="false">Relevant</button>
+            <button id="feedbackNotRelevant" type="button" data-feedback-value="not_relevant" aria-pressed="false">Not relevant</button>
+            <button id="feedbackUnsure" type="button" data-feedback-value="unsure" aria-pressed="false">Unsure</button>
+          </div>
+          <div id="feedbackReasonGroup" class="feedback-reason-group" hidden>
+            <label for="feedbackReason">Why is it not relevant?</label>
+            <select id="feedbackReason">
+              <option value="">Choose a reason</option>
+              <option value="wrong_job_family">Wrong job family</option>
+              <option value="wrong_seniority">Wrong seniority</option>
+              <option value="wrong_domain">Wrong domain</option>
+              <option value="wrong_location">Wrong location</option>
+              <option value="too_hands_on">Too hands-on</option>
+              <option value="too_managerial">Too managerial</option>
+              <option value="technology_mismatch">Technology mismatch</option>
+              <option value="work_rights">Work-rights issue</option>
+              <option value="other">Other</option>
+            </select>
+            <label for="feedbackDetail">Optional detail</label>
+            <textarea id="feedbackDetail" rows="3" maxlength="1000" placeholder="Add context that will help review this feedback later"></textarea>
+          </div>
+          <div class="drawer-actions">
+            <button id="saveFeedback" type="button" class="primary-action">Save Feedback</button>
+            <button id="clearFeedback" type="button">Clear Feedback</button>
+          </div>
+          <p id="drawerNotice" class="drawer-notice" aria-live="polite"></p>
+          <details class="feedback-history-panel">
+            <summary>Feedback history</summary>
+            <ol id="feedbackHistory" class="feedback-history"></ol>
+          </details>
+        </section>
+
+        <section class="drawer-section" aria-labelledby="evidenceHeading">
+          <h3 id="evidenceHeading">Why this score</h3>
+          <div class="evidence-group evidence-positive">
+            <h4>Positive evidence</h4>
+            <div id="drawerPositiveSignals" class="evidence-list"></div>
+          </div>
+          <div class="evidence-group evidence-negative">
+            <h4>Concerns</h4>
+            <div id="drawerNegativeSignals" class="evidence-list"></div>
+          </div>
+          <div class="evidence-group evidence-blocker">
+            <h4>Blockers</h4>
+            <div id="drawerBlockers" class="evidence-list"></div>
+          </div>
+        </section>
+
+        <section class="drawer-section" aria-labelledby="descriptionHeading">
+          <h3 id="descriptionHeading">Job description</h3>
+          <div id="drawerDescription" class="drawer-description"></div>
+        </section>
+
+        <section class="drawer-section" aria-labelledby="notesHeading">
+          <h3 id="notesHeading">Notes</h3>
+          <textarea id="drawerNotes" rows="4" maxlength="4000" placeholder="Private notes stored in this browser"></textarea>
+          <div class="drawer-actions">
+            <button id="drawerSaveNotes" type="button" class="primary-action">Save Notes</button>
+          </div>
+        </section>
+
+        <section class="drawer-section" aria-labelledby="captureHeading">
+          <h3 id="captureHeading">Capture quality</h3>
+          <dl id="drawerCaptureQuality" class="capture-quality"></dl>
+        </section>
+      </div>
+    </aside>
+
+    <script src="../lens-packs/bundled_lens_pack.js"></script>
+    <script src="../lens-packs/lens_pack_runtime.js"></script>
+    <script src="report.js"></script>
+  </body>
+</html>

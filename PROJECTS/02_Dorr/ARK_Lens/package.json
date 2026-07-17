@@ -1,0 +1,14 @@
+{
+  "name": "ark-lens",
+  "version": "2026.6.19",
+  "private": true,
+  "scripts": {
+    "build:lens-pack": "node tests/tools/build-lens-pack-bundle.js",
+    "build:icons": "node tests/tools/build-icons.js",
+    "package:alpha": "npm run build:icons && node tests/tools/build-peer-alpha-package.js",
+    "test": "npm run test:fast && npm run test:extraction",
+    "test:fast": "node tests/smoke.test.js && node tests/characterization.test.js && node tests/lens-pack-contract.test.js && node tests/lens-editor.test.js && node tests/adapter-doctor-safety.test.js && node tests/report-feedback.test.js && node tests/peer-alpha.test.js && node tests/session-indicator.test.js",
+    "test:extraction": "node tests/real-world-extraction.test.js && node tests/report-browser.test.js",
+    "test:visual": "node tests/visual-smoke.js"
+  }
+}

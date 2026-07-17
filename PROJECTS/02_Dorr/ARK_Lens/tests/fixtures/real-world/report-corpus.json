@@ -1,0 +1,3551 @@
+[
+  {
+    "record_id": "linkedin_jobs:4246066284",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4246066284",
+      "url": "https://www.linkedin.com/jobs/view/4246066284/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Engineering Director, Global Treasury and Payment Network (Relocate to Singapore)",
+      "secondary_text": "Airwallex",
+      "tertiary_text": "Melbourne, Victoria, Australia · Reposted 2 weeks ago · Over 100 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🟡 Opportunity",
+        "meaning": "do",
+        "negated": false,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 90,
+      "reason": "Strong product/engineering leadership match",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "engineering director",
+          "fintech",
+          "payments",
+          "payment infrastructure",
+          "fraud",
+          "banking",
+          "ai",
+          "data-driven"
+        ],
+        "matched_rule_ids": [
+          "leadership_title",
+          "preferred_domains",
+          "ai_product_delivery"
+        ],
+        "negative": [],
+        "positive": [
+          {
+            "group": "must_have",
+            "id": "leadership_title",
+            "keywords": [
+              "engineering director"
+            ],
+            "match_scope": "title",
+            "penalty": 0,
+            "reason": "",
+            "weight": 35
+          },
+          {
+            "group": "nice_to_have",
+            "id": "preferred_domains",
+            "keywords": [
+              "fintech",
+              "payments",
+              "payment infrastructure",
+              "fraud",
+              "banking"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 12
+          },
+          {
+            "group": "nice_to_have",
+            "id": "ai_product_delivery",
+            "keywords": [
+              "ai",
+              "data-driven"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 8
+          }
+        ]
+      },
+      "workflow_state": "apply"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 2,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Melbourne, Victoria, Australia · Reposted 2 weeks ago · Over 100 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4246067129",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4246067129",
+      "url": "https://www.linkedin.com/jobs/view/4246067129/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Engineering Director, Global Treasury and Payment Network (Relocate to Singapore)",
+      "secondary_text": "Airwallex",
+      "tertiary_text": "Sydney, New South Wales, Australia · Reposted 2 weeks ago · Over 100 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🟡 Opportunity",
+        "meaning": "do",
+        "negated": false,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 90,
+      "reason": "Strong product/engineering leadership match",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "engineering director",
+          "fintech",
+          "payments",
+          "payment infrastructure",
+          "fraud",
+          "banking",
+          "ai",
+          "data-driven"
+        ],
+        "matched_rule_ids": [
+          "leadership_title",
+          "preferred_domains",
+          "ai_product_delivery"
+        ],
+        "negative": [],
+        "positive": [
+          {
+            "group": "must_have",
+            "id": "leadership_title",
+            "keywords": [
+              "engineering director"
+            ],
+            "match_scope": "title",
+            "penalty": 0,
+            "reason": "",
+            "weight": 35
+          },
+          {
+            "group": "nice_to_have",
+            "id": "preferred_domains",
+            "keywords": [
+              "fintech",
+              "payments",
+              "payment infrastructure",
+              "fraud",
+              "banking"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 12
+          },
+          {
+            "group": "nice_to_have",
+            "id": "ai_product_delivery",
+            "keywords": [
+              "ai",
+              "data-driven"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 8
+          }
+        ]
+      },
+      "workflow_state": "apply"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Sydney, New South Wales, Australia · Reposted 2 weeks ago · Over 100 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4277529536",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4277529536",
+      "url": "https://www.linkedin.com/jobs/view/4277529536/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Technical Support Representative, In-Store",
+      "secondary_text": "DoorDash",
+      "tertiary_text": "Sydney, New South Wales, Australia · Reposted 2 weeks ago · Over 100 people clicked apply"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🚫🟡 Not Opportunity",
+        "meaning": "skip",
+        "negated": true,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 0,
+      "reason": "Low fit: customer/support role, outside product/engineering leadership",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "ai",
+          "technical support representative"
+        ],
+        "matched_rule_ids": [
+          "ai_product_delivery",
+          "wrong_job_family_support"
+        ],
+        "negative": [
+          {
+            "group": "should_not_have",
+            "id": "wrong_job_family_support",
+            "keywords": [
+              "technical support representative"
+            ],
+            "match_scope": "title",
+            "penalty": 100,
+            "reason": "Customer/support role, outside product/engineering leadership",
+            "weight": 0
+          }
+        ],
+        "positive": [
+          {
+            "group": "nice_to_have",
+            "id": "ai_product_delivery",
+            "keywords": [
+              "ai"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 8
+          }
+        ]
+      },
+      "workflow_state": "ignore"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 2,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Sydney, New South Wales, Australia · Reposted 2 weeks ago · Over 100 people clicked apply"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4318948292",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4318948292",
+      "url": "https://www.linkedin.com/jobs/view/4318948292/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Manager, Software Engineering, Services & China Partnership - VALORANT",
+      "secondary_text": "Riot Games",
+      "tertiary_text": "Sydney, New South Wales, Australia · Reposted 2 weeks ago · 89 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "purple",
+        "label": "🟣 Question",
+        "meaning": "review",
+        "negated": false,
+        "scope": "self",
+        "time": "now"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 55,
+      "reason": "Relevant evidence found; review role scope",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "software delivery",
+          "developer experience"
+        ],
+        "matched_rule_ids": [
+          "engineering_management_scope"
+        ],
+        "negative": [],
+        "positive": [
+          {
+            "group": "must_have",
+            "id": "engineering_management_scope",
+            "keywords": [
+              "software delivery",
+              "developer experience"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Engineering-management experience aligned with the target profile",
+            "weight": 20
+          }
+        ]
+      },
+      "workflow_state": "review"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Sydney, New South Wales, Australia · Reposted 2 weeks ago · 89 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4358592239",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4358592239",
+      "url": "https://www.linkedin.com/jobs/view/4358592239/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Engineering Manager - Agentic AI",
+      "secondary_text": "Cover Genius",
+      "tertiary_text": "Sydney, New South Wales, Australia · Reposted 2 weeks ago · Over 100 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🟡 Opportunity",
+        "meaning": "do",
+        "negated": false,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 98,
+      "reason": "Strong product/engineering leadership match",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "engineering manager",
+          "technical strategy",
+          "ai",
+          "llm",
+          "agentic"
+        ],
+        "matched_rule_ids": [
+          "leadership_title",
+          "engineering_management_scope",
+          "ai_product_delivery"
+        ],
+        "negative": [],
+        "positive": [
+          {
+            "group": "must_have",
+            "id": "leadership_title",
+            "keywords": [
+              "engineering manager"
+            ],
+            "match_scope": "title",
+            "penalty": 0,
+            "reason": "",
+            "weight": 35
+          },
+          {
+            "group": "must_have",
+            "id": "engineering_management_scope",
+            "keywords": [
+              "technical strategy"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Engineering-management experience aligned with the target profile",
+            "weight": 20
+          },
+          {
+            "group": "nice_to_have",
+            "id": "ai_product_delivery",
+            "keywords": [
+              "ai",
+              "llm",
+              "agentic"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 8
+          }
+        ]
+      },
+      "workflow_state": "apply"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Sydney, New South Wales, Australia · Reposted 2 weeks ago · Over 100 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4371740627",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4371740627",
+      "url": "https://www.linkedin.com/jobs/view/4371740627/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Technical Lead Manager, Migration",
+      "secondary_text": "MongoDB",
+      "tertiary_text": "Sydney, New South Wales, Australia · Reposted 2 days ago · Over 100 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "purple",
+        "label": "🟣 Question",
+        "meaning": "review",
+        "negated": false,
+        "scope": "self",
+        "time": "now"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 78,
+      "reason": "Relevant evidence found; review role scope",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "technical leadership",
+          "team leadership",
+          "product roadmap",
+          "ai"
+        ],
+        "matched_rule_ids": [
+          "engineering_management_scope",
+          "product_engineering_leadership",
+          "ai_product_delivery"
+        ],
+        "negative": [],
+        "positive": [
+          {
+            "group": "must_have",
+            "id": "engineering_management_scope",
+            "keywords": [
+              "technical leadership",
+              "team leadership"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Engineering-management experience aligned with the target profile",
+            "weight": 20
+          },
+          {
+            "group": "must_have",
+            "id": "product_engineering_leadership",
+            "keywords": [
+              "product roadmap"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Product-delivery experience aligned with the target profile",
+            "weight": 15
+          },
+          {
+            "group": "nice_to_have",
+            "id": "ai_product_delivery",
+            "keywords": [
+              "ai"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 8
+          }
+        ]
+      },
+      "workflow_state": "review"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Sydney, New South Wales, Australia · Reposted 2 days ago · Over 100 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4384446641",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4384446641",
+      "url": "https://www.linkedin.com/jobs/view/4384446641/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Manager, Software Engineering – Automation & Build Systems, Unpublished R&D Product",
+      "secondary_text": "Riot Games",
+      "tertiary_text": "Sydney, New South Wales, Australia · Reposted 1 week ago · 34 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🚫🟡 Not Opportunity",
+        "meaning": "skip",
+        "negated": true,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 0,
+      "reason": "Low fit: context signals without role-fit evidence",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "automation"
+        ],
+        "matched_rule_ids": [
+          "ai_product_delivery"
+        ],
+        "negative": [],
+        "positive": [
+          {
+            "group": "nice_to_have",
+            "id": "ai_product_delivery",
+            "keywords": [
+              "automation"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 8
+          }
+        ]
+      },
+      "workflow_state": "ignore"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Sydney, New South Wales, Australia · Reposted 1 week ago · 34 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4387545820",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4387545820",
+      "url": "https://www.linkedin.com/jobs/view/4387545820/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Engineering Product Owner - Digital Channels",
+      "secondary_text": "Macquarie Group",
+      "tertiary_text": "Sydney, New South Wales, Australia · Reposted 5 days ago · Over 100 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🚫🟡 Not Opportunity",
+        "meaning": "skip",
+        "negated": true,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 0,
+      "reason": "Low fit: context signals without role-fit evidence",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "fintech",
+          "ai",
+          "llm",
+          "automation",
+          "agentic"
+        ],
+        "matched_rule_ids": [
+          "preferred_domains",
+          "ai_product_delivery"
+        ],
+        "negative": [],
+        "positive": [
+          {
+            "group": "nice_to_have",
+            "id": "preferred_domains",
+            "keywords": [
+              "fintech"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 12
+          },
+          {
+            "group": "nice_to_have",
+            "id": "ai_product_delivery",
+            "keywords": [
+              "ai",
+              "llm",
+              "automation",
+              "agentic"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 8
+          }
+        ]
+      },
+      "workflow_state": "ignore"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Sydney, New South Wales, Australia · Reposted 5 days ago · Over 100 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4394876977",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4394876977",
+      "url": "https://www.linkedin.com/jobs/view/4394876977/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Customer Experience Specialist",
+      "secondary_text": "Updoc",
+      "tertiary_text": "Sydney, New South Wales, Australia · Reposted 1 week ago · Over 100 people clicked apply"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🚫🟡 Not Opportunity",
+        "meaning": "skip",
+        "negated": true,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 0,
+      "reason": "Low fit: context signals without role-fit evidence",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "b2b",
+          "saas"
+        ],
+        "matched_rule_ids": [
+          "preferred_domains"
+        ],
+        "negative": [],
+        "positive": [
+          {
+            "group": "nice_to_have",
+            "id": "preferred_domains",
+            "keywords": [
+              "b2b",
+              "saas"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 12
+          }
+        ]
+      },
+      "workflow_state": "ignore"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Sydney, New South Wales, Australia · Reposted 1 week ago · Over 100 people clicked apply"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4401589590",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4401589590",
+      "url": "https://www.linkedin.com/jobs/view/4401589590/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Head of Product Engineering & AI",
+      "secondary_text": "H&L POS",
+      "tertiary_text": "Australia · Reposted 1 week ago · Over 100 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🟡 Opportunity",
+        "meaning": "do",
+        "negated": false,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 100,
+      "reason": "Strong product/engineering leadership match",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "head of product engineering",
+          "head of product",
+          "team leadership",
+          "software architecture",
+          "product roadmap",
+          "product strategy",
+          "product leadership",
+          "payments",
+          "b2b",
+          "saas",
+          "ai",
+          "automation",
+          "agentic",
+          "platform strategy"
+        ],
+        "matched_rule_ids": [
+          "leadership_title",
+          "engineering_management_scope",
+          "product_engineering_leadership",
+          "preferred_domains",
+          "ai_product_delivery"
+        ],
+        "negative": [],
+        "positive": [
+          {
+            "group": "must_have",
+            "id": "leadership_title",
+            "keywords": [
+              "head of product engineering",
+              "head of product"
+            ],
+            "match_scope": "title",
+            "penalty": 0,
+            "reason": "",
+            "weight": 35
+          },
+          {
+            "group": "must_have",
+            "id": "engineering_management_scope",
+            "keywords": [
+              "team leadership",
+              "software architecture"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Engineering-management experience aligned with the target profile",
+            "weight": 20
+          },
+          {
+            "group": "must_have",
+            "id": "product_engineering_leadership",
+            "keywords": [
+              "product roadmap",
+              "product strategy",
+              "product leadership"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Product-delivery experience aligned with the target profile",
+            "weight": 15
+          },
+          {
+            "group": "nice_to_have",
+            "id": "preferred_domains",
+            "keywords": [
+              "payments",
+              "b2b",
+              "saas"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 12
+          },
+          {
+            "group": "nice_to_have",
+            "id": "ai_product_delivery",
+            "keywords": [
+              "ai",
+              "automation",
+              "agentic",
+              "platform strategy"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 8
+          }
+        ]
+      },
+      "workflow_state": "apply"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Australia · Reposted 1 week ago · Over 100 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4403201301",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4403201301",
+      "url": "https://www.linkedin.com/jobs/view/4403201301/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Platform Specialist - Sydney",
+      "secondary_text": "Legora",
+      "tertiary_text": "Sydney, New South Wales, Australia · Reposted 4 days ago · Over 100 people clicked apply"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🚫🟡 Not Opportunity",
+        "meaning": "skip",
+        "negated": true,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 0,
+      "reason": "Low fit: context signals without role-fit evidence",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "b2b",
+          "saas",
+          "ai"
+        ],
+        "matched_rule_ids": [
+          "preferred_domains",
+          "ai_product_delivery"
+        ],
+        "negative": [],
+        "positive": [
+          {
+            "group": "nice_to_have",
+            "id": "preferred_domains",
+            "keywords": [
+              "b2b",
+              "saas"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 12
+          },
+          {
+            "group": "nice_to_have",
+            "id": "ai_product_delivery",
+            "keywords": [
+              "ai"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 8
+          }
+        ]
+      },
+      "workflow_state": "ignore"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 2,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Sydney, New South Wales, Australia · Reposted 4 days ago · Over 100 people clicked apply"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4414646674",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4414646674",
+      "url": "https://www.linkedin.com/jobs/view/4414646674/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Customer Service Representative (Fixed term 12 Months)",
+      "secondary_text": "Resmed",
+      "tertiary_text": "Sydney, New South Wales, Australia · 2 months ago · 23 people clicked apply"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🚫🟡 Not Opportunity",
+        "meaning": "skip",
+        "negated": true,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 0,
+      "reason": "Low fit: customer/support role, outside product/engineering leadership",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "logistics",
+          "customer service representative"
+        ],
+        "matched_rule_ids": [
+          "preferred_domains",
+          "wrong_job_family_support"
+        ],
+        "negative": [
+          {
+            "group": "should_not_have",
+            "id": "wrong_job_family_support",
+            "keywords": [
+              "customer service representative"
+            ],
+            "match_scope": "title",
+            "penalty": 100,
+            "reason": "Customer/support role, outside product/engineering leadership",
+            "weight": 0
+          }
+        ],
+        "positive": [
+          {
+            "group": "nice_to_have",
+            "id": "preferred_domains",
+            "keywords": [
+              "logistics"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 12
+          }
+        ]
+      },
+      "workflow_state": "ignore"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Sydney, New South Wales, Australia · 2 months ago · 23 people clicked apply"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4416385733",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4416385733",
+      "url": "https://www.linkedin.com/jobs/view/4416385733/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Engineering Manager (Cloud and Data)",
+      "secondary_text": "GROW Inc",
+      "tertiary_text": "Melbourne, Victoria, Australia · Reposted 1 week ago · Over 100 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🚫🟡 Not Opportunity",
+        "meaning": "skip",
+        "negated": true,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 32,
+      "reason": "Low fit: cloud infrastructure role",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "engineering manager",
+          "technical leadership",
+          "people management",
+          "engineering excellence",
+          "stakeholder management",
+          "fintech",
+          "aws preferred",
+          "cloud-native environments",
+          "cloud and data"
+        ],
+        "matched_rule_ids": [
+          "leadership_title",
+          "engineering_management_scope",
+          "product_engineering_leadership",
+          "preferred_domains",
+          "cloud_heavy",
+          "cloud_infrastructure_title"
+        ],
+        "negative": [
+          {
+            "group": "should_not_have",
+            "id": "cloud_heavy",
+            "keywords": [
+              "aws preferred",
+              "cloud-native environments"
+            ],
+            "match_scope": "all",
+            "penalty": 30,
+            "reason": "Too cloud/platform-infra heavy",
+            "weight": 0
+          },
+          {
+            "group": "should_not_have",
+            "id": "cloud_infrastructure_title",
+            "keywords": [
+              "cloud and data"
+            ],
+            "match_scope": "title",
+            "penalty": 55,
+            "reason": "Cloud infrastructure role",
+            "weight": 0
+          }
+        ],
+        "positive": [
+          {
+            "group": "must_have",
+            "id": "leadership_title",
+            "keywords": [
+              "engineering manager"
+            ],
+            "match_scope": "title",
+            "penalty": 0,
+            "reason": "",
+            "weight": 35
+          },
+          {
+            "group": "must_have",
+            "id": "engineering_management_scope",
+            "keywords": [
+              "technical leadership",
+              "people management",
+              "engineering excellence"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Engineering-management experience aligned with the target profile",
+            "weight": 20
+          },
+          {
+            "group": "must_have",
+            "id": "product_engineering_leadership",
+            "keywords": [
+              "stakeholder management"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Product-delivery experience aligned with the target profile",
+            "weight": 15
+          },
+          {
+            "group": "nice_to_have",
+            "id": "preferred_domains",
+            "keywords": [
+              "fintech"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 12
+          }
+        ]
+      },
+      "workflow_state": "ignore"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Melbourne, Victoria, Australia · Reposted 1 week ago · Over 100 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4416392545",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4416392545",
+      "url": "https://www.linkedin.com/jobs/view/4416392545/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Engineering Manager (Cloud and Data)",
+      "secondary_text": "GROW Inc",
+      "tertiary_text": "Sydney, New South Wales, Australia · Reposted 1 week ago · 91 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🚫🟡 Not Opportunity",
+        "meaning": "skip",
+        "negated": true,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 32,
+      "reason": "Low fit: cloud infrastructure role",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "engineering manager",
+          "technical leadership",
+          "people management",
+          "engineering excellence",
+          "stakeholder management",
+          "fintech",
+          "aws preferred",
+          "cloud-native environments",
+          "cloud and data"
+        ],
+        "matched_rule_ids": [
+          "leadership_title",
+          "engineering_management_scope",
+          "product_engineering_leadership",
+          "preferred_domains",
+          "cloud_heavy",
+          "cloud_infrastructure_title"
+        ],
+        "negative": [
+          {
+            "group": "should_not_have",
+            "id": "cloud_heavy",
+            "keywords": [
+              "aws preferred",
+              "cloud-native environments"
+            ],
+            "match_scope": "all",
+            "penalty": 30,
+            "reason": "Too cloud/platform-infra heavy",
+            "weight": 0
+          },
+          {
+            "group": "should_not_have",
+            "id": "cloud_infrastructure_title",
+            "keywords": [
+              "cloud and data"
+            ],
+            "match_scope": "title",
+            "penalty": 55,
+            "reason": "Cloud infrastructure role",
+            "weight": 0
+          }
+        ],
+        "positive": [
+          {
+            "group": "must_have",
+            "id": "leadership_title",
+            "keywords": [
+              "engineering manager"
+            ],
+            "match_scope": "title",
+            "penalty": 0,
+            "reason": "",
+            "weight": 35
+          },
+          {
+            "group": "must_have",
+            "id": "engineering_management_scope",
+            "keywords": [
+              "technical leadership",
+              "people management",
+              "engineering excellence"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Engineering-management experience aligned with the target profile",
+            "weight": 20
+          },
+          {
+            "group": "must_have",
+            "id": "product_engineering_leadership",
+            "keywords": [
+              "stakeholder management"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Product-delivery experience aligned with the target profile",
+            "weight": 15
+          },
+          {
+            "group": "nice_to_have",
+            "id": "preferred_domains",
+            "keywords": [
+              "fintech"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 12
+          }
+        ]
+      },
+      "workflow_state": "ignore"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 2,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Sydney, New South Wales, Australia · Reposted 1 week ago · 91 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4417451731",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4417451731",
+      "url": "https://www.linkedin.com/jobs/view/4417451731/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "AI Product Owner",
+      "secondary_text": "Ingenia Communities Group",
+      "tertiary_text": "Sydney, New South Wales, Australia · Reposted 1 week ago · Over 100 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "purple",
+        "label": "🟣 Question",
+        "meaning": "review",
+        "negated": false,
+        "scope": "self",
+        "time": "now"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 58,
+      "reason": "Relevant evidence found; review role scope",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "cross-functional delivery",
+          "ai",
+          "automation"
+        ],
+        "matched_rule_ids": [
+          "product_engineering_leadership",
+          "ai_product_delivery"
+        ],
+        "negative": [],
+        "positive": [
+          {
+            "group": "must_have",
+            "id": "product_engineering_leadership",
+            "keywords": [
+              "cross-functional delivery"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Product-delivery experience aligned with the target profile",
+            "weight": 15
+          },
+          {
+            "group": "nice_to_have",
+            "id": "ai_product_delivery",
+            "keywords": [
+              "ai",
+              "automation"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 8
+          }
+        ]
+      },
+      "workflow_state": "review"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Sydney, New South Wales, Australia · Reposted 1 week ago · Over 100 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4419225580",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4419225580",
+      "url": "https://www.linkedin.com/jobs/view/4419225580/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Product Director, Financial Markets & Financial Platform",
+      "secondary_text": "Airwallex",
+      "tertiary_text": "Sydney, New South Wales, Australia · Reposted 1 day ago · 64 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🟡 Opportunity",
+        "meaning": "do",
+        "negated": false,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 100,
+      "reason": "Strong product/engineering leadership match",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "product director",
+          "product strategy",
+          "customer-centric",
+          "payments",
+          "fraud",
+          "banking",
+          "reconciliation",
+          "ai",
+          "data-driven"
+        ],
+        "matched_rule_ids": [
+          "leadership_title",
+          "product_engineering_leadership",
+          "preferred_domains",
+          "ai_product_delivery"
+        ],
+        "negative": [],
+        "positive": [
+          {
+            "group": "must_have",
+            "id": "leadership_title",
+            "keywords": [
+              "product director"
+            ],
+            "match_scope": "title",
+            "penalty": 0,
+            "reason": "",
+            "weight": 35
+          },
+          {
+            "group": "must_have",
+            "id": "product_engineering_leadership",
+            "keywords": [
+              "product strategy",
+              "customer-centric"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Product-delivery experience aligned with the target profile",
+            "weight": 15
+          },
+          {
+            "group": "nice_to_have",
+            "id": "preferred_domains",
+            "keywords": [
+              "payments",
+              "fraud",
+              "banking",
+              "reconciliation"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 12
+          },
+          {
+            "group": "nice_to_have",
+            "id": "ai_product_delivery",
+            "keywords": [
+              "ai",
+              "data-driven"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 8
+          }
+        ]
+      },
+      "workflow_state": "apply"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Sydney, New South Wales, Australia · Reposted 1 day ago · 64 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4422315312",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4422315312",
+      "url": "https://www.linkedin.com/jobs/view/4422315312/"
+    },
+    "display": {
+      "context_badge": "Applied",
+      "primary_text": "Manager II, Technical Escalations Engineering",
+      "secondary_text": "Datadog",
+      "tertiary_text": "Sydney, New South Wales, Australia · Reposted 14 hours ago · 77 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.95,
+      "dorr": {
+        "color": "green",
+        "label": "🟢 Done",
+        "meaning": "done",
+        "negated": false,
+        "scope": "self",
+        "time": "past"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 78,
+      "reason": "LinkedIn shows already applied",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "high-performing teams",
+          "product strategy",
+          "ai",
+          "data-driven"
+        ],
+        "matched_rule_ids": [
+          "engineering_management_scope",
+          "product_engineering_leadership",
+          "ai_product_delivery"
+        ],
+        "negative": [],
+        "positive": [
+          {
+            "group": "must_have",
+            "id": "engineering_management_scope",
+            "keywords": [
+              "high-performing teams"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Engineering-management experience aligned with the target profile",
+            "weight": 20
+          },
+          {
+            "group": "must_have",
+            "id": "product_engineering_leadership",
+            "keywords": [
+              "product strategy"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Product-delivery experience aligned with the target profile",
+            "weight": 15
+          },
+          {
+            "group": "nice_to_have",
+            "id": "ai_product_delivery",
+            "keywords": [
+              "ai",
+              "data-driven"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 8
+          }
+        ]
+      },
+      "workflow_state": "applied"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Sydney, New South Wales, Australia · Reposted 14 hours ago · 77 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4422335886",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4422335886",
+      "url": "https://www.linkedin.com/jobs/view/4422335886/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Hybrid",
+      "secondary_text": "Relevance AI",
+      "tertiary_text": "Sydney, New South Wales, Australia · Reposted 1 day ago · Over 100 people clicked apply"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🚫🟡 Not Opportunity",
+        "meaning": "skip",
+        "negated": true,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 45,
+      "reason": "Low fit: cloud/infrastructure requirements outweigh the positives",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "technical leadership",
+          "saas",
+          "ai",
+          "automation",
+          "agentic",
+          "terraform"
+        ],
+        "matched_rule_ids": [
+          "engineering_management_scope",
+          "preferred_domains",
+          "ai_product_delivery",
+          "cloud_heavy"
+        ],
+        "negative": [
+          {
+            "group": "should_not_have",
+            "id": "cloud_heavy",
+            "keywords": [
+              "terraform"
+            ],
+            "match_scope": "all",
+            "penalty": 30,
+            "reason": "Too cloud/platform-infra heavy",
+            "weight": 0
+          }
+        ],
+        "positive": [
+          {
+            "group": "must_have",
+            "id": "engineering_management_scope",
+            "keywords": [
+              "technical leadership"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Engineering-management experience aligned with the target profile",
+            "weight": 20
+          },
+          {
+            "group": "nice_to_have",
+            "id": "preferred_domains",
+            "keywords": [
+              "saas"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 12
+          },
+          {
+            "group": "nice_to_have",
+            "id": "ai_product_delivery",
+            "keywords": [
+              "ai",
+              "automation",
+              "agentic"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 8
+          }
+        ]
+      },
+      "workflow_state": "ignore"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 6,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Sydney, New South Wales, Australia · Reposted 1 day ago · Over 100 people clicked apply"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4426470861",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4426470861",
+      "url": "https://www.linkedin.com/jobs/view/4426470861/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Head of Engineering",
+      "secondary_text": "EQL",
+      "tertiary_text": "Melbourne, Victoria, Australia · Reposted 2 weeks ago · Over 100 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🟡 Opportunity",
+        "meaning": "do",
+        "negated": false,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 100,
+      "reason": "Strong product/engineering leadership match",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "head of engineering",
+          "engineering leadership",
+          "marketplace",
+          "ai"
+        ],
+        "matched_rule_ids": [
+          "leadership_title",
+          "engineering_management_scope",
+          "preferred_domains",
+          "ai_product_delivery"
+        ],
+        "negative": [],
+        "positive": [
+          {
+            "group": "must_have",
+            "id": "leadership_title",
+            "keywords": [
+              "head of engineering"
+            ],
+            "match_scope": "title",
+            "penalty": 0,
+            "reason": "",
+            "weight": 35
+          },
+          {
+            "group": "must_have",
+            "id": "engineering_management_scope",
+            "keywords": [
+              "engineering leadership"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Engineering-management experience aligned with the target profile",
+            "weight": 20
+          },
+          {
+            "group": "nice_to_have",
+            "id": "preferred_domains",
+            "keywords": [
+              "marketplace"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 12
+          },
+          {
+            "group": "nice_to_have",
+            "id": "ai_product_delivery",
+            "keywords": [
+              "ai"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 8
+          }
+        ]
+      },
+      "workflow_state": "apply"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Melbourne, Victoria, Australia · Reposted 2 weeks ago · Over 100 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4426907593",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4426907593",
+      "url": "https://www.linkedin.com/jobs/view/4426907593/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Technical Product Support Specialist, APAC",
+      "secondary_text": "Triple Whale",
+      "tertiary_text": "Sydney, New South Wales, Australia · Reposted 1 week ago · Over 100 people clicked apply"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🚫🟡 Not Opportunity",
+        "meaning": "skip",
+        "negated": true,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 0,
+      "reason": "Low fit: customer/support role, outside product/engineering leadership",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "saas",
+          "e-commerce",
+          "ecommerce",
+          "ai",
+          "llm",
+          "product support specialist"
+        ],
+        "matched_rule_ids": [
+          "preferred_domains",
+          "ai_product_delivery",
+          "wrong_job_family_support"
+        ],
+        "negative": [
+          {
+            "group": "should_not_have",
+            "id": "wrong_job_family_support",
+            "keywords": [
+              "product support specialist"
+            ],
+            "match_scope": "title",
+            "penalty": 100,
+            "reason": "Customer/support role, outside product/engineering leadership",
+            "weight": 0
+          }
+        ],
+        "positive": [
+          {
+            "group": "nice_to_have",
+            "id": "preferred_domains",
+            "keywords": [
+              "saas",
+              "e-commerce",
+              "ecommerce"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 12
+          },
+          {
+            "group": "nice_to_have",
+            "id": "ai_product_delivery",
+            "keywords": [
+              "ai",
+              "llm"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 8
+          }
+        ]
+      },
+      "workflow_state": "ignore"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Sydney, New South Wales, Australia · Reposted 1 week ago · Over 100 people clicked apply"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4430792978",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4430792978",
+      "url": "https://www.linkedin.com/jobs/view/4430792978/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Engineering Manager",
+      "secondary_text": "Hireup",
+      "tertiary_text": "Sydney, New South Wales, Australia · 3 weeks ago · Over 100 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🟡 Opportunity",
+        "meaning": "do",
+        "negated": false,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 98,
+      "reason": "Strong product/engineering leadership match",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "engineering manager",
+          "developer experience",
+          "ai"
+        ],
+        "matched_rule_ids": [
+          "leadership_title",
+          "engineering_management_scope",
+          "ai_product_delivery"
+        ],
+        "negative": [],
+        "positive": [
+          {
+            "group": "must_have",
+            "id": "leadership_title",
+            "keywords": [
+              "engineering manager"
+            ],
+            "match_scope": "title",
+            "penalty": 0,
+            "reason": "",
+            "weight": 35
+          },
+          {
+            "group": "must_have",
+            "id": "engineering_management_scope",
+            "keywords": [
+              "developer experience"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Engineering-management experience aligned with the target profile",
+            "weight": 20
+          },
+          {
+            "group": "nice_to_have",
+            "id": "ai_product_delivery",
+            "keywords": [
+              "ai"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 8
+          }
+        ]
+      },
+      "workflow_state": "apply"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Sydney, New South Wales, Australia · 3 weeks ago · Over 100 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4430956053",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4430956053",
+      "url": "https://www.linkedin.com/jobs/view/4430956053/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Software Development Manager, Internet Edge Services",
+      "secondary_text": "Amazon Web Services (AWS)",
+      "tertiary_text": "Sydney, New South Wales, Australia · Reposted 5 days ago · 23 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "purple",
+        "label": "🟣 Question",
+        "meaning": "review",
+        "negated": false,
+        "scope": "self",
+        "time": "now"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 77,
+      "reason": "Adjacent leadership role with relevant evidence",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "product strategy",
+          "software development manager",
+          "reconciliation"
+        ],
+        "matched_rule_ids": [
+          "product_engineering_leadership",
+          "adjacent_leadership_title",
+          "preferred_domains"
+        ],
+        "negative": [],
+        "positive": [
+          {
+            "group": "must_have",
+            "id": "product_engineering_leadership",
+            "keywords": [
+              "product strategy"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Product-delivery experience aligned with the target profile",
+            "weight": 15
+          },
+          {
+            "group": "nice_to_have",
+            "id": "adjacent_leadership_title",
+            "keywords": [
+              "software development manager"
+            ],
+            "match_scope": "title",
+            "penalty": 0,
+            "reason": "Adjacent leadership role",
+            "weight": 15
+          },
+          {
+            "group": "nice_to_have",
+            "id": "preferred_domains",
+            "keywords": [
+              "reconciliation"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 12
+          }
+        ]
+      },
+      "workflow_state": "review"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 2,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Sydney, New South Wales, Australia · Reposted 5 days ago · 23 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4432343383",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4432343383",
+      "url": "https://www.linkedin.com/jobs/view/4432343383/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Director of Engineering",
+      "secondary_text": "Freelancer.com",
+      "tertiary_text": "Sydney, New South Wales, Australia · 1 month ago · 13 people clicked applyResponses managed off LinkedIn"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🚫🟡 Not Opportunity",
+        "meaning": "skip",
+        "negated": true,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 45,
+      "reason": "Low fit: cloud/infrastructure requirements outweigh the positives",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "director of engineering",
+          "engineering leadership",
+          "engineering strategy",
+          "technical strategy",
+          "engineering excellence",
+          "payments",
+          "logistics",
+          "marketplace",
+          "aws cloud architecture"
+        ],
+        "matched_rule_ids": [
+          "leadership_title",
+          "engineering_management_scope",
+          "preferred_domains",
+          "cloud_heavy"
+        ],
+        "negative": [
+          {
+            "group": "should_not_have",
+            "id": "cloud_heavy",
+            "keywords": [
+              "aws cloud architecture"
+            ],
+            "match_scope": "all",
+            "penalty": 30,
+            "reason": "Too cloud/platform-infra heavy",
+            "weight": 0
+          }
+        ],
+        "positive": [
+          {
+            "group": "must_have",
+            "id": "leadership_title",
+            "keywords": [
+              "director of engineering"
+            ],
+            "match_scope": "title",
+            "penalty": 0,
+            "reason": "",
+            "weight": 35
+          },
+          {
+            "group": "must_have",
+            "id": "engineering_management_scope",
+            "keywords": [
+              "engineering leadership",
+              "engineering strategy",
+              "technical strategy",
+              "engineering excellence"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Engineering-management experience aligned with the target profile",
+            "weight": 20
+          },
+          {
+            "group": "nice_to_have",
+            "id": "preferred_domains",
+            "keywords": [
+              "payments",
+              "logistics",
+              "marketplace"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 12
+          }
+        ]
+      },
+      "workflow_state": "ignore"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 2,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Sydney, New South Wales, Australia · 1 month ago · 13 people clicked applyResponses managed off LinkedIn"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4434423518",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4434423518",
+      "url": "https://www.linkedin.com/jobs/view/4434423518/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Engineering Manager",
+      "secondary_text": "oOh!",
+      "tertiary_text": "North Sydney, New South Wales, Australia · 2 weeks ago · 25 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.9,
+      "dorr": {
+        "color": "red",
+        "label": "🔴 Threat",
+        "meaning": "skip",
+        "negated": false,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 0,
+      "reason": "Ignored due to blocker",
+      "signals": {
+        "blockers": [
+          {
+            "group": "blockers",
+            "id": "citizenship_or_clearance",
+            "keywords": [
+              "must be australian citizens"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Citizenship/security clearance blocker",
+            "weight": 0
+          }
+        ],
+        "matched_keywords": [
+          "must be australian citizens"
+        ],
+        "matched_rule_ids": [
+          "citizenship_or_clearance"
+        ],
+        "negative": [],
+        "positive": [
+          {
+            "group": "must_have",
+            "id": "leadership_title",
+            "keywords": [
+              "engineering manager"
+            ],
+            "match_scope": "title",
+            "penalty": 0,
+            "reason": "",
+            "weight": 35
+          },
+          {
+            "group": "must_have",
+            "id": "engineering_management_scope",
+            "keywords": [
+              "engineering leadership",
+              "engineering excellence"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Engineering-management experience aligned with the target profile",
+            "weight": 20
+          },
+          {
+            "group": "must_have",
+            "id": "product_engineering_leadership",
+            "keywords": [
+              "stakeholder management"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Product-delivery experience aligned with the target profile",
+            "weight": 15
+          }
+        ]
+      },
+      "workflow_state": "ignore"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "North Sydney, New South Wales, Australia · 2 weeks ago · 25 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4436488420",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4436488420",
+      "url": "https://www.linkedin.com/jobs/view/4436488420/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Senior Engineering Manager",
+      "secondary_text": "Commonwealth Bank",
+      "tertiary_text": "Sydney, New South Wales, Australia · 1 week ago · 42 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🚫🟡 Not Opportunity",
+        "meaning": "skip",
+        "negated": true,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 45,
+      "reason": "Low fit: cloud/infrastructure requirements outweigh the positives",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "engineering manager",
+          "senior engineering manager",
+          "engineering strategy",
+          "engineering excellence",
+          "high-performing teams",
+          "banking",
+          "ai",
+          "automation",
+          "agentic",
+          "data-driven",
+          "aws preferred"
+        ],
+        "matched_rule_ids": [
+          "leadership_title",
+          "engineering_management_scope",
+          "preferred_domains",
+          "ai_product_delivery",
+          "cloud_heavy"
+        ],
+        "negative": [
+          {
+            "group": "should_not_have",
+            "id": "cloud_heavy",
+            "keywords": [
+              "aws preferred"
+            ],
+            "match_scope": "all",
+            "penalty": 30,
+            "reason": "Too cloud/platform-infra heavy",
+            "weight": 0
+          }
+        ],
+        "positive": [
+          {
+            "group": "must_have",
+            "id": "leadership_title",
+            "keywords": [
+              "engineering manager",
+              "senior engineering manager"
+            ],
+            "match_scope": "title",
+            "penalty": 0,
+            "reason": "",
+            "weight": 35
+          },
+          {
+            "group": "must_have",
+            "id": "engineering_management_scope",
+            "keywords": [
+              "engineering strategy",
+              "engineering excellence",
+              "high-performing teams"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Engineering-management experience aligned with the target profile",
+            "weight": 20
+          },
+          {
+            "group": "nice_to_have",
+            "id": "preferred_domains",
+            "keywords": [
+              "banking"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 12
+          },
+          {
+            "group": "nice_to_have",
+            "id": "ai_product_delivery",
+            "keywords": [
+              "ai",
+              "automation",
+              "agentic",
+              "data-driven"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 8
+          }
+        ]
+      },
+      "workflow_state": "ignore"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 2,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Sydney, New South Wales, Australia · 1 week ago · 42 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4437402281",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4437402281",
+      "url": "https://www.linkedin.com/jobs/view/4437402281/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "National Manager, AI Lead",
+      "secondary_text": "Australian Catholic University",
+      "tertiary_text": "North Sydney, New South Wales, Australia · 1 week ago · 45 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🚫🟡 Not Opportunity",
+        "meaning": "skip",
+        "negated": true,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 0,
+      "reason": "Low fit: context signals without role-fit evidence",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "ai"
+        ],
+        "matched_rule_ids": [
+          "ai_product_delivery"
+        ],
+        "negative": [],
+        "positive": [
+          {
+            "group": "nice_to_have",
+            "id": "ai_product_delivery",
+            "keywords": [
+              "ai"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 8
+          }
+        ]
+      },
+      "workflow_state": "ignore"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "North Sydney, New South Wales, Australia · 1 week ago · 45 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4437732781",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4437732781",
+      "url": "https://www.linkedin.com/jobs/view/4437732781/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Engineering Manager – Digital (CommBank App- Android/iOS)",
+      "secondary_text": "Commonwealth Bank",
+      "tertiary_text": "Sydney, New South Wales, Australia · 1 week ago · 31 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🚫🟡 Not Opportunity",
+        "meaning": "skip",
+        "negated": true,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 45,
+      "reason": "Low fit: cloud/infrastructure requirements outweigh the positives",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "engineering manager",
+          "engineering excellence",
+          "payments",
+          "banking",
+          "ai",
+          "automation",
+          "ai-assisted development",
+          "infrastructure as code",
+          "terraform"
+        ],
+        "matched_rule_ids": [
+          "leadership_title",
+          "engineering_management_scope",
+          "preferred_domains",
+          "ai_product_delivery",
+          "cloud_heavy"
+        ],
+        "negative": [
+          {
+            "group": "should_not_have",
+            "id": "cloud_heavy",
+            "keywords": [
+              "infrastructure as code",
+              "terraform"
+            ],
+            "match_scope": "all",
+            "penalty": 30,
+            "reason": "Too cloud/platform-infra heavy",
+            "weight": 0
+          }
+        ],
+        "positive": [
+          {
+            "group": "must_have",
+            "id": "leadership_title",
+            "keywords": [
+              "engineering manager"
+            ],
+            "match_scope": "title",
+            "penalty": 0,
+            "reason": "",
+            "weight": 35
+          },
+          {
+            "group": "must_have",
+            "id": "engineering_management_scope",
+            "keywords": [
+              "engineering excellence"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Engineering-management experience aligned with the target profile",
+            "weight": 20
+          },
+          {
+            "group": "nice_to_have",
+            "id": "preferred_domains",
+            "keywords": [
+              "payments",
+              "banking"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 12
+          },
+          {
+            "group": "nice_to_have",
+            "id": "ai_product_delivery",
+            "keywords": [
+              "ai",
+              "automation",
+              "ai-assisted development"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 8
+          }
+        ]
+      },
+      "workflow_state": "ignore"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Sydney, New South Wales, Australia · 1 week ago · 31 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4438065494",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4438065494",
+      "url": "https://www.linkedin.com/jobs/view/4438065494/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Head of Engineering/cofounder",
+      "secondary_text": "SAM.Coach",
+      "tertiary_text": "Sydney, New South Wales, Australia · 16 hours ago · 29 applicantsCompany review time is typically 1 week"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🟡 Opportunity",
+        "meaning": "do",
+        "negated": false,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 88,
+      "reason": "Strong product/engineering leadership match",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "head of engineering",
+          "ai"
+        ],
+        "matched_rule_ids": [
+          "leadership_title",
+          "ai_product_delivery"
+        ],
+        "negative": [],
+        "positive": [
+          {
+            "group": "must_have",
+            "id": "leadership_title",
+            "keywords": [
+              "head of engineering"
+            ],
+            "match_scope": "title",
+            "penalty": 0,
+            "reason": "",
+            "weight": 35
+          },
+          {
+            "group": "nice_to_have",
+            "id": "ai_product_delivery",
+            "keywords": [
+              "ai"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 8
+          }
+        ]
+      },
+      "workflow_state": "apply"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Sydney, New South Wales, Australia · 16 hours ago · 29 applicantsCompany review time is typically 1 week"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4438879545",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4438879545",
+      "url": "https://www.linkedin.com/jobs/view/4438879545/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Customer Service Representative",
+      "secondary_text": "Johnson & Johnson MedTech",
+      "tertiary_text": "North Ryde, New South Wales, Australia · 5 days ago · Over 100 people clicked apply"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🚫🟡 Not Opportunity",
+        "meaning": "skip",
+        "negated": true,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 0,
+      "reason": "Low fit: customer/support role, outside product/engineering leadership",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "warehouse",
+          "customer service representative"
+        ],
+        "matched_rule_ids": [
+          "preferred_domains",
+          "wrong_job_family_support"
+        ],
+        "negative": [
+          {
+            "group": "should_not_have",
+            "id": "wrong_job_family_support",
+            "keywords": [
+              "customer service representative"
+            ],
+            "match_scope": "title",
+            "penalty": 100,
+            "reason": "Customer/support role, outside product/engineering leadership",
+            "weight": 0
+          }
+        ],
+        "positive": [
+          {
+            "group": "nice_to_have",
+            "id": "preferred_domains",
+            "keywords": [
+              "warehouse"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 12
+          }
+        ]
+      },
+      "workflow_state": "ignore"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "North Ryde, New South Wales, Australia · 5 days ago · Over 100 people clicked apply"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4439100973",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4439100973",
+      "url": "https://www.linkedin.com/jobs/view/4439100973/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Head of Digital & Technology",
+      "secondary_text": "ClarkeHopkinsClarke Architects",
+      "tertiary_text": "Melbourne, Victoria, Australia · 1 day ago · Over 100 applicants · Promoted by hirer · Actively reviewing applicants"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "purple",
+        "label": "🟣 Question",
+        "meaning": "review",
+        "negated": false,
+        "scope": "self",
+        "time": "now"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 63,
+      "reason": "Relevant evidence found; review role scope",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "hands-on leadership",
+          "ai",
+          "automation"
+        ],
+        "matched_rule_ids": [
+          "engineering_management_scope",
+          "ai_product_delivery"
+        ],
+        "negative": [],
+        "positive": [
+          {
+            "group": "must_have",
+            "id": "engineering_management_scope",
+            "keywords": [
+              "hands-on leadership"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Engineering-management experience aligned with the target profile",
+            "weight": 20
+          },
+          {
+            "group": "nice_to_have",
+            "id": "ai_product_delivery",
+            "keywords": [
+              "ai",
+              "automation"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 8
+          }
+        ]
+      },
+      "workflow_state": "review"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Melbourne, Victoria, Australia · 1 day ago · Over 100 applicants · Promoted by hirer · Actively reviewing applicants"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4439483637",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4439483637",
+      "url": "https://www.linkedin.com/jobs/view/4439483637/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Head of Engineering - Applied AI",
+      "secondary_text": "V2 AI",
+      "tertiary_text": "Sydney, New South Wales, Australia · 1 day ago · 44 applicants · Promoted by hirer · Actively reviewing applicants"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🟡 Opportunity",
+        "meaning": "do",
+        "negated": false,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 98,
+      "reason": "Strong product/engineering leadership match",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "head of engineering",
+          "software delivery",
+          "ai",
+          "agentic"
+        ],
+        "matched_rule_ids": [
+          "leadership_title",
+          "engineering_management_scope",
+          "ai_product_delivery"
+        ],
+        "negative": [],
+        "positive": [
+          {
+            "group": "must_have",
+            "id": "leadership_title",
+            "keywords": [
+              "head of engineering"
+            ],
+            "match_scope": "title",
+            "penalty": 0,
+            "reason": "",
+            "weight": 35
+          },
+          {
+            "group": "must_have",
+            "id": "engineering_management_scope",
+            "keywords": [
+              "software delivery"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Engineering-management experience aligned with the target profile",
+            "weight": 20
+          },
+          {
+            "group": "nice_to_have",
+            "id": "ai_product_delivery",
+            "keywords": [
+              "ai",
+              "agentic"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 8
+          }
+        ]
+      },
+      "workflow_state": "apply"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Sydney, New South Wales, Australia · 1 day ago · 44 applicants · Promoted by hirer · Actively reviewing applicants"
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4439916932",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4439916932",
+      "url": "https://www.linkedin.com/jobs/view/4439916932/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Customer Service Representative",
+      "secondary_text": "Percepta",
+      "tertiary_text": ""
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🚫🟡 Not Opportunity",
+        "meaning": "skip",
+        "negated": true,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 0,
+      "reason": "Low fit: customer/support role, outside product/engineering leadership",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "customer service representative"
+        ],
+        "matched_rule_ids": [
+          "wrong_job_family_support"
+        ],
+        "negative": [
+          {
+            "group": "should_not_have",
+            "id": "wrong_job_family_support",
+            "keywords": [
+              "customer service representative"
+            ],
+            "match_scope": "title",
+            "penalty": 100,
+            "reason": "Customer/support role, outside product/engineering leadership",
+            "weight": 0
+          }
+        ],
+        "positive": []
+      },
+      "workflow_state": "ignore"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": ""
+    }
+  },
+  {
+    "record_id": "linkedin_jobs:4440950687",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "linkedin_jobs",
+      "source_item_id": "4440950687",
+      "url": "https://www.linkedin.com/jobs/view/4440950687/"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Director, Product - Engineering Simulation",
+      "secondary_text": "Neara",
+      "tertiary_text": "Sydney, New South Wales, Australia · 13 hours ago · 3 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🚫🟡 Not Opportunity",
+        "meaning": "skip",
+        "negated": true,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 0,
+      "reason": "Low fit: wrong engineering discipline",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "ai",
+          "structural engineering",
+          "electrical engineering"
+        ],
+        "matched_rule_ids": [
+          "ai_product_delivery",
+          "wrong_engineering_discipline"
+        ],
+        "negative": [
+          {
+            "group": "should_not_have",
+            "id": "wrong_engineering_discipline",
+            "keywords": [
+              "structural engineering",
+              "electrical engineering"
+            ],
+            "match_scope": "all",
+            "penalty": 100,
+            "reason": "Wrong engineering discipline",
+            "weight": 0
+          }
+        ],
+        "positive": [
+          {
+            "group": "nice_to_have",
+            "id": "ai_product_delivery",
+            "keywords": [
+              "ai"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 8
+          }
+        ]
+      },
+      "workflow_state": "ignore"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "linkedin_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005f",
+      "extraction_mode": "job_detail",
+      "raw_location_text": "Sydney, New South Wales, Australia · 13 hours ago · 3 people clicked apply · Promoted by hirer · Responses managed off LinkedIn"
+    }
+  },
+  {
+    "record_id": "seek_jobs:92904230",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "seek_jobs",
+      "source_item_id": "92904230",
+      "url": "https://au.seek.com/jobs?jobId=92904230&type=promoted"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Registered Nurse - Surgical",
+      "secondary_text": "Chris O'Brien Lifehouse",
+      "tertiary_text": "Camperdown, Sydney NSW · 21d ago · Full time"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.4,
+      "dorr": {
+        "color": "yellow",
+        "label": "🚫🟡 Not Opportunity",
+        "meaning": "skip",
+        "negated": true,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 0,
+      "reason": "No relevant job-search signals",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [],
+        "matched_rule_ids": [],
+        "negative": [],
+        "positive": []
+      },
+      "workflow_state": "ignore"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "seek_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005d",
+      "classification": "Healthcare & Medical · Nursing - General Medical & Surgical",
+      "extraction_mode": "search_result_cache",
+      "posted": "21d ago",
+      "raw_location_text": "Camperdown, Sydney NSW",
+      "salary": "",
+      "work_type": "Full time"
+    }
+  },
+  {
+    "record_id": "seek_jobs:93126597",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "seek_jobs",
+      "source_item_id": "93126597",
+      "url": "https://au.seek.com/engineering-manager-jobs/in-Sydney-NSW-2000?jobId=93126597&type=standard"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Project Manager (Engineering, Manufacturing, NPD, Process Improvement)",
+      "secondary_text": "Next Day Recruitment",
+      "tertiary_text": "Sydney NSW · Full time · $130 to $160,000 base + Super DOE"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.4,
+      "dorr": {
+        "color": "yellow",
+        "label": "🚫🟡 Not Opportunity",
+        "meaning": "skip",
+        "negated": true,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 0,
+      "reason": "No relevant job-search signals",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [],
+        "matched_rule_ids": [],
+        "negative": [],
+        "positive": []
+      },
+      "workflow_state": "ignore"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "seek_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005d",
+      "classification": "Project Management (Engineering)",
+      "extraction_mode": "job_detail",
+      "posted": "",
+      "raw_location_text": "Sydney NSW",
+      "salary": "$130 to $160,000 base + Super DOE",
+      "work_type": "Full time"
+    }
+  },
+  {
+    "record_id": "seek_jobs:93273832",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "seek_jobs",
+      "source_item_id": "93273832",
+      "url": "https://au.seek.com/engineering-manager-jobs/in-Sydney-NSW-2000?jobId=93273832&type=standard"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "AI Engineering Manager",
+      "secondary_text": "Motion Recruitment",
+      "tertiary_text": "Sydney NSW (Hybrid) · Full time"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🟡 Opportunity",
+        "meaning": "do",
+        "negated": false,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 93,
+      "reason": "Strong product/engineering leadership match",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "engineering manager",
+          "stakeholder management",
+          "ai",
+          "automation"
+        ],
+        "matched_rule_ids": [
+          "leadership_title",
+          "product_engineering_leadership",
+          "ai_product_delivery"
+        ],
+        "negative": [],
+        "positive": [
+          {
+            "group": "must_have",
+            "id": "leadership_title",
+            "keywords": [
+              "engineering manager"
+            ],
+            "match_scope": "title",
+            "penalty": 0,
+            "reason": "",
+            "weight": 35
+          },
+          {
+            "group": "must_have",
+            "id": "product_engineering_leadership",
+            "keywords": [
+              "stakeholder management"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "Product-delivery experience aligned with the target profile",
+            "weight": 15
+          },
+          {
+            "group": "nice_to_have",
+            "id": "ai_product_delivery",
+            "keywords": [
+              "ai",
+              "automation"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 8
+          }
+        ]
+      },
+      "workflow_state": "apply"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 1,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "seek_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005d",
+      "classification": "Consultants (Information & Communication Technology)",
+      "extraction_mode": "job_detail",
+      "posted": "",
+      "raw_location_text": "Sydney NSW (Hybrid)",
+      "salary": "",
+      "work_type": "Full time"
+    }
+  },
+  {
+    "record_id": "seek_jobs:93343672",
+    "source": {
+      "adapter_version": "v2026.06.003",
+      "id": "seek_jobs",
+      "source_item_id": "93343672",
+      "url": "https://au.seek.com/engineering-manager-jobs/in-Sydney-NSW-2000?jobId=93343672&type=standard"
+    },
+    "display": {
+      "context_badge": "",
+      "primary_text": "Senior Engineering Manager - 280k Base + Bonus + Equity",
+      "secondary_text": "Preacta Recruitment",
+      "tertiary_text": "Sydney NSW (Hybrid) · Full time"
+    },
+    "classification": {
+      "action": "report_only",
+      "confidence": 0.75,
+      "dorr": {
+        "color": "yellow",
+        "label": "🟡 Opportunity",
+        "meaning": "do",
+        "negated": false,
+        "scope": "self",
+        "time": "future"
+      },
+      "lens_pack_id": "bob_job_search",
+      "lens_pack_name": "My Job Search",
+      "lens_pack_version": "v2026.06.008",
+      "match_score": 82,
+      "reason": "Strong product/engineering leadership match",
+      "signals": {
+        "blockers": [],
+        "matched_keywords": [
+          "engineering manager",
+          "senior engineering manager",
+          "ai",
+          "agentic"
+        ],
+        "matched_rule_ids": [
+          "leadership_title",
+          "ai_product_delivery"
+        ],
+        "negative": [],
+        "positive": [
+          {
+            "group": "must_have",
+            "id": "leadership_title",
+            "keywords": [
+              "engineering manager",
+              "senior engineering manager"
+            ],
+            "match_scope": "title",
+            "penalty": 0,
+            "reason": "",
+            "weight": 35
+          },
+          {
+            "group": "nice_to_have",
+            "id": "ai_product_delivery",
+            "keywords": [
+              "ai",
+              "agentic"
+            ],
+            "match_scope": "all",
+            "penalty": 0,
+            "reason": "",
+            "weight": 8
+          }
+        ]
+      },
+      "workflow_state": "apply"
+    },
+    "memory": {
+      "first_seen_at": "2000-01-01T00:00:00.000Z",
+      "last_seen_at": "2000-01-01T00:00:00.000Z",
+      "notes": "",
+      "seen_count": 2,
+      "user_workflow_override": null
+    },
+    "metadata": {
+      "adapter_profile_id": "seek_jobs_default_profile",
+      "adapter_profile_version": "v2026.06.005d",
+      "classification": "General/Business Unit Manager (CEO & General Management)",
+      "extraction_mode": "job_detail",
+      "posted": "",
+      "raw_location_text": "Sydney NSW (Hybrid)",
+      "salary": "",
+      "work_type": "Full time"
+    }
+  }
+]
