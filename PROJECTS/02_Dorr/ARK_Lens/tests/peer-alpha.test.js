@@ -174,7 +174,18 @@ function testRepeatablePackageContract() {
   assert.match(packageSource, /SHA256SUMS\.txt/);
   assert.match(packageSource, /BUILD_INFO\.json/);
   assert.match(packageSource, /\.zip/);
-  assert.match(packageSource, /"icons"/);
+  assert.match(packageSource, /icons\/ark-lens-16\.png/);
+  assert.match(packageSource, /core\/lens_item\.js/);
+  assert.match(packageSource, /core\/deterministic_matcher\.js/);
+  assert.match(packageSource, /core\/extraction_result\.js/);
+  assert.match(packageSource, /sources\/source_adapter_registry\.js/);
+  assert.match(packageSource, /compatibility\/job_extraction_compat\.js/);
+  assert.match(packageSource, /policies\/job_capture_policy\.js/);
+  assert.match(packageSource, /policies\/job_policy_runtime\.js/);
+  assert.match(packageSource, /feed_lens_runtime:\s*Object\.freeze\(\[\]\)/);
+  assert.match(packageSource, /outside the Job peer-alpha allow-list/i);
+  assert.match(packageSource, /Feed implementation is forbidden/i);
+  assert.doesNotMatch(packageSource, /^\s*"(?:core|sources|policies)",?$/m);
   assert.match(packageSource, /tests\/fixtures/);
   assert.match(packageSource, /must not be packaged/i);
 

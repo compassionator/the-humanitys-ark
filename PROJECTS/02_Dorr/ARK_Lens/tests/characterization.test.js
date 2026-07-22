@@ -18,22 +18,13 @@ const scoringCorpus = readJson("tests/fixtures/real-world/scoring-corpus.json");
 const reportCorpus = readJson("tests/fixtures/real-world/report-corpus.json");
 const pageCases = readJson("tests/fixtures/real-world/page-cases.json");
 const canonicalLens = readJson("lens-packs/bob_job_search.json");
+const {
+  classifyExtractedJob,
+  scoreSignals
+} = require("../policies/job_policy_runtime.js");
 
 function loadScoringApi() {
-  const names = [
-    "escapeRegExp",
-    "keywordToWholeTermRegex",
-    "containsAny",
-    "normalize",
-    "clamp",
-    "getMatchedSignals",
-    "dedupeMatchedPositiveSignals",
-    "joinSignalReasons",
-    "scoreSignals"
-  ];
-  return evaluate(names.map((name) => extractFunction(contentSource, name)).join("\n"), [
-    "scoreSignals"
-  ]);
+  return { scoreSignals };
 }
 
 function loadRecordLifecycleApi() {
@@ -174,6 +165,61 @@ function testScoringDoesNotDependOnSignalIds() {
   });
 }
 
+function testLensItemProductionScoringPath() {
+  const mismatches = [];
+
+  scoringCorpus.forEach((testCase) => {
+    const input = testCase.input;
+    const expected = testCase.expected;
+    const actual = plain(classifyExtractedJob({
+      source: {
+        id: "linkedin_jobs",
+        source_item_id: testCase.case_id,
+        url: `https://www.linkedin.com/jobs/view/${testCase.case_id}/`
+      },
+      type: "job",
+      display: {
+        primary_text: input.title,
+        secondary_text: input.company,
+        tertiary_text: input.location
+      },
+      content: {
+        summary: input.summary,
+        full_text: input.full_text
+      },
+      platform_state: {
+        applied: expected.workflow_state === "applied",
+        applied_text: expected.workflow_state === "applied" ? "Applied" : ""
+      },
+      metadata: {}
+    }, canonicalLens));
+    const errors = [];
+
+    if (actual.match_score !== expected.match_score) {
+      errors.push(`score ${actual.match_score} != ${expected.match_score}`);
+    }
+    if (actual.workflow_state !== expected.workflow_state) {
+      errors.push(`state ${actual.workflow_state} != ${expected.workflow_state}`);
+    }
+    if (actual.reason !== expected.reason) {
+      errors.push(`reason ${JSON.stringify(actual.reason)} != ${JSON.stringify(expected.reason)}`);
+    }
+    if (JSON.stringify(signalSummary(actual.signals)) !== JSON.stringify(signalSummary(expected.signals))) {
+      errors.push("matched signals changed");
+    }
+
+    if (errors.length) {
+      mismatches.push(`${testCase.case_id} ${input.title}: ${errors.join("; ")}`);
+    }
+  });
+
+  assert.deepEqual(
+    mismatches,
+    [],
+    `LensItem production scoring regressions:\n${mismatches.join("\n")}`
+  );
+}
+
 function testRecordQualityPreservation() {
   const { getRecordCaptureQuality, preserveRicherExistingRecord } = loadRecordLifecycleApi();
   const existing = {
@@ -289,6 +335,7 @@ function testPublicFixturePrivacy() {
 testSingleCanonicalLensSource();
 testRealWorldScoringCorpus();
 testScoringDoesNotDependOnSignalIds();
+testLensItemProductionScoringPath();
 testRecordQualityPreservation();
 testReportCorpusAndCsvContract();
 testPageFixtureManifest();

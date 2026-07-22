@@ -10,6 +10,13 @@ const root = path.resolve(__dirname, "..");
 const contentSource = fs.readFileSync(path.join(root, "content_bundle.js"), "utf8");
 const lensPackRuntimeSource = fs.readFileSync(path.join(root, "lens-packs", "lens_pack_runtime.js"), "utf8");
 const bundledLensPackSource = fs.readFileSync(path.join(root, "lens-packs", "bundled_lens_pack.js"), "utf8");
+const lensItemRuntimeSource = fs.readFileSync(path.join(root, "core", "lens_item.js"), "utf8");
+const matcherRuntimeSource = fs.readFileSync(path.join(root, "core", "deterministic_matcher.js"), "utf8");
+const extractionResultRuntimeSource = fs.readFileSync(path.join(root, "core", "extraction_result.js"), "utf8");
+const sourceAdapterRuntimeSource = fs.readFileSync(path.join(root, "sources", "source_adapter_registry.js"), "utf8");
+const jobCompatibilityRuntimeSource = fs.readFileSync(path.join(root, "compatibility", "job_extraction_compat.js"), "utf8");
+const jobCapturePolicyRuntimeSource = fs.readFileSync(path.join(root, "policies", "job_capture_policy.js"), "utf8");
+const jobPolicyRuntimeSource = fs.readFileSync(path.join(root, "policies", "job_policy_runtime.js"), "utf8");
 const outputDir = process.env.ARK_VISUAL_OUTPUT || path.join(root, "tests", "artifacts");
 const profileDir = path.join(os.tmpdir(), `ark-lens-visual-${process.pid}`);
 const chromeCandidates = [
@@ -378,6 +385,13 @@ async function runAdapterFixture(client, {
       globalThis.__arkMockLocation = ${JSON.stringify(mockLocation)};
       ${bundledLensPackSource}
       ${lensPackRuntimeSource}
+      ${lensItemRuntimeSource}
+      ${matcherRuntimeSource}
+      ${extractionResultRuntimeSource}
+      ${sourceAdapterRuntimeSource}
+      ${jobCompatibilityRuntimeSource}
+      ${jobCapturePolicyRuntimeSource}
+      ${jobPolicyRuntimeSource}
       ${transformedBundle}
     `,
     awaitPromise: true,

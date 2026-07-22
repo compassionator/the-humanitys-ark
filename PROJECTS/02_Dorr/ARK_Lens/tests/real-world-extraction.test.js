@@ -15,6 +15,31 @@ const bundledLensPackSource = fs.readFileSync(
   path.join(root, "lens-packs", "bundled_lens_pack.js"),
   "utf8"
 );
+const lensItemRuntimeSource = fs.readFileSync(path.join(root, "core", "lens_item.js"), "utf8");
+const matcherRuntimeSource = fs.readFileSync(
+  path.join(root, "core", "deterministic_matcher.js"),
+  "utf8"
+);
+const extractionResultRuntimeSource = fs.readFileSync(
+  path.join(root, "core", "extraction_result.js"),
+  "utf8"
+);
+const sourceAdapterRuntimeSource = fs.readFileSync(
+  path.join(root, "sources", "source_adapter_registry.js"),
+  "utf8"
+);
+const jobCompatibilityRuntimeSource = fs.readFileSync(
+  path.join(root, "compatibility", "job_extraction_compat.js"),
+  "utf8"
+);
+const jobCapturePolicyRuntimeSource = fs.readFileSync(
+  path.join(root, "policies", "job_capture_policy.js"),
+  "utf8"
+);
+const jobPolicyRuntimeSource = fs.readFileSync(
+  path.join(root, "policies", "job_policy_runtime.js"),
+  "utf8"
+);
 const pageCases = JSON.parse(
   fs.readFileSync(path.join(fixtureDir, "page-cases.json"), "utf8")
 );
@@ -197,6 +222,13 @@ function runFixture(testCase, options = {}) {
     <script>${options.beforeBundle || ""}</script>
     <script>${bundledLensPackSource}</script>
     <script>${lensPackRuntimeSource}</script>
+    <script>${lensItemRuntimeSource}</script>
+    <script>${matcherRuntimeSource}</script>
+    <script>${extractionResultRuntimeSource}</script>
+    <script>${sourceAdapterRuntimeSource}</script>
+    <script>${jobCompatibilityRuntimeSource}</script>
+    <script>${jobCapturePolicyRuntimeSource}</script>
+    <script>${jobPolicyRuntimeSource}</script>
     <script>
       globalThis.__arkMockLocation = ${JSON.stringify(testCase.mock_location)};
       ${makeChromeMock()}
@@ -243,6 +275,17 @@ function assertReadyCapture(testCase, result) {
   const record = result.record;
 
   assert.equal(result.response.ok, true, `${testCase.case_id}: ${result.response.message || "capture failed"}`);
+  const expectedExtractionStatus = testCase.case_id === "page_1" ? "partial" : "complete";
+  assert.equal(result.response.extraction_status, expectedExtractionStatus);
+  assert.equal(
+    result.response.capture_quality.level,
+    expectedExtractionStatus === "complete" ? "complete" : "degraded"
+  );
+  assert.equal(
+    result.response.capture_quality.required_captured,
+    result.response.capture_quality.required_total
+  );
+  assert.deepEqual(result.response.missing_capabilities, []);
   assert.ok(record, `${testCase.case_id}: record was not saved`);
   assert.equal(record.source.id, testCase.source_id);
   assert.equal(String(record.source.source_item_id), expected.job_id);
@@ -289,6 +332,8 @@ function assertReadyCapture(testCase, result) {
 
 function assertIncompleteCapture(testCase, result) {
   assert.equal(result.response.ok, false, `${testCase.case_id}: incomplete DOM unexpectedly captured`);
+  assert.equal(result.response.extraction_status, "unsupported");
+  assert.equal(result.response.capture_quality.level, "insufficient");
   assert.equal(result.record, null);
   assert.ok(["wait", "fail"].includes(result.doctor.health));
   assert.equal(result.doctor.fields.job_id, testCase.expected.job_id);
@@ -331,7 +376,8 @@ selectedCases.forEach((testCase) => {
     case_id: testCase.case_id,
     ready: testCase.expected.capture_ready,
     health: result.doctor?.health || "missing",
-    extraction_mode: result.record?.metadata?.extraction_mode || null
+    extraction_mode: result.record?.metadata?.extraction_mode || null,
+    extraction_status: result.response?.extraction_status || null
   });
 });
 

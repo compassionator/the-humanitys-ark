@@ -7,30 +7,12 @@ const ADAPTER_PROFILE_LAST_KNOWN_GOOD_KEY = "ark_lens_adapter_profile_last_known
 const ADAPTER_PROFILE_ROLLBACKS_KEY = "ark_lens_adapter_profile_rollbacks";
 const LENS_PACK_RUNTIME = globalThis.ARK_LENS_PACK_RUNTIME;
 const BUNDLED_LENS_PACK = globalThis.ARK_BUNDLED_LENS_PACK;
+const SOURCE_ADAPTERS_RUNTIME = globalThis.ARK_SOURCE_ADAPTERS;
 
-if (!LENS_PACK_RUNTIME || !BUNDLED_LENS_PACK) {
-  throw new Error("ARK Lens Pack runtime was not loaded before the popup.");
+if (!LENS_PACK_RUNTIME || !BUNDLED_LENS_PACK || !SOURCE_ADAPTERS_RUNTIME) {
+  throw new Error("ARK Lens Pack and source adapter runtimes were not loaded before the popup.");
 }
-const SOURCE_ADAPTERS = [
-  {
-    id: "linkedin_jobs",
-    display_name: "LinkedIn Jobs",
-    type: "job",
-    status: "implemented"
-  },
-  {
-    id: "seek_jobs",
-    display_name: "SEEK Jobs",
-    type: "job",
-    status: "implemented"
-  },
-  {
-    id: "hays_jobs",
-    display_name: "Hays Jobs",
-    type: "job",
-    status: "planned"
-  }
-];
+const SOURCE_ADAPTERS = SOURCE_ADAPTERS_RUNTIME.listAdapterDefinitions();
 
 let popupNotice = "";
 let popupNoticeTimer = null;
@@ -180,6 +162,13 @@ async function ensureContentBundle(tabId) {
     files: [
       "lens-packs/bundled_lens_pack.js",
       "lens-packs/lens_pack_runtime.js",
+      "core/lens_item.js",
+      "core/deterministic_matcher.js",
+      "core/extraction_result.js",
+      "sources/source_adapter_registry.js",
+      "compatibility/job_extraction_compat.js",
+      "policies/job_capture_policy.js",
+      "policies/job_policy_runtime.js",
       "content_bundle.js"
     ]
   });
@@ -315,30 +304,8 @@ function syncSessionTimer(session) {
 }
 
 function getJobSourceForUrl(value) {
-  try {
-    const parsed = new URL(value || "");
-    const isLinkedInJobs =
-      /(^|\.)linkedin\.com$/i.test(parsed.hostname) &&
-      parsed.pathname.includes("/jobs");
-    const isSeekJobs =
-      /(^|\.)seek\.com(\.au)?$/i.test(parsed.hostname) &&
-      (
-        /^\/job\/\d+/.test(parsed.pathname) ||
-        /^\/jobs(?:-|\/|$)/.test(parsed.pathname) ||
-        Boolean(parsed.searchParams.get("jobId"))
-      );
-
-    if (isLinkedInJobs) {
-      return { id: "linkedin_jobs", displayName: "LinkedIn Jobs" };
-    }
-    if (isSeekJobs) {
-      return { id: "seek_jobs", displayName: "SEEK Jobs" };
-    }
-  } catch (_error) {
-    // The readiness result below explains unsupported and unavailable URLs.
-  }
-
-  return null;
+  const source = SOURCE_ADAPTERS_RUNTIME.getSourceForLocation(value || "");
+  return source ? { id: source.id, displayName: source.display_name } : null;
 }
 
 function getSourceReadiness(tab, lensPack) {

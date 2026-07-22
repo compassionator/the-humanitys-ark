@@ -1,4 +1,13 @@
+if (!globalThis.ARK_SOURCE_ADAPTERS && typeof importScripts === "function") {
+  importScripts("sources/source_adapter_registry.js");
+}
+
 const SESSION_KEY = "ark_lens_session";
+const SOURCE_ADAPTERS_RUNTIME = globalThis.ARK_SOURCE_ADAPTERS;
+
+if (!SOURCE_ADAPTERS_RUNTIME) {
+  throw new Error("ARK source adapter registry was not loaded before the background worker.");
+}
 
 function getSessionIndicatorState(session) {
   return {
@@ -31,23 +40,7 @@ async function syncSessionIndicator(sessionOverride) {
 }
 
 function isSupportedSourceUrl(url) {
-  try {
-    const parsed = new URL(url);
-    const isLinkedInJobs =
-      /(^|\.)linkedin\.com$/i.test(parsed.hostname) &&
-      parsed.pathname.includes("/jobs");
-    const isSeekJobs =
-      /(^|\.)seek\.com(\.au)?$/i.test(parsed.hostname) &&
-      (
-        /^\/job\/\d+/.test(parsed.pathname) ||
-        /^\/jobs(?:-|\/|$)/.test(parsed.pathname) ||
-        Boolean(parsed.searchParams.get("jobId"))
-      );
-
-    return isLinkedInJobs || isSeekJobs;
-  } catch (_error) {
-    return false;
-  }
+  return Boolean(SOURCE_ADAPTERS_RUNTIME.getSourceForLocation(url));
 }
 
 async function getSession() {
@@ -68,6 +61,13 @@ async function restartSessionListener(tabId, url) {
       files: [
         "lens-packs/bundled_lens_pack.js",
         "lens-packs/lens_pack_runtime.js",
+        "core/lens_item.js",
+        "core/deterministic_matcher.js",
+        "core/extraction_result.js",
+        "sources/source_adapter_registry.js",
+        "compatibility/job_extraction_compat.js",
+        "policies/job_capture_policy.js",
+        "policies/job_policy_runtime.js",
         "content_bundle.js"
       ]
     });

@@ -42,7 +42,7 @@ ARK Lens references canonical meaning; it does not copy or redefine the full Dor
 
 - **Capture:** LinkedIn Jobs and SEEK Jobs through source-specific adapters, session controls, source readiness, and a popup-scoped session timer.
 - **Lens Pack:** one bundled JSON source of truth validated by `schemas/lens-pack.schema.json`; rules declare keywords, match scope, weights, penalties, blockers, caps, role-fit behavior, and explanations.
-- **Matching:** local, deterministic, lexical whole-term and phrase matching. Semantic matching is not implemented yet.
+- **Matching:** a source-neutral `LensItem`, DOM-free deterministic lexical matcher, and separate Job policy preserve whole-term and phrase scoring. Semantic matching is not implemented yet.
 - **Lens editor:** Basic fields for common preferences plus Advanced JSON paste, validation, save, export, and bundled restore. Users can create, rename, duplicate, and delete Lenses.
 - **Report:** match percentage, fit state, positive and negative evidence, blockers, captured description, capture quality, private notes, manual decisions, and separate relevance feedback.
 - **Fix Capture:** redacted Help Files and schema-validated Repair Files with preview, live-page testing, activation only after a pass, and rollback.
@@ -106,16 +106,18 @@ npm.cmd run test:visual
 
 ```text
 alpha/          Getting Started and controlled-alpha guide
+core/           source-neutral LensItem and deterministic lexical matcher
 icons/          inactive and active extension icons
 lens-editor/    Basic and Advanced Lens editor
 lens-packs/     canonical bundled Lens Pack, generated bundle, runtime
 peer-alpha/     tester, privacy, limitation, feedback, and owner guidance
 popup/          capture and session controller
+policies/       domain policy; currently the frozen Job Lens score/workflow policy
 report/         report table, details drawer, feedback, notes, exports
 schemas/        Lens, repair-profile, and relevance-feedback contracts
 tests/          contracts, browser tests, sanitized fixtures, build tools
 background.js   session lifecycle and extension icon state
-content_bundle.js source extraction, scoring, storage, and Fix Capture runtime
+content_bundle.js source extraction, storage, sessions, and Fix Capture runtime
 manifest.json   Manifest V3 permissions and supported hosts
 ```
 

@@ -17,6 +17,9 @@ const backgroundSource = read("background.js");
 const manifest = JSON.parse(read("manifest.json"));
 const canonicalLens = JSON.parse(read("lens-packs/bob_job_search.json"));
 const { migrateLensPack } = require("../lens-packs/lens_pack_runtime.js");
+const { containsAny } = require("../core/deterministic_matcher.js");
+const { scoreSignals } = require("../policies/job_policy_runtime.js");
+const sourceAdaptersRuntime = require("../sources/source_adapter_registry.js");
 
 function extractFunction(source, name) {
   const start = source.indexOf(`function ${name}(`);
@@ -73,6 +76,7 @@ function testBackgroundRouting() {
   const context = {
     URL,
     console,
+    ARK_SOURCE_ADAPTERS: sourceAdaptersRuntime,
     chrome: {
       action: {
         setIcon: async () => {},
@@ -128,26 +132,6 @@ function testBackgroundRouting() {
 }
 
 function testKeywordMatchingAndScoring() {
-  const names = [
-    "escapeRegExp",
-    "keywordToWholeTermRegex",
-    "containsAny",
-    "normalize",
-    "clamp",
-    "getMatchedSignals",
-    "dedupeMatchedPositiveSignals",
-    "joinSignalReasons",
-    "scoreSignals"
-  ];
-  const source = names.map((name) => extractFunction(contentSource, name)).join("\n");
-  const context = {};
-
-  vm.runInNewContext(
-    `${source}\nthis.__api = { containsAny, scoreSignals };`,
-    context
-  );
-  const { containsAny, scoreSignals } = context.__api;
-
   assert.deepEqual([...containsAny("Australia maintain availability candidate", ["ai"])], []);
   assert.deepEqual([...containsAny("AI-native systems", ["ai"])], ["ai"]);
   assert.deepEqual([...containsAny("Responsible use of AI", ["ai"])], ["ai"]);
@@ -633,7 +617,7 @@ function testTrustLanguageAndSourceReadiness() {
   const popupFunctions = ["getJobSourceForUrl", "getSourceReadiness"]
     .map((name) => extractFunction(popupSource, name))
     .join("\n");
-  const popupContext = { URL };
+  const popupContext = { URL, SOURCE_ADAPTERS_RUNTIME: sourceAdaptersRuntime };
   vm.runInNewContext(
     `${popupFunctions}\nthis.__api = { getJobSourceForUrl, getSourceReadiness };`,
     popupContext
@@ -744,6 +728,25 @@ function testStaticContracts() {
   assert.equal(canonicalLens.version, "v2026.06.019");
   assert.equal(canonicalLens.name, "My Job Search");
   assert.doesNotMatch(contentSource, /^\s*(?:import|export)\s/m);
+  assert.doesNotMatch(contentSource, /function scoreSignals\(/);
+  assert.doesNotMatch(contentSource, /function getMatchedSignals\(/);
+  assert.match(contentSource, /JOB_POLICY\.classifyLensItem\(lensItem, activeLensPack\)/);
+  [backgroundSource, popupSource].forEach((source) => {
+    const itemIndex = source.indexOf('"core/lens_item.js"');
+    const matcherIndex = source.indexOf('"core/deterministic_matcher.js"');
+    const extractionIndex = source.indexOf('"core/extraction_result.js"');
+    const registryIndex = source.lastIndexOf('"sources/source_adapter_registry.js"');
+    const compatibilityIndex = source.indexOf('"compatibility/job_extraction_compat.js"');
+    const capturePolicyIndex = source.indexOf('"policies/job_capture_policy.js"');
+    const policyIndex = source.indexOf('"policies/job_policy_runtime.js"');
+    const contentIndex = source.indexOf('"content_bundle.js"');
+    assert.ok(itemIndex >= 0 && itemIndex < matcherIndex);
+    assert.ok(matcherIndex < extractionIndex && extractionIndex < registryIndex);
+    assert.ok(registryIndex < compatibilityIndex);
+    assert.ok(compatibilityIndex < capturePolicyIndex && capturePolicyIndex < policyIndex);
+    assert.ok(policyIndex < contentIndex);
+  });
+  assert.match(popupHtml, /\.\.\/sources\/source_adapter_registry\.js/);
   assert.doesNotMatch(contentSource, /\.innerHTML\s*=/);
   assert.doesNotMatch(popupSource, /\.innerHTML\s*=/);
   assert.doesNotMatch(reportSource, /\.innerHTML\s*=/);

@@ -14,6 +14,14 @@ It runs the fast contracts first, followed by browser extraction against sanitiz
 
 `tests/smoke.test.js` protects URL routing, whole-term lexical matching, all declared match scopes, score policies, trust-language presentation, source-readiness behavior, canonical URLs, report explanations, extension permissions, DOM IDs, and security-oriented static contracts.
 
+### Matcher behavior freeze
+
+`tests/matcher-contract.test.js` protects whole-term and phrase boundaries, case insensitivity, duplicate ownership, all current scopes, blockers, penalties, floors, caps, forced workflows, explanations, exact Job Dorr presentation labels, both implemented job-to-`LensItem` mappings, runtime loading order, and the DOM/Chrome-free matcher boundary.
+
+### F2.5 Lens separation
+
+`tests/lens-separation.test.js` protects domain-neutral core imports, Job-owned partial eligibility, optional generic text/URL fields, extensible namespaced capabilities, opaque adapter compatibility data, policy-free source registration, absence of Feed imports/implementations, and the exact-file Job peer-alpha package boundary.
+
 ### Real-world characterization
 
 `tests/characterization.test.js` protects:

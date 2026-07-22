@@ -49,9 +49,24 @@
   const ADAPTER_PROFILE_LAST_KNOWN_GOOD_KEY = "ark_lens_adapter_profile_last_known_good";
   const LENS_PACK_RUNTIME = globalThis.ARK_LENS_PACK_RUNTIME;
   const BUNDLED_LENS_PACK = globalThis.ARK_BUNDLED_LENS_PACK;
+  const DETERMINISTIC_MATCHER = globalThis.ARK_DETERMINISTIC_MATCHER;
+  const EXTRACTION_RESULTS = globalThis.ARK_EXTRACTION_RESULTS;
+  const SOURCE_ADAPTERS_RUNTIME = globalThis.ARK_SOURCE_ADAPTERS;
+  const JOB_EXTRACTION_COMPATIBILITY = globalThis.ARK_JOB_EXTRACTION_COMPATIBILITY;
+  const JOB_CAPTURE_POLICY = globalThis.ARK_JOB_CAPTURE_POLICY;
+  const JOB_POLICY = globalThis.ARK_JOB_POLICY;
 
-  if (!LENS_PACK_RUNTIME || !BUNDLED_LENS_PACK) {
-    throw new Error("ARK Lens Pack runtime was not loaded before the content bundle.");
+  if (
+    !LENS_PACK_RUNTIME ||
+    !BUNDLED_LENS_PACK ||
+    !DETERMINISTIC_MATCHER ||
+    !EXTRACTION_RESULTS ||
+    !SOURCE_ADAPTERS_RUNTIME ||
+    !JOB_EXTRACTION_COMPATIBILITY ||
+    !JOB_CAPTURE_POLICY ||
+    !JOB_POLICY
+  ) {
+    throw new Error("ARK Lens runtimes were not loaded before the content bundle.");
   }
 
   async function probeExtensionContext() {
@@ -99,39 +114,20 @@
   window.__arkLensIsContextHealthy = isExtensionContextHealthy;
   window.__arkLensProbeContext = probeExtensionContext;
 
-  const SOURCE_ADAPTER_REGISTRY = {
+  const SOURCE_ADAPTER_REGISTRY = SOURCE_ADAPTERS_RUNTIME.createRuntimeAdapterRegistry({
     linkedin_jobs: {
-      id: "linkedin_jobs",
-      display_name: "LinkedIn Jobs",
-      type: "job",
-      status: "implemented",
-      url_patterns: ["https://www.linkedin.com/jobs/*"],
-      canHandleCurrentPage: () => isLinkedInJobsPage(),
-      extractCurrentItem: (options) => extractCurrentLinkedInJob(options),
-      getCurrentItemId: () => getEffectiveLinkedInJobId()
+      discoverItems: () => discoverCurrentJobItems("linkedin_jobs"),
+      extractItem: (_candidate, options) => extractLinkedInAdapterItem(options),
+      deriveItemId: (candidate, result) =>
+        result?.item?.item_id || candidate?.item_id || getEffectiveLinkedInJobId()
     },
     seek_jobs: {
-      id: "seek_jobs",
-      display_name: "SEEK Jobs",
-      type: "job",
-      status: "implemented",
-      url_patterns: [
-        "https://www.seek.com.au/*",
-        "https://au.seek.com/*"
-      ],
-      canHandleCurrentPage: () => isSeekJobsPage(),
-      extractCurrentItem: (options) => extractCurrentSeekJob(options),
-      getCurrentItemId: () => getEffectiveSeekJobId()
-    },
-    hays_jobs: {
-      id: "hays_jobs",
-      display_name: "Hays Jobs",
-      type: "job",
-      status: "planned",
-      url_patterns: ["https://www.hays.com.au/*"],
-      canHandleCurrentPage: () => /(^|\.)hays\.com\.au$/i.test(location.hostname)
+      discoverItems: () => discoverCurrentJobItems("seek_jobs"),
+      extractItem: (_candidate, options) => extractSeekAdapterItem(options),
+      deriveItemId: (candidate, result) =>
+        result?.item?.item_id || candidate?.item_id || getEffectiveSeekJobId()
     }
-  };
+  });
 
   const DEFAULT_ADAPTER_PROFILES = {
     linkedin_jobs: {
@@ -330,40 +326,8 @@
       .join("");
   }
 
-  function normalize(text) {
-    return (text || "").toLowerCase();
-  }
-
-  function escapeRegExp(value) {
-    return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  }
-
-  function keywordToWholeTermRegex(keyword) {
-    const terms = String(keyword || "")
-      .trim()
-      .split(/[\s-]+/)
-      .filter(Boolean)
-      .map(escapeRegExp);
-
-    if (terms.length === 0) {
-      return null;
-    }
-
-    return new RegExp(`(^|[^a-z0-9])${terms.join("[\\s-]+")}(?=$|[^a-z0-9])`, "i");
-  }
-
-  function containsAny(text, keywords) {
-    const normalizedText = String(text || "").replace(/\s+/g, " ");
-
-    return (keywords || []).filter((keyword) => {
-      const matcher = keywordToWholeTermRegex(keyword);
-      return matcher ? matcher.test(normalizedText) : false;
-    });
-  }
-
-  function clamp(value, min, max) {
-    return Math.max(min, Math.min(max, value));
-  }
+  const normalize = DETERMINISTIC_MATCHER.normalize;
+  const escapeRegExp = DETERMINISTIC_MATCHER.escapeRegExp;
 
   // ============================================================
   // STORAGE
@@ -1316,19 +1280,17 @@
   }
 
   function isLinkedInJobsPage() {
-    return /(^|\.)linkedin\.com$/i.test(location.hostname) &&
-      location.pathname.includes("/jobs");
+    return SOURCE_ADAPTERS_RUNTIME.definitionMatchesLocation(
+      SOURCE_ADAPTERS_RUNTIME.getAdapterDefinition("linkedin_jobs"),
+      location
+    );
   }
 
   function isSeekJobsPage() {
-    const hasSeekJobId = Boolean(getCurrentJobIdParam(location.href, DEFAULT_ADAPTER_PROFILES.seek_jobs));
-
-    return /(^|\.)seek\.com(\.au)?$/i.test(location.hostname) &&
-      (
-        /^\/job\/\d+/.test(location.pathname) ||
-        /^\/jobs(?:-|\/|$)/.test(location.pathname) ||
-        hasSeekJobId
-      );
+    return SOURCE_ADAPTERS_RUNTIME.definitionMatchesLocation(
+      SOURCE_ADAPTERS_RUNTIME.getAdapterDefinition("seek_jobs"),
+      location
+    );
   }
 
   function getJobIdFromUrlOrLinks(profile) {
@@ -3220,12 +3182,22 @@
       : adapter.id === "seek_jobs"
         ? getSeekDoctorFieldPreview(profile)
         : { ready: false, missing_fields: [], fields: {} };
-    const extracted = await adapter.extractCurrentItem({
-      profile,
-      logWaiting: false,
-      allowCollectionFallback: true,
-      consumeCollectionSnapshot: false
-    });
+    const extractionResult = await EXTRACTION_RESULTS.guardExtraction(
+      () => {
+        const candidate = adapter.discoverItems(document, { location })[0] || null;
+        return adapter.extractItem(candidate, {
+          profile,
+          logWaiting: false,
+          allowCollectionFallback: true,
+          consumeCollectionSnapshot: false
+        });
+      },
+      {
+        required_capabilities: adapter.capabilities.required,
+        optional_capabilities: adapter.capabilities.optional
+      }
+    );
+    const extracted = extractionResult.source_data;
     const fields = extracted
       ? {
           title: extracted.display?.primary_text || "",
@@ -3251,6 +3223,9 @@
       adapter_profile_id: profile.id,
       adapter_profile_version: profile.version,
       extraction_mode: extracted?.metadata?.extraction_mode || null,
+      extraction_status: extractionResult.status,
+      capture_quality: extractionResult.capture_quality,
+      missing_capabilities: extractionResult.missing_capabilities,
       ready: Boolean(extracted) && missingFields.length === 0,
       missing_fields: missingFields,
       fields,
@@ -3664,27 +3639,111 @@
   // SOURCE ADAPTER ROUTER
   // ============================================================
 
+  function discoverCurrentJobItems(adapterId) {
+    const definition = SOURCE_ADAPTERS_RUNTIME.getAdapterDefinition(adapterId);
+
+    if (!definition || !SOURCE_ADAPTERS_RUNTIME.definitionMatchesLocation(definition, location)) {
+      return [];
+    }
+
+    const itemId = adapterId === "linkedin_jobs"
+      ? getEffectiveLinkedInJobId()
+      : adapterId === "seek_jobs"
+        ? getEffectiveSeekJobId()
+        : null;
+
+    return [{
+      item_id: itemId || null,
+      item_type: definition.item_type,
+      source_adapter_id: definition.id
+    }];
+  }
+
+  function getCapturedJobCapabilities(lensItem) {
+    const captured = ["item_discovery"];
+
+    if (lensItem.item_id) captured.push("stable_item_identity");
+    if (lensItem.primary_text) captured.push("primary_text");
+    if (lensItem.secondary_text) captured.push("secondary_text");
+    if (lensItem.body_text) captured.push("body_text");
+    if (lensItem.source_url) captured.push("source_url");
+    if (lensItem.metadata?.platform_state) captured.push("platform_state");
+    if (lensItem.metadata?.tertiary_text) captured.push("location");
+    if (lensItem.published_at) captured.push("published_at");
+
+    return captured;
+  }
+
+  function createJobExtractionResult(adapterId, extracted) {
+    const definition = SOURCE_ADAPTERS_RUNTIME.getAdapterDefinition(adapterId);
+    const capabilities = definition?.capabilities || { required: [], optional: [] };
+
+    if (!extracted) {
+      return EXTRACTION_RESULTS.createExtractionResult({
+        status: "unsupported",
+        required_capabilities: capabilities.required,
+        optional_capabilities: capabilities.optional,
+        warnings: [{
+          code: "item_not_ready_or_unsupported",
+          message: "No supported current item was ready for extraction."
+        }]
+      });
+    }
+
+    const item = JOB_EXTRACTION_COMPATIBILITY.toLensItem(extracted);
+    const adapterWarning = Boolean(extracted.capture?.adapter_warning);
+
+    return EXTRACTION_RESULTS.createExtractionResult({
+      status: adapterWarning ? "partial" : "complete",
+      item,
+      source_data: extracted,
+      required_capabilities: capabilities.required,
+      optional_capabilities: capabilities.optional,
+      captured_capabilities: getCapturedJobCapabilities(item),
+      warnings: adapterWarning
+        ? [{
+            code: "adapter_capture_warning",
+            message: "The source adapter reported a degraded capture."
+          }]
+        : []
+    });
+  }
+
+  async function extractLinkedInAdapterItem(options = {}) {
+    return createJobExtractionResult(
+      "linkedin_jobs",
+      await extractCurrentLinkedInJob(options)
+    );
+  }
+
+  async function extractSeekAdapterItem(options = {}) {
+    return createJobExtractionResult(
+      "seek_jobs",
+      await extractCurrentSeekJob(options)
+    );
+  }
+
   function getCurrentSourceAdapter() {
-    return Object.values(SOURCE_ADAPTER_REGISTRY).find((adapter) =>
-      typeof adapter.canHandleCurrentPage === "function" &&
-      adapter.canHandleCurrentPage()
-    ) || null;
+    return SOURCE_ADAPTERS_RUNTIME.getRuntimeAdapterForLocation(
+      SOURCE_ADAPTER_REGISTRY,
+      location
+    );
   }
 
   function getEffectiveCurrentItemId() {
     const adapter = getCurrentSourceAdapter();
 
-    if (typeof adapter?.getCurrentItemId === "function") {
-      return adapter.getCurrentItemId();
-    }
-
-    return null;
+    const candidate = adapter?.discoverItems(document, { location })[0] || null;
+    return typeof adapter?.deriveItemId === "function"
+      ? adapter.deriveItemId(candidate, null, { location })
+      : null;
   }
 
   function getEffectiveCurrentItemKey() {
     const adapter = getCurrentSourceAdapter();
-    const itemId = typeof adapter?.getCurrentItemId === "function"
-      ? adapter.getCurrentItemId()
+    const candidate = adapter?.discoverItems(document, { location })[0] || null;
+    const itemId = typeof adapter?.deriveItemId === "function"
+      ? adapter.deriveItemId(candidate, null, { location })
       : null;
 
     return adapter?.id && itemId ? `${adapter.id}:${itemId}` : null;
@@ -3707,15 +3766,13 @@
       console.warn("[ARK Lens] no implemented source adapter matched current page", {
         url: location.href
       });
-      return null;
-    }
-
-    if (adapter.status !== "implemented") {
-      console.warn("[ARK Lens] source adapter is not implemented", {
-        adapter_id: adapter.id,
-        status: adapter.status
+      return EXTRACTION_RESULTS.createExtractionResult({
+        status: "unsupported",
+        warnings: [{
+          code: "unsupported_source",
+          message: "No implemented source adapter matched the current page."
+        }]
       });
-      return null;
     }
 
     if (!isSourceAdapterAllowedByLens(adapter.id, lensPack)) {
@@ -3723,7 +3780,15 @@
         adapter_id: adapter.id,
         lens_pack_id: lensPack?.id || lensPack?.lens_pack_id || null
       });
-      return null;
+      return EXTRACTION_RESULTS.createExtractionResult({
+        status: "unsupported",
+        required_capabilities: adapter.capabilities.required,
+        optional_capabilities: adapter.capabilities.optional,
+        warnings: [{
+          code: "source_disabled_for_lens",
+          message: "The current source is not enabled by the active Lens Pack."
+        }]
+      });
     }
 
     const profile = await getAdapterProfile(adapter.id);
@@ -3732,7 +3797,15 @@
       console.warn("[ARK Lens] no adapter profile available", {
         adapter_id: adapter.id
       });
-      return null;
+      return EXTRACTION_RESULTS.createExtractionResult({
+        status: "failed",
+        required_capabilities: adapter.capabilities.required,
+        optional_capabilities: adapter.capabilities.optional,
+        errors: [{
+          code: "missing_adapter_profile",
+          message: "No adapter profile was available for this source."
+        }]
+      });
     }
 
     console.log("[ARK Lens] selected source adapter", adapter.id);
@@ -3741,376 +3814,34 @@
       version: profile.version
     });
 
-    const extracted = await adapter.extractCurrentItem({
-      ...options,
-      profile
-    });
+    const extractionResult = await EXTRACTION_RESULTS.guardExtraction(
+      () => {
+        const candidate = adapter.discoverItems(document, { location })[0] || null;
+        return adapter.extractItem(candidate, {
+          ...options,
+          profile
+        });
+      },
+      {
+        required_capabilities: adapter.capabilities.required,
+        optional_capabilities: adapter.capabilities.optional
+      }
+    );
 
-    if (extracted?.metadata?.extraction_mode) {
-      console.log("[ARK Lens] extraction mode", extracted.metadata.extraction_mode);
+    if (extractionResult.source_data?.metadata?.extraction_mode) {
+      console.log(
+        "[ARK Lens] extraction mode",
+        extractionResult.source_data.metadata.extraction_mode
+      );
     }
 
-    return extracted;
+    return extractionResult;
   }
 
   // ============================================================
-  // RULE ENGINE
+  // MATCHING
+  // Pure lexical matching and Job Lens policy run in core/ and policies/.
   // ============================================================
-
-  function getDorrForWorkflow(workflowState, hasBlocker = false) {
-    const byState = {
-      applied: {
-        scope: "self",
-        color: "green",
-        time: "past",
-        meaning: "done",
-        negated: false,
-        label: "🟢 Done"
-      },
-      apply: {
-        scope: "self",
-        color: "yellow",
-        time: "future",
-        meaning: "do",
-        negated: false,
-        label: "🟡 Opportunity"
-      },
-      review: {
-        scope: "self",
-        color: "purple",
-        time: "now",
-        meaning: "review",
-        negated: false,
-        label: "🟣 Question"
-      },
-      blockerIgnore: {
-        scope: "self",
-        color: "red",
-        time: "future",
-        meaning: "skip",
-        negated: false,
-        label: "🔴 Threat"
-      },
-      ignore: {
-        scope: "self",
-        color: "yellow",
-        time: "future",
-        meaning: "skip",
-        negated: true,
-        label: "🚫🟡 Not Opportunity"
-      }
-    };
-
-    if (workflowState === "ignore" && hasBlocker) {
-      return byState.blockerIgnore;
-    }
-
-    return byState[workflowState] || byState.review;
-  }
-
-  function getMatchedSignals(text, groupName, signals, context) {
-    context = context || {};
-    return (signals || []).flatMap((signal) => {
-      const matchScope = signal.match_scope;
-      const scopedText = {
-        title: context.title,
-        company: context.company,
-        location: context.location,
-        description: context.description,
-        metadata: context.metadata
-      }[matchScope];
-      const matchText = matchScope === "all"
-        ? text
-        : String(scopedText || "").replace(/[,:|/()[\]{}]+/g, " ");
-      const matchedKeywords = containsAny(matchText, signal.keywords || []);
-
-      if (matchedKeywords.length === 0) {
-        return [];
-      }
-
-      return [{
-        ...signal,
-        group: groupName,
-        id: signal.id,
-        keywords: matchedKeywords,
-        weight: signal.weight || 0,
-        penalty: signal.penalty || 0,
-        reason: signal.reason || "",
-        display_name: signal.display_name,
-        match_scope: matchScope,
-        blocker: signal.blocker,
-        qualifies_role_fit: signal.qualifies_role_fit,
-        role_fit_kind: signal.role_fit_kind
-      }];
-    });
-  }
-
-  function dedupeMatchedPositiveSignals(signals) {
-    const ownersByKeyword = new Map();
-
-    signals.forEach((signal, signalIndex) => {
-      (signal.keywords || []).forEach((keyword) => {
-        const key = normalize(keyword).trim();
-        if (!key) return;
-
-        const owners = ownersByKeyword.get(key) || [];
-        owners.push(signalIndex);
-        ownersByKeyword.set(key, owners);
-      });
-    });
-
-    const assignedKeywords = signals.map(() => []);
-
-    ownersByKeyword.forEach((owners, keyword) => {
-      const ownerIndex = owners.reduce((bestIndex, candidateIndex) => {
-        const bestWeight = signals[bestIndex].weight || 0;
-        const candidateWeight = signals[candidateIndex].weight || 0;
-        return candidateWeight < bestWeight ? candidateIndex : bestIndex;
-      }, owners[0]);
-      const originalKeyword = (signals[ownerIndex].keywords || []).find(
-        (value) => normalize(value).trim() === keyword
-      );
-
-      assignedKeywords[ownerIndex].push(originalKeyword || keyword);
-    });
-
-    return signals.flatMap((signal, signalIndex) => {
-      if (assignedKeywords[signalIndex].length === 0) {
-        return [];
-      }
-
-      return [{
-        ...signal,
-        keywords: assignedKeywords[signalIndex]
-      }];
-    });
-  }
-
-  function joinSignalReasons(signals, fallback) {
-    const reasons = signals
-      .map((signal) => signal.reason)
-      .filter(Boolean);
-
-    return reasons.length ? reasons.join("; ") : fallback;
-  }
-
-  function scoreSignals(text, lensPack, context) {
-    context = context || {};
-    const groups = lensPack.signal_groups || {};
-    const policy = lensPack.scoring_policy;
-    const thresholds = policy.thresholds;
-    const confidence = policy.confidence;
-    const reasons = policy.reasons;
-    const scoringContext = {
-      title: context.title || "",
-      company: context.company || "",
-      location: context.location || "",
-      description: context.description || "",
-      metadata: context.metadata || ""
-    };
-    const matched = Object.entries(groups).flatMap(([groupName, signals]) =>
-      getMatchedSignals(text, groupName, signals, scoringContext)
-    );
-    const blockers = matched.filter((signal) => signal.blocker);
-    const positive = dedupeMatchedPositiveSignals(
-      matched.filter((signal) => !signal.blocker && (signal.weight || 0) > 0)
-    );
-    const negative = matched.filter(
-      (signal) => !signal.blocker && (signal.penalty || 0) > 0
-    );
-    const positiveScore = positive.reduce((sum, signal) => sum + (signal.weight || 0), 0);
-    const negativeScore = negative.reduce((sum, signal) => sum + (signal.penalty || 0), 0);
-    const hasRoleFitEvidence = matched.some(
-      (signal) => !signal.blocker && signal.qualifies_role_fit
-    );
-
-    if (blockers.length > 0) {
-      const blockerReason = [...blockers]
-        .sort((left, right) => (right.reason_priority || 0) - (left.reason_priority || 0))
-        .find((signal) => signal.outcome_reason)?.outcome_reason;
-      return {
-        matchScore: blockers.reduce(
-          (score, signal) => signal.force_score === undefined
-            ? score
-            : Math.min(score, signal.force_score),
-          policy.min_score
-        ),
-        workflowState: blockers.find((signal) => signal.force_workflow_state)
-          ?.force_workflow_state || "ignore",
-        reason: blockerReason || reasons.blocker,
-        signals: {
-          positive,
-          negative,
-          blockers,
-          matched_rule_ids: blockers.map((signal) => signal.id),
-          matched_keywords: blockers.flatMap((signal) => signal.keywords)
-        },
-        confidence: confidence.blocker
-      };
-    }
-
-    const hasNegative = negative.length > 0;
-    const hasTargetRoleTitle = positive.some((signal) => signal.role_fit_kind === "target");
-    const hasAdjacentRoleTitle = positive.some((signal) => signal.role_fit_kind === "adjacent");
-    let matchScore = (
-      hasRoleFitEvidence ? policy.role_fit_base_score + positiveScore : 0
-    ) - negativeScore;
-
-    positive.forEach((signal) => {
-      const floorAllowed = signal.score_floor_when !== "no_negative" || !hasNegative;
-      if (floorAllowed && signal.score_floor !== undefined) {
-        matchScore = Math.max(matchScore, signal.score_floor);
-      }
-
-      const keywordFloor = signal.keyword_score_floor;
-      if (
-        floorAllowed &&
-        keywordFloor?.score !== undefined &&
-        signal.keywords.some((keyword) =>
-          (keywordFloor.keywords || []).some(
-            (candidate) => normalize(candidate).trim() === normalize(keyword).trim()
-          )
-        )
-      ) {
-        matchScore = Math.max(matchScore, keywordFloor.score);
-      }
-    });
-
-    if (hasNegative) {
-      matchScore = Math.min(matchScore, policy.any_negative_score_cap);
-    }
-
-    [...positive, ...negative].forEach((signal) => {
-      if (signal.score_cap !== undefined) {
-        matchScore = Math.min(matchScore, signal.score_cap);
-      }
-    });
-
-    const forcedScores = [...positive, ...negative]
-      .filter((signal) => signal.force_score !== undefined)
-      .map((signal) => signal.force_score);
-    if (forcedScores.length > 0) {
-      matchScore = Math.min(...forcedScores);
-    }
-
-    matchScore = clamp(matchScore, policy.min_score, policy.max_score);
-
-    const forcedWorkflow = [...positive, ...negative]
-      .sort((left, right) => (right.reason_priority || 0) - (left.reason_priority || 0))
-      .find((signal) => signal.force_workflow_state)?.force_workflow_state;
-    const workflowState = forcedWorkflow || (
-      matchScore >= thresholds.apply_min ? "apply" :
-      matchScore >= thresholds.review_min ? "review" :
-      "ignore"
-    );
-    const decisiveReason = [...negative]
-      .sort((left, right) => (right.reason_priority || 0) - (left.reason_priority || 0))
-      .find((signal) => signal.outcome_reason)?.outcome_reason;
-    let reason = decisiveReason || reasons.default;
-
-    if (decisiveReason) {
-      reason = decisiveReason;
-    } else if (!hasRoleFitEvidence && positive.length > 0) {
-      reason = reasons.context_without_role_fit;
-    } else if (matchScore >= thresholds.apply_min) {
-      reason = hasTargetRoleTitle
-        ? reasons.strong_target
-        : reasons.strong_evidence;
-    } else if (hasAdjacentRoleTitle) {
-      if (hasNegative) {
-        const template = reasons.adjacent_with_concerns;
-        reason = template.replace(
-          "{reasons}",
-          joinSignalReasons(negative, "mixed signals")
-        );
-      } else {
-        reason = reasons.adjacent;
-      }
-    } else if (
-      !hasNegative &&
-      positive.length > 0 &&
-      matchScore >= thresholds.review_min
-    ) {
-      reason = hasTargetRoleTitle
-        ? reasons.good_target
-        : reasons.relevant_evidence;
-    } else if (hasNegative && matchScore >= thresholds.review_min) {
-      const template = reasons.review_with_concerns;
-      reason = template.replace(
-        "{reasons}",
-        joinSignalReasons(negative, "mixed positive and negative signals")
-      );
-    } else if (positive.length > 0) {
-      reason = reasons.limited_evidence;
-    } else {
-      reason = reasons.no_signals;
-    }
-
-    return {
-      matchScore,
-      workflowState,
-      reason,
-      signals: {
-        positive,
-        negative,
-        blockers,
-        matched_rule_ids: [...positive, ...negative].map((signal) => signal.id),
-        matched_keywords: [...positive, ...negative].flatMap((signal) => signal.keywords)
-      },
-      confidence: positive.length || negative.length
-        ? confidence.matched
-        : confidence.unmatched
-    };
-  }
-
-  function classifyExtractedJob(extracted, lensPack) {
-    const text = [
-      extracted.display?.primary_text,
-      extracted.display?.secondary_text,
-      extracted.display?.tertiary_text,
-      extracted.content?.summary,
-      extracted.content?.full_text
-    ].join(" ");
-    const scored = scoreSignals(text, lensPack, {
-      title: extracted.display?.primary_text || "",
-      company: extracted.display?.secondary_text || "",
-      location: extracted.display?.tertiary_text || "",
-      description: [
-        extracted.content?.summary,
-        extracted.content?.full_text
-      ].join(" "),
-      metadata: extracted.source?.url || ""
-    });
-    const policy = lensPack.scoring_policy || {};
-
-    if (extracted.platform_state?.applied) {
-      return {
-        workflow_state: "applied",
-        lens_pack_id: lensPack.lens_pack_id,
-        lens_pack_version: lensPack.lens_pack_version,
-        lens_pack_name: lensPack.name || null,
-        dorr: getDorrForWorkflow("applied"),
-        action: lensPack.behavior || "report_only",
-        reason: policy.reasons.applied,
-        match_score: scored.matchScore,
-        signals: scored.signals,
-        confidence: policy.confidence.applied
-      };
-    }
-
-    return {
-      workflow_state: scored.workflowState,
-      lens_pack_id: lensPack.lens_pack_id,
-      lens_pack_version: lensPack.lens_pack_version,
-      lens_pack_name: lensPack.name || null,
-      dorr: getDorrForWorkflow(scored.workflowState, scored.signals.blockers.length > 0),
-      action: lensPack.behavior || "report_only",
-      reason: scored.reason,
-      match_score: scored.matchScore,
-      signals: scored.signals,
-      confidence: scored.confidence
-    };
-  }
 
   // ============================================================
   // SCHEMA BUILDER
@@ -4203,9 +3934,11 @@
   let clickListenerAttached = false;
   let recentClickedCollectionSnapshot = null;
   let lastCapturedLinkedInDetailSignature = "";
+  let lastExtractionResult = null;
 
   async function captureCurrentJob(observedEvent = "manual_capture") {
     try {
+      lastExtractionResult = null;
       const session = await getSession();
 
       if (!session.active) {
@@ -4220,13 +3953,14 @@
         logWaiting: shouldLogWaiting,
         allowCollectionFallback: observedEvent !== "session_started_capture"
       };
-      let extracted = await extractCurrentItemForActiveLens(
+      let extractionResult = await extractCurrentItemForActiveLens(
         activeLensPack,
         extractionOptions
       );
+      lastExtractionResult = extractionResult;
 
       if (
-        !extracted &&
+        !JOB_CAPTURE_POLICY.canProcess(extractionResult) &&
         getCurrentSourceAdapter()?.id === "linkedin_jobs" &&
         getEffectiveLinkedInJobId() &&
         (observedEvent === "session_started_capture" || observedEvent === "manual_capture")
@@ -4239,22 +3973,25 @@
           }
 
           linkedInDomScopesCache.timestamp = 0;
-          extracted = await extractCurrentItemForActiveLens(activeLensPack, {
+          extractionResult = await extractCurrentItemForActiveLens(activeLensPack, {
             ...extractionOptions,
             logWaiting: false
           });
+          lastExtractionResult = extractionResult;
 
-          if (extracted) {
+          if (JOB_CAPTURE_POLICY.canProcess(extractionResult)) {
             break;
           }
         }
       }
 
-      if (!extracted) {
+      if (!JOB_CAPTURE_POLICY.canProcess(extractionResult)) {
         return null;
       }
 
-      const classification = classifyExtractedJob(extracted, activeLensPack);
+      const lensItem = extractionResult.item;
+      const extracted = extractionResult.source_data;
+      const classification = JOB_POLICY.classifyLensItem(lensItem, activeLensPack);
 
       const record = createArkRecord({
         extracted,
@@ -4577,6 +4314,9 @@
           record_id: record?.record_id || null,
           source_item_id: record?.source?.source_item_id || null,
           title: record?.display?.primary_text || "",
+          extraction_status: lastExtractionResult?.status || null,
+          capture_quality: lastExtractionResult?.capture_quality || null,
+          missing_capabilities: lastExtractionResult?.missing_capabilities || [],
           message: record ? "Capture saved." : "No record captured."
         }))
         .catch((error) => sendResponse({

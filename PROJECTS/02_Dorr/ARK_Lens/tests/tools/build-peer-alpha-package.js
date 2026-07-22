@@ -10,18 +10,72 @@ const distRoot = path.join(root, "dist");
 const releaseDir = path.join(distRoot, releaseName);
 const zipPath = path.join(distRoot, `${releaseName}.zip`);
 const zipHashPath = `${zipPath}.sha256.txt`;
+const PACKAGE_BOUNDARIES = Object.freeze({
+  shared_runtime: Object.freeze([
+    "core/lens_item.js",
+    "core/deterministic_matcher.js",
+    "core/extraction_result.js",
+    "sources/source_adapter_registry.js",
+    "lens-packs/lens_pack_runtime.js"
+  ]),
+  job_lens_runtime: Object.freeze([
+    "content_bundle.js",
+    "compatibility/job_extraction_compat.js",
+    "policies/job_capture_policy.js",
+    "policies/job_policy_runtime.js",
+    "lens-packs/bob_job_search.json",
+    "lens-packs/bundled_lens_pack.js",
+    "lens-packs/README.md"
+  ]),
+  feed_lens_runtime: Object.freeze([]),
+  combined_runtime: Object.freeze([]),
+  browser_orchestration: Object.freeze([
+    "manifest.json",
+    "background.js"
+  ]),
+  job_ui_and_reports: Object.freeze([
+    "alpha/guide.css",
+    "alpha/guide.html",
+    "alpha/guide.js",
+    "lens-editor/editor.css",
+    "lens-editor/editor.html",
+    "lens-editor/editor.js",
+    "popup/popup.css",
+    "popup/popup.html",
+    "popup/popup.js",
+    "report/report.css",
+    "report/report.html",
+    "report/report.js"
+  ]),
+  job_schemas: Object.freeze([
+    "schemas/adapter-profile.schema.json",
+    "schemas/lens-pack.schema.json",
+    "schemas/relevance-feedback.schema.json"
+  ]),
+  package_assets_and_docs: Object.freeze([
+    "icons/ark-lens-16.png",
+    "icons/ark-lens-32.png",
+    "icons/ark-lens-48.png",
+    "icons/ark-lens-128.png",
+    "icons/ark-lens-active-16.png",
+    "icons/ark-lens-active-32.png",
+    "icons/ark-lens-active-48.png",
+    "icons/ark-lens-active-128.png",
+    "peer-alpha/FEEDBACK_TEMPLATE.md",
+    "peer-alpha/KNOWN_LIMITATIONS.md",
+    "peer-alpha/OWNER_CHECKLIST.md",
+    "peer-alpha/PRIVACY.md",
+    "peer-alpha/TESTER_GUIDE.md"
+  ]),
+  development_only: Object.freeze(["tests", "tests/fixtures", ".git", ".agents", ".codex"])
+});
 const RELEASE_ENTRIES = [
-  "manifest.json",
-  "background.js",
-  "content_bundle.js",
-  "popup",
-  "report",
-  "lens-editor",
-  "lens-packs",
-  "schemas",
-  "icons",
-  "alpha",
-  "peer-alpha"
+  ...PACKAGE_BOUNDARIES.shared_runtime,
+  ...PACKAGE_BOUNDARIES.job_lens_runtime,
+  ...PACKAGE_BOUNDARIES.browser_orchestration,
+  ...PACKAGE_BOUNDARIES.job_ui_and_reports,
+  ...PACKAGE_BOUNDARIES.job_schemas,
+  ...PACKAGE_BOUNDARIES.package_assets_and_docs
 ];
 // Development data such as tests/fixtures, .git, raw captures, downloads, and dist must not be packaged.
 const FORBIDDEN_PACKAGE_PATHS = [
@@ -175,6 +229,20 @@ function verifyPackageFiles(files) {
   const relativeFiles = files.map((filePath) =>
     path.relative(releaseDir, filePath).replace(/\\/g, "/")
   );
+  const allowedFiles = new Set([
+    ...RELEASE_ENTRIES,
+    "BUILD_INFO.json",
+    "SHA256SUMS.txt"
+  ]);
+
+  relativeFiles.forEach((relativePath) => {
+    if (!allowedFiles.has(relativePath)) {
+      throw new Error(`File is outside the Job peer-alpha allow-list: ${relativePath}`);
+    }
+    if (/(^|\/)(?:feed|feeds)(?:\/|[-_.])/i.test(relativePath)) {
+      throw new Error(`Feed implementation is forbidden in the Job peer-alpha: ${relativePath}`);
+    }
+  });
 
   FORBIDDEN_PACKAGE_PATHS.forEach((forbidden) => {
     if (relativeFiles.some((filePath) => filePath === forbidden || filePath.startsWith(`${forbidden}/`))) {
@@ -184,6 +252,13 @@ function verifyPackageFiles(files) {
 
   [
     "manifest.json",
+    "core/lens_item.js",
+    "core/deterministic_matcher.js",
+    "core/extraction_result.js",
+    "sources/source_adapter_registry.js",
+    "compatibility/job_extraction_compat.js",
+    "policies/job_capture_policy.js",
+    "policies/job_policy_runtime.js",
     "icons/ark-lens-16.png",
     "icons/ark-lens-active-16.png",
     "alpha/guide.html",
