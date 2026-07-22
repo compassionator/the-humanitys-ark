@@ -134,7 +134,7 @@ The peer-alpha builder remains exact-file allow-list based. It now explicitly in
 
 ## Manual Job alpha smoke checklist
 
-This checklist is pending human verification; it has not been claimed as executed by automated browser fixtures.
+Manual gate status: **complete**. The user executed the controlled Job Lens alpha smoke gate after F3A and confirmed it passed. This is user-reported manual evidence, not an automated result. No individual observations beyond that confirmation are asserted here.
 
 ### LinkedIn Jobs
 
