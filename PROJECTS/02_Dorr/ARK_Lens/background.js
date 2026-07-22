@@ -1,5 +1,6 @@
 if (!globalThis.ARK_SOURCE_ADAPTERS && typeof importScripts === "function") {
   importScripts("sources/source_adapter_registry.js");
+  importScripts("sources/jobs/job_source_catalogue.js");
 }
 
 const SESSION_KEY = "ark_lens_session";
@@ -65,6 +66,7 @@ async function restartSessionListener(tabId, url) {
         "core/deterministic_matcher.js",
         "core/extraction_result.js",
         "sources/source_adapter_registry.js",
+        "sources/jobs/job_source_catalogue.js",
         "sources/dom_read_utils.js",
         "sources/adapter_diagnostics.js",
         "sources/jobs/job_extraction_builder.js",

@@ -7,7 +7,7 @@ const read = (relativePath) => fs.readFileSync(path.join(root, relativePath), "u
 const plain = (value) => JSON.parse(JSON.stringify(value));
 const lensItems = require("../core/lens_item.js");
 const extractionResults = require("../core/extraction_result.js");
-const registry = require("../sources/source_adapter_registry.js");
+const registry = require("../sources/jobs/job_source_catalogue.js");
 const jobCapturePolicy = require("../policies/job_capture_policy.js");
 
 function makeJobResult({ status = "partial", omitted = [], item = null } = {}) {
@@ -139,7 +139,7 @@ function testRegistryAndDomainBoundaries() {
   );
 
   assert.doesNotMatch(registrySource, /require\(|ARK_(?:JOB|FEED)|workflow|matchScore|report|storage|session|selector|querySelector/);
-  assert.doesNotMatch(registrySource, /if\s*\([^)]*item_type|else\s+if\s*\([^)]*(?:job|feed)/i);
+  assert.doesNotMatch(registrySource, /linkedin_jobs|seek_jobs|hays_jobs|linkedin_feed|ARK_(?:JOB|FEED)/i);
   assert.doesNotMatch(jobPolicySource, /selector|querySelector|ARK_FEED|feed_policy/i);
   assert.doesNotMatch(jobCaptureSource, /selector|querySelector|ARK_FEED|feed_policy/i);
   assert.doesNotMatch(adapterBlock, /workflow|match_score|ARK_FEED|feed_policy/i);
@@ -172,14 +172,8 @@ function testJobPackageIsolation() {
   assert.match(packageSource, /Feed implementation is forbidden in the Job peer-alpha/);
   assert.doesNotMatch(packageSource, /^\s*"(?:core|sources|policies|compatibility)",?$/m);
 
-  const implementationRoots = ["core", "sources", "compatibility", "policies"];
-  const implementationFiles = implementationRoots.flatMap((directory) =>
-    fs.readdirSync(path.join(root, directory)).map((name) => `${directory}/${name}`)
-  );
-  assert.deepEqual(
-    implementationFiles.filter((relativePath) => /(^|[\/_-])feed(?:[\/_.-]|$)/i.test(relativePath)),
-    []
-  );
+  assert.doesNotMatch(packageSource, /"(?:sources|domains|orchestration|proofs)\/feed/);
+  assert.equal(fs.existsSync(path.join(root, "sources", "feed", "linkedin_feed_adapter.js")), true);
 }
 
 testGenericCorePurity();

@@ -166,6 +166,7 @@ async function ensureContentBundle(tabId) {
       "core/deterministic_matcher.js",
       "core/extraction_result.js",
       "sources/source_adapter_registry.js",
+      "sources/jobs/job_source_catalogue.js",
       "sources/dom_read_utils.js",
       "sources/adapter_diagnostics.js",
       "sources/jobs/job_extraction_builder.js",

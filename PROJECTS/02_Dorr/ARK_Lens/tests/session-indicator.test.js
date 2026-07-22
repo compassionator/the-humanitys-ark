@@ -5,7 +5,7 @@ const vm = require("node:vm");
 
 const root = path.resolve(__dirname, "..");
 const backgroundSource = fs.readFileSync(path.join(root, "background.js"), "utf8");
-const sourceAdaptersRuntime = require("../sources/source_adapter_registry.js");
+const sourceAdaptersRuntime = require("../sources/jobs/job_source_catalogue.js");
 
 function plain(value) {
   return JSON.parse(JSON.stringify(value));

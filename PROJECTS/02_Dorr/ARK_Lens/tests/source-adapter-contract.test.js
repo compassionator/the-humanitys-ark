@@ -5,7 +5,7 @@ const path = require("node:path");
 const root = path.resolve(__dirname, "..");
 const read = (relativePath) => fs.readFileSync(path.join(root, relativePath), "utf8");
 const plain = (value) => JSON.parse(JSON.stringify(value));
-const registry = require("../sources/source_adapter_registry.js");
+const registry = require("../sources/jobs/job_source_catalogue.js");
 const extractionResults = require("../core/extraction_result.js");
 const lensItems = require("../core/lens_item.js");
 const jobCapturePolicy = require("../policies/job_capture_policy.js");
@@ -249,6 +249,7 @@ function testDependencyBoundaries() {
   const resultSource = read("core/extraction_result.js");
   const jobPolicySource = read("policies/job_policy_runtime.js");
   const registrySource = read("sources/source_adapter_registry.js");
+  const jobCatalogueSource = read("sources/jobs/job_source_catalogue.js");
   const linkedInAdapterSource = read("sources/jobs/linkedin_jobs_adapter.js");
   const seekAdapterSource = read("sources/jobs/seek_jobs_adapter.js");
   const adapterResultSource = read("sources/jobs/job_adapter_result.js");
@@ -264,6 +265,9 @@ function testDependencyBoundaries() {
   assert.doesNotMatch(matcherSource, /source_adapter|job_policy|ExtractionResult/);
   assert.doesNotMatch(jobPolicySource, /\b(?:document|selector|profile|source_adapter)\b/);
   assert.doesNotMatch(registrySource, /matchScore|workflowState|getDorrForWorkflow|querySelector/);
+  assert.doesNotMatch(registrySource, /linkedin_jobs|seek_jobs|hays_jobs|linkedin_feed/);
+  assert.match(jobCatalogueSource, /linkedin_jobs/);
+  assert.match(jobCatalogueSource, /seek_jobs/);
   assert.doesNotMatch(itemSource, /\b(?:company|location|job_description|apply_status|role_fit|workflow|job_score)\s*:/);
 
   const runtimeRegistryBlock = contentSource.slice(

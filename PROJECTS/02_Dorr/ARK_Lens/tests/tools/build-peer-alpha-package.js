@@ -22,6 +22,7 @@ const PACKAGE_BOUNDARIES = Object.freeze({
   ]),
   job_lens_runtime: Object.freeze([
     "content_bundle.js",
+    "sources/jobs/job_source_catalogue.js",
     "sources/jobs/job_extraction_builder.js",
     "sources/jobs/job_adapter_result.js",
     "sources/jobs/linkedin_jobs_adapter.js",
@@ -262,6 +263,7 @@ function verifyPackageFiles(files) {
     "core/deterministic_matcher.js",
     "core/extraction_result.js",
     "sources/source_adapter_registry.js",
+    "sources/jobs/job_source_catalogue.js",
     "sources/dom_read_utils.js",
     "sources/adapter_diagnostics.js",
     "sources/jobs/job_extraction_builder.js",

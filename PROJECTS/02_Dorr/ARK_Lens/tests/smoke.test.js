@@ -21,7 +21,7 @@ const canonicalLens = JSON.parse(read("lens-packs/bob_job_search.json"));
 const { migrateLensPack } = require("../lens-packs/lens_pack_runtime.js");
 const { containsAny } = require("../core/deterministic_matcher.js");
 const { scoreSignals } = require("../policies/job_policy_runtime.js");
-const sourceAdaptersRuntime = require("../sources/source_adapter_registry.js");
+const sourceAdaptersRuntime = require("../sources/jobs/job_source_catalogue.js");
 
 function extractFunction(source, name) {
   const start = source.indexOf(`function ${name}(`);
@@ -738,6 +738,7 @@ function testStaticContracts() {
     const matcherIndex = source.indexOf('"core/deterministic_matcher.js"');
     const extractionIndex = source.indexOf('"core/extraction_result.js"');
     const registryIndex = source.lastIndexOf('"sources/source_adapter_registry.js"');
+    const jobCatalogueIndex = source.lastIndexOf('"sources/jobs/job_source_catalogue.js"');
     const domReadIndex = source.indexOf('"sources/dom_read_utils.js"');
     const diagnosticsIndex = source.indexOf('"sources/adapter_diagnostics.js"');
     const builderIndex = source.indexOf('"sources/jobs/job_extraction_builder.js"');
@@ -750,7 +751,8 @@ function testStaticContracts() {
     const contentIndex = source.indexOf('"content_bundle.js"');
     assert.ok(itemIndex >= 0 && itemIndex < matcherIndex);
     assert.ok(matcherIndex < extractionIndex && extractionIndex < registryIndex);
-    assert.ok(registryIndex < domReadIndex && domReadIndex < diagnosticsIndex);
+    assert.ok(registryIndex < jobCatalogueIndex && jobCatalogueIndex < domReadIndex);
+    assert.ok(domReadIndex < diagnosticsIndex);
     assert.ok(diagnosticsIndex < builderIndex && builderIndex < resultIndex);
     assert.ok(resultIndex < linkedInIndex && linkedInIndex < seekIndex);
     assert.ok(seekIndex < compatibilityIndex);
@@ -758,6 +760,7 @@ function testStaticContracts() {
     assert.ok(policyIndex < contentIndex);
   });
   assert.match(popupHtml, /\.\.\/sources\/source_adapter_registry\.js/);
+  assert.match(popupHtml, /\.\.\/sources\/jobs\/job_source_catalogue\.js/);
   assert.doesNotMatch(contentSource, /\.innerHTML\s*=/);
   assert.doesNotMatch(popupSource, /\.innerHTML\s*=/);
   assert.doesNotMatch(reportSource, /\.innerHTML\s*=/);

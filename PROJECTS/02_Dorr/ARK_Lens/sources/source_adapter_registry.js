@@ -1,34 +1,38 @@
-(function initializeArkSourceAdapterRegistry(root, factory) {
+(function initializeArkSourceRegistryCore(root, factory) {
   const api = factory();
 
-  if (typeof module !== "undefined" && module.exports) {
-    module.exports = api;
-  }
-
-  root.ARK_SOURCE_ADAPTERS = api;
-})(typeof globalThis !== "undefined" ? globalThis : this, function createArkSourceAdapterRegistry() {
+  if (typeof module !== "undefined" && module.exports) module.exports = api;
+  root.ARK_SOURCE_REGISTRY_CORE = api;
+})(typeof globalThis !== "undefined" ? globalThis : this, function createArkSourceRegistryCore() {
   const ADAPTER_STATUSES = Object.freeze(["implemented", "planned", "unsupported"]);
-  // Built-in keys document current runtime use; validation is deliberately open
-  // to well-formed namespaced capabilities owned by future Lens domains.
   const CAPABILITY_VOCABULARY = Object.freeze([
     "item_discovery",
     "stable_item_identity",
     "primary_text",
     "secondary_text",
     "body_text",
-    "location",
-    "source_url",
-    "platform_state",
-    "spa_observation",
-    "repair_profile"
+    "source_url"
   ]);
   const CAPABILITY_KEY_PATTERN = /^[a-z][a-z0-9_]*(?:\.[a-z][a-z0-9_]*)*$/;
 
-  function isValidCapabilityKey(capability) {
-    return typeof capability === "string" && CAPABILITY_KEY_PATTERN.test(capability);
+  function isValidCapabilityKey(value) {
+    return typeof value === "string" && CAPABILITY_KEY_PATTERN.test(value);
   }
 
-  function freezeCapabilities(value) {
+  function toUrl(locationLike) {
+    try {
+      if (typeof locationLike === "string") return new URL(locationLike);
+      if (locationLike?.href) return new URL(locationLike.href);
+      if (locationLike?.hostname) {
+        return new URL(`${locationLike.protocol || "https:"}//${locationLike.hostname}${locationLike.pathname || "/"}${locationLike.search || ""}`);
+      }
+    } catch (_error) {
+      return null;
+    }
+    return null;
+  }
+
+  function freezeCapabilities(value = {}) {
     return Object.freeze({
       required: Object.freeze([...(value.required || [])]),
       optional: Object.freeze([...(value.optional || [])]),
@@ -37,221 +41,154 @@
     });
   }
 
-  const DEFINITIONS = Object.freeze([
-    Object.freeze({
-      id: "linkedin_jobs",
-      display_name: "LinkedIn Jobs",
-      item_type: "job",
-      status: "implemented",
-      url_patterns: Object.freeze(["https://www.linkedin.com/jobs/*"]),
-      capabilities: freezeCapabilities({
-        required: [
-          "item_discovery",
-          "stable_item_identity",
-          "primary_text",
-          "secondary_text",
-          "body_text",
-          "source_url",
-          "platform_state"
-        ],
-        optional: ["location"],
-        operations: ["spa_observation", "repair_profile"],
-        unsupported: []
-      })
-    }),
-    Object.freeze({
-      id: "seek_jobs",
-      display_name: "SEEK Jobs",
-      item_type: "job",
-      status: "implemented",
-      url_patterns: Object.freeze([
-        "https://www.seek.com.au/*",
-        "https://au.seek.com/*"
-      ]),
-      capabilities: freezeCapabilities({
-        required: [
-          "item_discovery",
-          "stable_item_identity",
-          "primary_text",
-          "secondary_text",
-          "body_text",
-          "source_url",
-          "platform_state"
-        ],
-        optional: ["location"],
-        operations: ["spa_observation", "repair_profile"],
-        unsupported: []
-      })
-    }),
-    Object.freeze({
-      id: "hays_jobs",
-      display_name: "Hays Jobs",
-      item_type: "job",
-      status: "planned",
-      url_patterns: Object.freeze(["https://www.hays.com.au/*"]),
-      capabilities: freezeCapabilities({
-        required: [],
-        optional: [],
-        operations: [],
-        unsupported: []
-      })
-    })
-  ]);
-
-  const DEFINITION_BY_ID = new Map(DEFINITIONS.map((definition) => [definition.id, definition]));
-
-  if (DEFINITION_BY_ID.size !== DEFINITIONS.length) {
-    throw new Error("ARK source adapter definitions contain duplicate IDs.");
-  }
-
-  function toUrl(locationLike) {
-    try {
-      if (typeof locationLike === "string") {
-        return new URL(locationLike);
-      }
-      if (locationLike?.href) {
-        return new URL(locationLike.href);
-      }
-      if (locationLike?.hostname) {
-        const protocol = locationLike.protocol || "https:";
-        const pathname = locationLike.pathname || "/";
-        const search = locationLike.search || "";
-        return new URL(`${protocol}//${locationLike.hostname}${pathname}${search}`);
-      }
-    } catch (_error) {
-      return null;
-    }
-
-    return null;
-  }
-
-  function definitionMatchesLocation(definition, locationLike) {
-    const parsed = toUrl(locationLike);
-    if (!parsed || !definition) return false;
-
-    if (definition.id === "linkedin_jobs") {
-      return /(^|\.)linkedin\.com$/i.test(parsed.hostname) &&
-        parsed.pathname.includes("/jobs");
-    }
-
-    if (definition.id === "seek_jobs") {
-      return /(^|\.)seek\.com(\.au)?$/i.test(parsed.hostname) &&
-        (
-          /^\/job\/\d+/.test(parsed.pathname) ||
-          /^\/jobs(?:-|\/|$)/.test(parsed.pathname) ||
-          Boolean(parsed.searchParams.get("jobId"))
-        );
-    }
-
-    if (definition.id === "hays_jobs") {
-      return /(^|\.)hays\.com\.au$/i.test(parsed.hostname);
-    }
-
-    return false;
-  }
-
-  function listAdapterDefinitions() {
-    return [...DEFINITIONS];
-  }
-
-  function getAdapterDefinition(adapterId) {
-    return DEFINITION_BY_ID.get(adapterId) || null;
-  }
-
-  function getSourceForLocation(locationLike, options = {}) {
-    const includePlanned = options.includePlanned === true;
-
-    return DEFINITIONS.find((definition) =>
-      (definition.status === "implemented" || includePlanned) &&
-      definitionMatchesLocation(definition, locationLike)
-    ) || null;
-  }
-
-  function getSourceStatusForLocation(locationLike) {
-    const definition = getSourceForLocation(locationLike, { includePlanned: true });
-
-    return definition
-      ? { status: definition.status, adapter: definition }
-      : { status: "unsupported", adapter: null };
-  }
-
-  function validateCapabilityDeclaration(definition) {
+  function validateCapabilityDeclaration(definition = {}) {
+    const capabilities = definition.capabilities || {};
+    const groups = ["required", "optional", "operations", "unsupported"];
     const errors = [];
-    const declared = [
-      ...definition.capabilities.required,
-      ...definition.capabilities.optional,
-      ...definition.capabilities.operations,
-      ...definition.capabilities.unsupported
-    ];
-
-    declared.forEach((capability) => {
-      if (!isValidCapabilityKey(capability)) {
-        errors.push(`Invalid capability key ${String(capability)}`);
-      }
+    groups.forEach((group) => {
+      if (!Array.isArray(capabilities[group])) errors.push(`Capability group ${group} must be an array`);
     });
+    if (errors.length) return { valid: false, errors };
 
+    const declared = groups.flatMap((group) => capabilities[group]);
+    declared.forEach((capability) => {
+      if (!isValidCapabilityKey(capability)) errors.push(`Invalid capability key ${String(capability)}`);
+    });
     const supported = [
-      ...definition.capabilities.required,
-      ...definition.capabilities.optional,
-      ...definition.capabilities.operations
+      ...capabilities.required,
+      ...capabilities.optional,
+      ...capabilities.operations
     ];
     if (new Set(supported).size !== supported.length) {
       errors.push("Supported capability declarations must not overlap");
     }
-    if (supported.some((capability) => definition.capabilities.unsupported.includes(capability))) {
+    if (supported.some((capability) => capabilities.unsupported.includes(capability))) {
       errors.push("Supported and unsupported capability declarations must not overlap");
     }
-
     return { valid: errors.length === 0, errors };
   }
 
-  function createRuntimeAdapterRegistry(implementations = {}) {
-    Object.keys(implementations).forEach((adapterId) => {
-      const definition = getAdapterDefinition(adapterId);
-      if (!definition) throw new Error(`Unknown source adapter implementation ${adapterId}.`);
-      if (definition.status !== "implemented") {
-        throw new Error(`Planned source adapter ${adapterId} cannot receive a runtime implementation.`);
-      }
-    });
-
-    return Object.fromEntries(DEFINITIONS.map((definition) => {
-      const implementation = implementations[definition.id] || {};
-      const adapter = {
-        ...definition,
-        canHandleLocation: (locationLike) => definitionMatchesLocation(definition, locationLike),
-        ...implementation
-      };
-
-      if (definition.status === "implemented") {
-        ["discoverItems", "extractItem", "deriveItemId"].forEach((method) => {
-          if (typeof adapter[method] !== "function") {
-            throw new Error(`Implemented source adapter ${definition.id} is missing ${method}().`);
-          }
-        });
-      }
-
-      return [definition.id, Object.freeze(adapter)];
-    }));
+  function validateDefinition(value = {}) {
+    const errors = [];
+    if (!/^[a-z][a-z0-9_]*$/.test(value.id || "")) errors.push("Adapter ID is invalid");
+    if (!String(value.display_name || "").trim()) errors.push("Adapter display name is required");
+    if (!/^[a-z][a-z0-9_]*$/.test(value.item_type || "")) errors.push("Adapter item type is invalid");
+    if (!ADAPTER_STATUSES.includes(value.status)) errors.push("Adapter status is invalid");
+    if (typeof value.matches_location !== "function") errors.push("Adapter matches_location function is required");
+    errors.push(...validateCapabilityDeclaration(value).errors);
+    return { valid: errors.length === 0, errors };
   }
 
-  function getRuntimeAdapterForLocation(runtimeRegistry, locationLike) {
-    return Object.values(runtimeRegistry || {}).find((adapter) =>
-      adapter.status === "implemented" && adapter.canHandleLocation(locationLike)
-    ) || null;
+  function freezeDefinition(value) {
+    return Object.freeze({
+      ...value,
+      url_patterns: Object.freeze([...(value.url_patterns || [])]),
+      capabilities: freezeCapabilities(value.capabilities)
+    });
+  }
+
+  function createSourceRegistry({ definitions = [], implementations = {} } = {}) {
+    const frozenDefinitions = Object.freeze(definitions.map((definition) => {
+      const validation = validateDefinition(definition);
+      if (!validation.valid) {
+        throw new Error(`Invalid source adapter ${definition?.id || "definition"}: ${validation.errors.join("; ")}`);
+      }
+      return freezeDefinition(definition);
+    }));
+    const byId = new Map(frozenDefinitions.map((definition) => [definition.id, definition]));
+    if (byId.size !== frozenDefinitions.length) {
+      throw new Error("ARK source adapter definitions contain duplicate IDs.");
+    }
+
+    function definitionMatchesLocation(definition, locationLike) {
+      const parsed = toUrl(locationLike);
+      if (!definition || !parsed) return false;
+      try {
+        return definition.matches_location(parsed) === true;
+      } catch (_error) {
+        return false;
+      }
+    }
+
+    function listAdapterDefinitions() {
+      return [...frozenDefinitions];
+    }
+
+    function getAdapterDefinition(adapterId) {
+      return byId.get(adapterId) || null;
+    }
+
+    function getSourceForLocation(locationLike, options = {}) {
+      const includePlanned = options.includePlanned === true;
+      return frozenDefinitions.find((definition) =>
+        (definition.status === "implemented" || includePlanned) &&
+        definitionMatchesLocation(definition, locationLike)
+      ) || null;
+    }
+
+    function getSourceStatusForLocation(locationLike) {
+      const adapter = getSourceForLocation(locationLike, { includePlanned: true });
+      return adapter ? { status: adapter.status, adapter } : { status: "unsupported", adapter: null };
+    }
+
+    function createRuntimeAdapterRegistry(runtimeImplementations = implementations) {
+      Object.keys(runtimeImplementations || {}).forEach((adapterId) => {
+        const definition = getAdapterDefinition(adapterId);
+        if (!definition) throw new Error(`Unknown source adapter implementation ${adapterId}.`);
+        if (definition.status !== "implemented") {
+          throw new Error(`Planned source adapter ${adapterId} cannot receive a runtime implementation.`);
+        }
+      });
+
+      return Object.fromEntries(frozenDefinitions.map((definition) => {
+        const implementation = runtimeImplementations?.[definition.id] || {};
+        const adapter = {
+          ...definition,
+          canHandleLocation: (locationLike) => definitionMatchesLocation(definition, locationLike),
+          ...implementation
+        };
+        if (definition.status === "implemented") {
+          ["discoverItems", "extractItem", "deriveItemId"].forEach((method) => {
+            if (typeof adapter[method] !== "function") {
+              throw new Error(`Implemented source adapter ${definition.id} is missing ${method}().`);
+            }
+          });
+        }
+        return [definition.id, Object.freeze(adapter)];
+      }));
+    }
+
+    function getRuntimeAdapterForLocation(runtimeRegistry, locationLike) {
+      return Object.values(runtimeRegistry || {}).find((adapter) =>
+        adapter.status === "implemented" && adapter.canHandleLocation(locationLike)
+      ) || null;
+    }
+
+    return Object.freeze({
+      ADAPTER_STATUSES,
+      CAPABILITY_VOCABULARY,
+      CAPABILITY_KEY_PATTERN,
+      createRuntimeAdapterRegistry,
+      definitionMatchesLocation,
+      getAdapterDefinition,
+      getRuntimeAdapterForLocation,
+      getSourceForLocation,
+      getSourceStatusForLocation,
+      isValidCapabilityKey,
+      listAdapterDefinitions,
+      validateCapabilityDeclaration,
+      validateDefinition
+    });
   }
 
   return {
     ADAPTER_STATUSES,
     CAPABILITY_VOCABULARY,
     CAPABILITY_KEY_PATTERN,
-    createRuntimeAdapterRegistry,
-    definitionMatchesLocation,
-    getAdapterDefinition,
-    getRuntimeAdapterForLocation,
-    getSourceForLocation,
-    getSourceStatusForLocation,
+    createSourceRegistry,
     isValidCapabilityKey,
-    listAdapterDefinitions,
-    validateCapabilityDeclaration
+    toUrl,
+    validateCapabilityDeclaration,
+    validateDefinition
   };
 });

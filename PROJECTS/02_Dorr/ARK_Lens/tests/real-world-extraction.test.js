@@ -28,6 +28,10 @@ const sourceAdapterRuntimeSource = fs.readFileSync(
   path.join(root, "sources", "source_adapter_registry.js"),
   "utf8"
 );
+const jobSourceCatalogueSource = fs.readFileSync(
+  path.join(root, "sources", "jobs", "job_source_catalogue.js"),
+  "utf8"
+);
 const domReadUtilsSource = fs.readFileSync(path.join(root, "sources", "dom_read_utils.js"), "utf8");
 const adapterDiagnosticsSource = fs.readFileSync(path.join(root, "sources", "adapter_diagnostics.js"), "utf8");
 const jobExtractionBuilderSource = fs.readFileSync(path.join(root, "sources", "jobs", "job_extraction_builder.js"), "utf8");
@@ -239,6 +243,7 @@ function runFixture(testCase, options = {}) {
     <script>${matcherRuntimeSource}</script>
     <script>${extractionResultRuntimeSource}</script>
     <script>${sourceAdapterRuntimeSource}</script>
+    <script>${jobSourceCatalogueSource}</script>
     <script>${domReadUtilsSource}</script>
     <script>${adapterDiagnosticsSource}</script>
     <script>${jobExtractionBuilderSource}</script>

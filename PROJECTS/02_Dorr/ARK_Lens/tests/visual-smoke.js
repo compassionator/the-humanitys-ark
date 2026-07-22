@@ -14,6 +14,7 @@ const lensItemRuntimeSource = fs.readFileSync(path.join(root, "core", "lens_item
 const matcherRuntimeSource = fs.readFileSync(path.join(root, "core", "deterministic_matcher.js"), "utf8");
 const extractionResultRuntimeSource = fs.readFileSync(path.join(root, "core", "extraction_result.js"), "utf8");
 const sourceAdapterRuntimeSource = fs.readFileSync(path.join(root, "sources", "source_adapter_registry.js"), "utf8");
+const jobSourceCatalogueSource = fs.readFileSync(path.join(root, "sources", "jobs", "job_source_catalogue.js"), "utf8");
 const domReadUtilsSource = fs.readFileSync(path.join(root, "sources", "dom_read_utils.js"), "utf8");
 const adapterDiagnosticsSource = fs.readFileSync(path.join(root, "sources", "adapter_diagnostics.js"), "utf8");
 const jobExtractionBuilderSource = fs.readFileSync(path.join(root, "sources", "jobs", "job_extraction_builder.js"), "utf8");
@@ -395,6 +396,7 @@ async function runAdapterFixture(client, {
       ${matcherRuntimeSource}
       ${extractionResultRuntimeSource}
       ${sourceAdapterRuntimeSource}
+      ${jobSourceCatalogueSource}
       ${domReadUtilsSource}
       ${adapterDiagnosticsSource}
       ${jobExtractionBuilderSource}

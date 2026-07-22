@@ -1,0 +1,61 @@
+<main data-feed-root>
+  <article data-feed-post data-case="text" data-urn="urn:li:activity:1000000000000000001">
+    <a href="https://www.linkedin.com/in/synthetic-author-a"><span data-feed-author>Sample Author A</span></a>
+    <div data-feed-post-text>A synthetic visible text post about careful product delivery.</div>
+    <time data-feed-timestamp datetime="2026-07-20T01:00:00Z">2d</time>
+    <a href="https://www.linkedin.com/feed/update/urn:li:activity:1000000000000000001/">View post</a>
+    <div data-comment-body hidden>COMMENT_BODY_MUST_NOT_EXPORT</div>
+  </article>
+  <article data-feed-post data-case="image" data-urn="urn:li:activity:1000000000000000002">
+    <a href="https://www.linkedin.com/in/synthetic-author-b"><span data-feed-author>Sample Author B</span></a>
+    <div data-feed-post-text>A synthetic image post.</div>
+    <time data-feed-timestamp datetime="2026-07-20T02:00:00Z">2d</time>
+    <a href="https://www.linkedin.com/feed/update/urn:li:activity:1000000000000000002/">View post</a>
+    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="Synthetic placeholder">
+  </article>
+  <article data-feed-post data-case="video" data-urn="urn:li:activity:1000000000000000003">
+    <a href="https://www.linkedin.com/in/synthetic-author-c"><span data-feed-author>Sample Author C</span></a>
+    <div data-feed-post-text>A synthetic video post.</div>
+    <time data-feed-timestamp datetime="2026-07-20T03:00:00Z">2d</time>
+    <a href="https://www.linkedin.com/feed/update/urn:li:activity:1000000000000000003/">View post</a>
+    <video></video>
+  </article>
+  <article data-feed-post data-case="article" data-urn="urn:li:activity:1000000000000000004">
+    <a href="https://www.linkedin.com/company/synthetic-company"><span data-feed-author>Sample Company</span></a>
+    <div data-feed-post-text>A synthetic link post.</div>
+    <time data-feed-timestamp datetime="2026-07-20T04:00:00Z">2d</time>
+    <a href="https://www.linkedin.com/feed/update/urn:li:activity:1000000000000000004/">View post</a>
+    <a data-feed-article href="https://example.test/synthetic-article?trackingId=SYNTHETIC_TOKEN_MUST_NOT_EXPORT">Synthetic article</a>
+  </article>
+  <article data-feed-post data-case="repost" data-urn="urn:li:activity:1000000000000000005">
+    <a href="https://www.linkedin.com/in/synthetic-author-d"><span data-feed-author>Sample Author D</span></a>
+    <div data-repost-context>Sample Author D reposted this</div>
+    <div data-feed-post-text>A synthetic repost with visible context.</div>
+    <time data-feed-timestamp datetime="2026-07-20T05:00:00Z">2d</time>
+    <a href="https://www.linkedin.com/feed/update/urn:li:activity:1000000000000000005/">View post</a>
+  </article>
+  <article data-feed-post data-case="sponsored" data-urn="urn:li:activity:1000000000000000006">
+    <a href="https://www.linkedin.com/company/synthetic-sponsor"><span data-feed-author>Synthetic Sponsor</span></a>
+    <div data-sponsored-label>Promoted</div>
+    <div data-feed-post-text>A synthetic promoted post.</div>
+    <time data-feed-timestamp datetime="2026-07-20T06:00:00Z">2d</time>
+    <a href="https://www.linkedin.com/feed/update/urn:li:activity:1000000000000000006/">View post</a>
+  </article>
+  <article data-feed-post data-case="recommendation" data-urn="urn:li:activity:1000000000000000007">
+    <a href="https://www.linkedin.com/in/synthetic-author-e"><span data-feed-author>Sample Author E</span></a>
+    <div data-recommendation-label>Suggested because you follow synthetic topics</div>
+    <div data-feed-post-text>A synthetic recommended post.</div>
+    <time data-feed-timestamp datetime="2026-07-20T07:00:00Z">2d</time>
+    <a href="https://www.linkedin.com/feed/update/urn:li:activity:1000000000000000007/">View post</a>
+  </article>
+  <article data-feed-post data-case="fallback">
+    <a href="https://www.linkedin.com/in/synthetic-author-f"><span data-feed-author>Sample Author F</span></a>
+    <div data-feed-post-text>A synthetic post without a rendered stable identifier.</div>
+    <span data-feed-timestamp>3h</span>
+  </article>
+  <article data-feed-post data-case="partial">
+    <span data-feed-author>Sample Author G</span>
+    <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="Synthetic placeholder">
+  </article>
+  <article data-feed-post data-case="unsupported" aria-label="Rendered loading placeholder"></article>
+</main>

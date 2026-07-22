@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LinkedIn Feed Extraction Proof</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main>
+    <h1>Feed extraction proof</h1>
+    <p class="notice">Reads only evidence already visible in the LinkedIn home feed. No ranking, filtering, comments, or uploads.</p>
+    <div class="controls">
+      <button id="scan" type="button">Scan visible feed</button>
+      <button id="start" type="button">Start observing</button>
+      <button id="stop" type="button">Stop observing</button>
+      <button id="refresh" type="button">Refresh snapshot</button>
+      <button id="export" type="button">Export local JSON</button>
+      <button id="clear" type="button">Clear in-memory snapshot</button>
+    </div>
+    <p id="status" role="status">Ready.</p>
+    <dl id="counts"></dl>
+    <details>
+      <summary>Local snapshot</summary>
+      <pre id="snapshot"></pre>
+    </details>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>
