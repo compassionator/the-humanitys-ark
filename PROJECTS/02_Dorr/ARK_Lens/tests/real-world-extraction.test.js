@@ -28,6 +28,12 @@ const sourceAdapterRuntimeSource = fs.readFileSync(
   path.join(root, "sources", "source_adapter_registry.js"),
   "utf8"
 );
+const domReadUtilsSource = fs.readFileSync(path.join(root, "sources", "dom_read_utils.js"), "utf8");
+const adapterDiagnosticsSource = fs.readFileSync(path.join(root, "sources", "adapter_diagnostics.js"), "utf8");
+const jobExtractionBuilderSource = fs.readFileSync(path.join(root, "sources", "jobs", "job_extraction_builder.js"), "utf8");
+const jobAdapterResultSource = fs.readFileSync(path.join(root, "sources", "jobs", "job_adapter_result.js"), "utf8");
+const linkedInJobsAdapterSource = fs.readFileSync(path.join(root, "sources", "jobs", "linkedin_jobs_adapter.js"), "utf8");
+const seekJobsAdapterSource = fs.readFileSync(path.join(root, "sources", "jobs", "seek_jobs_adapter.js"), "utf8");
 const jobCompatibilityRuntimeSource = fs.readFileSync(
   path.join(root, "compatibility", "job_extraction_compat.js"),
   "utf8"
@@ -150,12 +156,18 @@ function makeRunner(testCase) {
     }
 
     let doctor = null;
+    let adapterDiagnostic = null;
     let repairValidation = null;
     let repairTest = null;
     let repairStorageUnchanged = true;
     let response = { ok: false, message: "Message listener did not initialize" };
 
     if (typeof globalThis.__arkMessageListener === "function") {
+      adapterDiagnostic = await new Promise((resolve) => globalThis.__arkMessageListener(
+        { type: "ARK_ADAPTER_DIAGNOSTICS" },
+        {},
+        resolve
+      ));
       doctor = await new Promise((resolve) => globalThis.__arkMessageListener(
         { type: "ARK_ADAPTER_DOCTOR_HEALTH_CHECK" },
         {},
@@ -197,6 +209,7 @@ function makeRunner(testCase) {
     result.textContent = JSON.stringify({
       response,
       doctor,
+      adapterDiagnostic,
       repairValidation,
       repairTest,
       repairStorageUnchanged,
@@ -226,6 +239,12 @@ function runFixture(testCase, options = {}) {
     <script>${matcherRuntimeSource}</script>
     <script>${extractionResultRuntimeSource}</script>
     <script>${sourceAdapterRuntimeSource}</script>
+    <script>${domReadUtilsSource}</script>
+    <script>${adapterDiagnosticsSource}</script>
+    <script>${jobExtractionBuilderSource}</script>
+    <script>${jobAdapterResultSource}</script>
+    <script>${linkedInJobsAdapterSource}</script>
+    <script>${seekJobsAdapterSource}</script>
     <script>${jobCompatibilityRuntimeSource}</script>
     <script>${jobCapturePolicyRuntimeSource}</script>
     <script>${jobPolicyRuntimeSource}</script>
@@ -271,6 +290,15 @@ function normalize(value) {
 }
 
 function assertReadyCapture(testCase, result) {
+  assert.equal(result.adapterDiagnostic.adapter_id, testCase.source_id);
+  assert.equal(result.adapterDiagnostic.item_type, "job");
+  assert.equal(result.adapterDiagnostic.location_supported, true);
+  assert.equal(result.adapterDiagnostic.structure_detected, true);
+  assert.ok(result.adapterDiagnostic.discovered_item_count >= 1);
+  assert.ok(["complete", "partial"].includes(result.adapterDiagnostic.capture_status));
+  assert.doesNotThrow(() => JSON.stringify(result.adapterDiagnostic));
+  assert.equal("item" in result.adapterDiagnostic, false);
+  assert.equal("source_data" in result.adapterDiagnostic, false);
   const expected = testCase.expected;
   const record = result.record;
 
@@ -331,6 +359,10 @@ function assertReadyCapture(testCase, result) {
 }
 
 function assertIncompleteCapture(testCase, result) {
+  assert.equal(result.adapterDiagnostic.adapter_id, testCase.source_id);
+  assert.equal(result.adapterDiagnostic.location_supported, true);
+  assert.equal(result.adapterDiagnostic.capture_status, "unsupported");
+  assert.doesNotThrow(() => JSON.stringify(result.adapterDiagnostic));
   assert.equal(result.response.ok, false, `${testCase.case_id}: incomplete DOM unexpectedly captured`);
   assert.equal(result.response.extraction_status, "unsupported");
   assert.equal(result.response.capture_quality.level, "insufficient");

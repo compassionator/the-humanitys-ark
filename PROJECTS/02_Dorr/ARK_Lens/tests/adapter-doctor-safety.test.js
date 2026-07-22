@@ -15,6 +15,8 @@ const contentSource = read("content_bundle.js");
 const popupSource = read("popup/popup.js");
 const popupHtml = read("popup/popup.html");
 const repairSchema = JSON.parse(read("schemas/adapter-profile.schema.json"));
+const linkedInJobsAdapterRuntime = require("../sources/jobs/linkedin_jobs_adapter.js");
+const seekJobsAdapterRuntime = require("../sources/jobs/seek_jobs_adapter.js");
 
 function idsFromHtml(html) {
   return new Set([...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]));
@@ -43,7 +45,9 @@ function loadDoctorContractApi() {
 
   return evaluate(source, [...names, "DEFAULT_ADAPTER_PROFILES"], {
     document,
-    URL
+    URL,
+    LINKEDIN_JOBS_ADAPTER_RUNTIME: linkedInJobsAdapterRuntime,
+    SEEK_JOBS_ADAPTER_RUNTIME: seekJobsAdapterRuntime
   });
 }
 

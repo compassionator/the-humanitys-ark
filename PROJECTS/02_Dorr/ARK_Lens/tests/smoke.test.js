@@ -8,6 +8,8 @@ const read = (relativePath) =>
   fs.readFileSync(path.join(root, relativePath), "utf8");
 
 const contentSource = read("content_bundle.js");
+const linkedInAdapterSource = read("sources/jobs/linkedin_jobs_adapter.js");
+const seekAdapterSource = read("sources/jobs/seek_jobs_adapter.js");
 const popupSource = read("popup/popup.js");
 const popupHtml = read("popup/popup.html");
 const reportSource = read("report/report.js");
@@ -469,7 +471,7 @@ function testKeywordMatchingAndScoring() {
 }
 
 function testSeekExactUrl() {
-  const source = extractFunction(contentSource, "getSeekRecordUrl");
+  const source = extractFunction(seekAdapterSource, "getSeekRecordUrl");
   const original = "https://au.seek.com/ai-engineer-real-time-jobs-in-information-communication-technology/engineering-software/in-Sydney-NSW-2000?jobId=92971234&type=standard";
   const context = { URL, encodeURIComponent, location: { href: original } };
 
@@ -479,11 +481,11 @@ function testSeekExactUrl() {
 
 function testLinkedInCanonicalUrlAndTitleGuard() {
   const contentFunctions = [
-    "cleanText",
     "getLinkedInRecordUrl",
     "isUsefulLinkedInJobTitle"
-  ].map((name) => extractFunction(contentSource, name)).join("\n");
+  ].map((name) => extractFunction(linkedInAdapterSource, name)).join("\n");
   const contentContext = {
+    cleanText: (value) => (value || "").replace(/\s+/g, " ").trim(),
     encodeURIComponent,
     location: { href: "https://www.linkedin.com/jobs/collections/recommended/" }
   };
@@ -736,13 +738,22 @@ function testStaticContracts() {
     const matcherIndex = source.indexOf('"core/deterministic_matcher.js"');
     const extractionIndex = source.indexOf('"core/extraction_result.js"');
     const registryIndex = source.lastIndexOf('"sources/source_adapter_registry.js"');
+    const domReadIndex = source.indexOf('"sources/dom_read_utils.js"');
+    const diagnosticsIndex = source.indexOf('"sources/adapter_diagnostics.js"');
+    const builderIndex = source.indexOf('"sources/jobs/job_extraction_builder.js"');
+    const resultIndex = source.indexOf('"sources/jobs/job_adapter_result.js"');
+    const linkedInIndex = source.indexOf('"sources/jobs/linkedin_jobs_adapter.js"');
+    const seekIndex = source.indexOf('"sources/jobs/seek_jobs_adapter.js"');
     const compatibilityIndex = source.indexOf('"compatibility/job_extraction_compat.js"');
     const capturePolicyIndex = source.indexOf('"policies/job_capture_policy.js"');
     const policyIndex = source.indexOf('"policies/job_policy_runtime.js"');
     const contentIndex = source.indexOf('"content_bundle.js"');
     assert.ok(itemIndex >= 0 && itemIndex < matcherIndex);
     assert.ok(matcherIndex < extractionIndex && extractionIndex < registryIndex);
-    assert.ok(registryIndex < compatibilityIndex);
+    assert.ok(registryIndex < domReadIndex && domReadIndex < diagnosticsIndex);
+    assert.ok(diagnosticsIndex < builderIndex && builderIndex < resultIndex);
+    assert.ok(resultIndex < linkedInIndex && linkedInIndex < seekIndex);
+    assert.ok(seekIndex < compatibilityIndex);
     assert.ok(compatibilityIndex < capturePolicyIndex && capturePolicyIndex < policyIndex);
     assert.ok(policyIndex < contentIndex);
   });
@@ -752,13 +763,12 @@ function testStaticContracts() {
   assert.doesNotMatch(reportSource, /\.innerHTML\s*=/);
   assert.match(contentSource, /captureCurrentJob\("job_changed_auto_capture"\)/);
   assert.match(contentSource, /clearInterval\(jobChangeInterval\)/);
-  assert.match(contentSource, /sourceId:\s*"seek_jobs"/);
-  assert.match(contentSource, /const domDescription = getSeekText/);
+  assert.doesNotMatch(contentSource, /function getSeekRecordUrl\(/);
+  assert.doesNotMatch(contentSource, /function getLinkedInRecordUrl\(/);
+  assert.match(seekAdapterSource, /sourceId:\s*"seek_jobs"/);
+  assert.match(seekAdapterSource, /const domDescription = getSeekText/);
   assert.doesNotMatch(
-    contentSource.slice(
-      contentSource.indexOf("seek_jobs: {", contentSource.indexOf("DEFAULT_ADAPTER_PROFILES")),
-      contentSource.indexOf("// UTILS")
-    ),
+    seekAdapterSource.slice(0, seekAdapterSource.indexOf("function create")),
     /detail_root:\s*\[[\s\S]*?"\[data-job-id\]"/
   );
 

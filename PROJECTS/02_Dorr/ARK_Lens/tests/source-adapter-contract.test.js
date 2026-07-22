@@ -249,6 +249,9 @@ function testDependencyBoundaries() {
   const resultSource = read("core/extraction_result.js");
   const jobPolicySource = read("policies/job_policy_runtime.js");
   const registrySource = read("sources/source_adapter_registry.js");
+  const linkedInAdapterSource = read("sources/jobs/linkedin_jobs_adapter.js");
+  const seekAdapterSource = read("sources/jobs/seek_jobs_adapter.js");
+  const adapterResultSource = read("sources/jobs/job_adapter_result.js");
   const contentSource = read("content_bundle.js");
   const backgroundSource = read("background.js");
   const popupSource = read("popup/popup.js");
@@ -264,25 +267,34 @@ function testDependencyBoundaries() {
   assert.doesNotMatch(itemSource, /\b(?:company|location|job_description|apply_status|role_fit|workflow|job_score)\s*:/);
 
   const runtimeRegistryBlock = contentSource.slice(
-    contentSource.indexOf("const SOURCE_ADAPTER_REGISTRY"),
-    contentSource.indexOf("const DEFAULT_ADAPTER_PROFILES")
+    contentSource.indexOf("const sourceAdapterContext"),
+    contentSource.indexOf("// STORAGE")
   );
   assert.match(runtimeRegistryBlock, /createRuntimeAdapterRegistry/);
   assert.match(runtimeRegistryBlock, /discoverItems/);
   assert.match(runtimeRegistryBlock, /extractItem/);
   assert.match(runtimeRegistryBlock, /deriveItemId/);
   assert.doesNotMatch(runtimeRegistryBlock, /match_score|workflow_state|getDorr|classif/);
-  assert.match(contentSource, /createJobExtractionResult/);
+  assert.match(adapterResultSource, /createExtractionResult/);
   assert.match(contentSource, /JOB_CAPTURE_POLICY\.canProcess/);
   assert.match(contentSource, /const lensItem = extractionResult\.item/);
   assert.match(contentSource, /const extracted = extractionResult\.source_data/);
-  assert.match(contentSource, /querySelector/);
+  assert.match(contentSource, /function getBestTitle\([^)]*\)\s*{\s*return LINKEDIN_JOBS_ADAPTER\.getBestTitle/);
+  assert.match(contentSource, /function getSeekText\([^)]*\)\s*{\s*return SEEK_JOBS_ADAPTER\.getText/);
+  assert.doesNotMatch(contentSource, /data-automation=\\"job-detail-title|jobs-search__job-details/);
+  assert.match(linkedInAdapterSource, /safeQuerySelector/);
+  assert.match(seekAdapterSource, /safeQuerySelector/);
+  [linkedInAdapterSource, seekAdapterSource].forEach((source) => {
+    assert.doesNotMatch(source, /classifyLensItem|match_score|workflow_state|chrome\.storage|createOrUpdateRecord/);
+  });
   assert.doesNotMatch(popupSource, /const SOURCE_ADAPTERS = \[/);
   assert.doesNotMatch(backgroundSource, /linkedin\\\.com|seek\\\.com/);
   assert.match(backgroundSource, /SOURCE_ADAPTERS_RUNTIME\.getSourceForLocation/);
   assert.match(popupSource, /SOURCE_ADAPTERS_RUNTIME\.getSourceForLocation/);
   assert.match(popupHtml, /source_adapter_registry\.js/);
   assert.match(packageSource, /sources\/source_adapter_registry\.js/);
+  assert.match(packageSource, /sources\/jobs\/linkedin_jobs_adapter\.js/);
+  assert.match(packageSource, /sources\/jobs\/seek_jobs_adapter\.js/);
   assert.match(packageSource, /core\/extraction_result\.js/);
   assert.match(packageSource, /sources\/source_adapter_registry\.js/);
 }

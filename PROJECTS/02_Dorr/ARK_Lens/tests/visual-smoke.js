@@ -14,6 +14,12 @@ const lensItemRuntimeSource = fs.readFileSync(path.join(root, "core", "lens_item
 const matcherRuntimeSource = fs.readFileSync(path.join(root, "core", "deterministic_matcher.js"), "utf8");
 const extractionResultRuntimeSource = fs.readFileSync(path.join(root, "core", "extraction_result.js"), "utf8");
 const sourceAdapterRuntimeSource = fs.readFileSync(path.join(root, "sources", "source_adapter_registry.js"), "utf8");
+const domReadUtilsSource = fs.readFileSync(path.join(root, "sources", "dom_read_utils.js"), "utf8");
+const adapterDiagnosticsSource = fs.readFileSync(path.join(root, "sources", "adapter_diagnostics.js"), "utf8");
+const jobExtractionBuilderSource = fs.readFileSync(path.join(root, "sources", "jobs", "job_extraction_builder.js"), "utf8");
+const jobAdapterResultSource = fs.readFileSync(path.join(root, "sources", "jobs", "job_adapter_result.js"), "utf8");
+const linkedInJobsAdapterSource = fs.readFileSync(path.join(root, "sources", "jobs", "linkedin_jobs_adapter.js"), "utf8");
+const seekJobsAdapterSource = fs.readFileSync(path.join(root, "sources", "jobs", "seek_jobs_adapter.js"), "utf8");
 const jobCompatibilityRuntimeSource = fs.readFileSync(path.join(root, "compatibility", "job_extraction_compat.js"), "utf8");
 const jobCapturePolicyRuntimeSource = fs.readFileSync(path.join(root, "policies", "job_capture_policy.js"), "utf8");
 const jobPolicyRuntimeSource = fs.readFileSync(path.join(root, "policies", "job_policy_runtime.js"), "utf8");
@@ -389,6 +395,12 @@ async function runAdapterFixture(client, {
       ${matcherRuntimeSource}
       ${extractionResultRuntimeSource}
       ${sourceAdapterRuntimeSource}
+      ${domReadUtilsSource}
+      ${adapterDiagnosticsSource}
+      ${jobExtractionBuilderSource}
+      ${jobAdapterResultSource}
+      ${linkedInJobsAdapterSource}
+      ${seekJobsAdapterSource}
       ${jobCompatibilityRuntimeSource}
       ${jobCapturePolicyRuntimeSource}
       ${jobPolicyRuntimeSource}
