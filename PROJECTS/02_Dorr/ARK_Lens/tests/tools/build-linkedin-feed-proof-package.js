@@ -1,7 +1,7 @@
 const crypto = require("node:crypto");
 const fs = require("node:fs");
 const path = require("node:path");
-const { spawnSync } = require("node:child_process");
+const { createZip } = require("./portable-zip");
 
 const root = path.resolve(__dirname, "..", "..");
 const releaseName = "ark-lens-linkedin-feed-extraction-proof-v0.1";
@@ -92,10 +92,12 @@ packaged.forEach((relativePath) => {
 });
 if (packaged.length !== allowed.size) throw new Error("Feed proof package is missing an exact allow-list entry.");
 
-const archived = spawnSync("tar", ["-a", "-c", "-f", zipPath, "-C", distRoot, releaseName], {
-  encoding: "utf8"
+createZip({
+  files: listFiles(releaseDir),
+  baseDir: releaseDir,
+  rootName: releaseName,
+  targetPath: zipPath
 });
-if (archived.status !== 0) throw new Error(archived.stderr || "Feed proof ZIP creation failed.");
 const hash = sha256(zipPath);
 fs.writeFileSync(zipHashPath, `${hash}  ${path.basename(zipPath)}\n`);
 console.log(`Built ${path.relative(root, releaseDir)}`);
