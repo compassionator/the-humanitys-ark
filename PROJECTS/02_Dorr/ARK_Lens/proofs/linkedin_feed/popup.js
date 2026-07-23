@@ -1,3 +1,8 @@
+const EXTENSION_API = globalThis.browser || globalThis.chrome;
+if (!EXTENSION_API?.tabs?.query || !EXTENSION_API?.tabs?.sendMessage || !EXTENSION_API?.scripting?.executeScript) {
+  throw new Error("ARK Lens Feed proof requires the WebExtension tabs and scripting APIs.");
+}
+
 const RUNTIME_FILES = [
   "core/lens_item.js",
   "core/extraction_result.js",
@@ -15,7 +20,7 @@ const RUNTIME_FILES = [
 let currentSnapshot = null;
 
 async function activeTab() {
-  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+  const [tab] = await EXTENSION_API.tabs.query({ active: true, currentWindow: true });
   if (!tab?.id || !/^https:\/\/([a-z0-9-]+\.)?linkedin\.com\/feed(?:\/|$)/i.test(tab.url || "")) {
     throw new Error("Open the LinkedIn home feed before running this proof.");
   }
@@ -23,7 +28,7 @@ async function activeTab() {
 }
 
 async function ensureRuntime(tabId) {
-  await chrome.scripting.executeScript({ target: { tabId }, files: RUNTIME_FILES });
+  await EXTENSION_API.scripting.executeScript({ target: { tabId }, files: RUNTIME_FILES });
 }
 
 function render(snapshot) {
@@ -45,7 +50,7 @@ function render(snapshot) {
 async function operation(type) {
   const tab = await activeTab();
   await ensureRuntime(tab.id);
-  const response = await chrome.tabs.sendMessage(tab.id, { type });
+  const response = await EXTENSION_API.tabs.sendMessage(tab.id, { type });
   if (!response?.ok) throw new Error(response?.message || "Proof operation failed.");
   render(response.snapshot);
 }

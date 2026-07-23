@@ -1,4 +1,9 @@
 (() => {
+  const EXTENSION_API = globalThis.browser || globalThis.chrome;
+  if (!EXTENSION_API?.runtime?.onMessage?.addListener) {
+    throw new Error("ARK Lens Feed proof requires the WebExtension runtime messaging API.");
+  }
+
   if (!globalThis.__arkLinkedInFeedProofRuntime) {
     const feedRegistry = globalThis.ARK_FEED_SOURCE_ADAPTERS;
     const adapter = globalThis.ARK_LINKEDIN_FEED_ADAPTER.create({
@@ -31,6 +36,6 @@
         .catch((error) => sendResponse({ ok: false, message: error?.message || "Feed proof operation failed." }));
       return true;
     };
-    chrome.runtime.onMessage.addListener(globalThis.__arkLinkedInFeedProofListener);
+    EXTENSION_API.runtime.onMessage.addListener(globalThis.__arkLinkedInFeedProofListener);
   }
 })();
