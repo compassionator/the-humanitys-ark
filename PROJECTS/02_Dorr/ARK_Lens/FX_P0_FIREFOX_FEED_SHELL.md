@@ -126,13 +126,48 @@ npm.cmd run run:linkedin-feed-proof:firefox -- --firefox="C:\Program Files\Mozil
 
 Temporary execution proves browser-shell installation and runtime wiring. Fixture results do not prove live LinkedIn selectors.
 
+## Firefox desktop interactive gate
+
+```text
+Firefox desktop interactive gate:
+EXECUTED BY USER — PASSED
+```
+
+The user successfully verified the proof interactively in Firefox desktop. The tested behavior included:
+
+- Firefox accepted the temporary extension;
+- the action popup opened;
+- LinkedIn Feed scan worked;
+- extraction results were available;
+- observation and scrolling worked;
+- duplicate suppression worked;
+- stopping observation worked;
+- local JSON export worked;
+- clearing the in-memory snapshot worked;
+- LinkedIn was not visually modified.
+
+No additional measurements, post counts, browser logs or diagnostics are recorded by this gate.
+
+## Current stage status
+
+```text
+FX_P0 DESKTOP COMPLETE — READY FOR FIREFOX ANDROID GATE
+```
+
 ## Pending compatibility gates
 
-Firefox Feed shell implemented.
+The following items remain unresolved:
 
-Live Firefox Android Feed compatibility not yet proven.
+- Firefox Android installation;
+- Android popup sizing and touch usability;
+- Android active-tab behavior;
+- Android export behavior;
+- mobile LinkedIn Feed DOM;
+- mobile single-page application and background lifecycle;
+- Firefox Job Lens;
+- F3B.
 
-Mobile LinkedIn Feed DOM and selectors remain unverified. Any future mobile selector correction requires sanitized live evidence and focused regression fixtures.
+Live Firefox Android Feed compatibility has not yet been proven. Mobile LinkedIn Feed DOM and selectors remain unverified. Any future mobile selector correction requires sanitized live evidence and focused regression fixtures.
 
 Native LinkedIn or other native social applications are outside the browser-extension boundary.
 
