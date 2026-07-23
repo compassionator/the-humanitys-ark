@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "ARK Lens — LinkedIn Feed Extraction Proof",
+  "version": "0.1.0",
+  "description": "A local, read-only proof that extracts evidence already rendered in the LinkedIn home feed.",
+  "action": {
+    "default_popup": "proofs/linkedin_feed/popup.html",
+    "default_title": "LinkedIn Feed Extraction Proof"
+  },
+  "permissions": ["activeTab", "scripting"]
+}
