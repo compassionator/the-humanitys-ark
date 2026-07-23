@@ -190,7 +190,13 @@ Tests cover:
 
 ## Manual LinkedIn Feed proof gate
 
-Status: **pending user execution**. Automated fixtures do not claim real LinkedIn Feed success.
+Status: **EXECUTED BY USER — PASSED**.
+
+The user reported that the current proof worked successfully in the real Chrome desktop LinkedIn Feed environment. This is user-reported manual evidence; Codex and the automated suite did not execute the live test. Automated fixture and browser-contract evidence remains separately identified above.
+
+Firefox desktop and Firefox Android validation have not begun. No claim is made regarding mobile LinkedIn Feed DOM support.
+
+User-executed procedure:
 
 1. Install the separate Feed proof extension.
 2. Open the LinkedIn home feed.
@@ -207,6 +213,33 @@ Status: **pending user execution**. Automated fixtures do not claim real LinkedI
 13. Confirm it contains only visible supported evidence.
 14. Confirm comments were neither opened nor extracted.
 15. Confirm the normal Job Lens extension/package remains unaffected.
+
+## FEED_P0 completion gate
+
+**FEED P0 COMPLETE — CROSS-DOMAIN EVIDENCE READY**
+
+Complete:
+
+- protected Job Lens automated gates;
+- user-confirmed manual Job Lens test;
+- LinkedIn Feed automated extraction proof;
+- user-confirmed manual Chrome LinkedIn Feed test;
+- Job/Feed package isolation;
+- portable ZIP packaging;
+- local-first and read-only privacy boundary.
+
+Still unproven and not started by this gate:
+
+- Firefox desktop;
+- Firefox Android;
+- mobile LinkedIn Feed DOM;
+- mobile LinkedIn Jobs DOM;
+- mobile SEEK DOM;
+- Feed filtering and actions;
+- Feed persistence and reports;
+- DOM Doctor;
+- F3B;
+- AI.
 
 ## Known limitations
 
