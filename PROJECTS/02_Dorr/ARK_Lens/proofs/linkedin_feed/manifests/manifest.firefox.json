@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "ARK Lens — LinkedIn Feed Extraction Proof",
+  "version": "0.1.0",
+  "description": "A local, read-only proof for extracting visible LinkedIn Feed posts into canonical ARK Lens items.",
+  "action": {
+    "default_popup": "proofs/linkedin_feed/popup.html",
+    "default_title": "LinkedIn Feed Extraction Proof"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "@ark-linkedin-feed-proof",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ]
+      }
+    },
+    "gecko_android": {
+      "strict_min_version": "142.0"
+    }
+  }
+}

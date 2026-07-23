@@ -83,11 +83,16 @@ function testProofExtensionAndPrivacy() {
   ["Scan visible feed", "Start observing", "Stop observing", "Refresh snapshot", "Export local JSON", "Clear in-memory snapshot"]
     .forEach((label) => assert.match(popupHtml, new RegExp(label)));
   assert.doesNotMatch(popup, /classify|match_score|workflow_state|relevance_score|dorr|hidePost|blurPost/i);
-  assert.match(popup, /chrome\.scripting\.executeScript/);
-  assert.match(popup, /chrome\.tabs\.sendMessage/);
+  assert.match(popup, /EXTENSION_API\.scripting\.executeScript/);
+  assert.match(popup, /EXTENSION_API\.tabs\.sendMessage/);
+  assert.match(popup, /globalThis\.browser\s*\|\|\s*globalThis\.chrome/);
+  assert.doesNotMatch(popup, /\bchrome\.(?:tabs|scripting|runtime)\b/);
   assert.doesNotMatch(popup, /chrome\.storage|fetch\(|XMLHttpRequest/);
   assert.doesNotMatch(popup, /sources\/jobs|policies\/job|compatibility\/job|content_bundle|report\//);
   assert.doesNotMatch(bootstrap, /chrome\.storage|fetch\(|XMLHttpRequest/);
+  assert.match(bootstrap, /EXTENSION_API\.runtime\.onMessage\.addListener/);
+  assert.match(bootstrap, /globalThis\.browser\s*\|\|\s*globalThis\.chrome/);
+  assert.doesNotMatch(bootstrap, /\bchrome\.(?:tabs|scripting|runtime)\b/);
 }
 
 testRegistrySeparation();
