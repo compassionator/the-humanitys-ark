@@ -10,14 +10,18 @@ Preserve Dorr as the Ark’s decentralized reasoning, rating, routing, and learn
 Dorr is broader than one app screen. It is the framework that helps turn noisy inputs into timed, scoped, meaningful frames without collapsing into a compulsory system.
 
 ## Current next step
-Stabilize the Job Search Lens through controlled peer feedback while preserving Dorr as the canonical shared grammar.
+Validate the read-only LinkedIn Feed proof on Firefox Android while preserving Dorr as the canonical shared grammar and Job Search Lens as the current working product Lens.
 
 ## Status
-Canonical grammar locked at v1.6; broader Dorr framework Draft; current product implementation in controlled peer alpha.
+Canonical grammar locked at v1.6; broader Dorr framework Draft; Job Search Lens in controlled peer alpha; cross-domain Feed extraction proof validated on Chrome and Firefox desktop.
 
 ## Current implementation
 
-[ARK Lens Job Search](ARK_Lens/README.md) is the current controlled-alpha browser implementation. It provides the working local-first product surface while Dorr remains the canonical shared grammar.
+[ARK Lens Job Search](ARK_Lens/README.md) remains the current controlled-alpha product Lens. It provides the working local-first product surface while Dorr remains the canonical shared grammar.
+
+The separate read-only LinkedIn Feed extraction proof demonstrates that ARK Lens can apply the shared architecture to a non-Job domain without redefining Dorr or entering the Job runtime. Its user-executed Chrome and Firefox desktop gates passed. Firefox Android Feed validation is the next practical compatibility gate.
+
+Feed filtering, F3B, and Firefox Job Lens work have not begun.
 
 ## Canonical references
 - [Dorr Grammar v1.6](DORR_GRAMMAR.md) — canonical colour/time semantic meaning
@@ -61,7 +65,9 @@ These directions matter, but they should not blur the current MVP.
 
 ## Current practical slice
 
-[ARK Lens Job Search](ARK_Lens/README.md) is the current implementation. It captures supported job listings, applies a local deterministic Lens Pack, and presents explainable results without a hosted service.
+[ARK Lens Job Search](ARK_Lens/README.md) is the current working product Lens. It captures supported job listings, applies a local deterministic Lens Pack, and presents explainable results without a hosted service.
+
+The LinkedIn Feed proof is cross-domain extraction evidence only. It is read-only and in-memory; it is not a completed Feed Lens product.
 
 ## Historical design lineage
 

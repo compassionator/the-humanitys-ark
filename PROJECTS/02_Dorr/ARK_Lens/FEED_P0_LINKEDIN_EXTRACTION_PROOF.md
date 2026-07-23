@@ -194,7 +194,18 @@ Status: **EXECUTED BY USER — PASSED**.
 
 The user reported that the current proof worked successfully in the real Chrome desktop LinkedIn Feed environment. This is user-reported manual evidence; Codex and the automated suite did not execute the live test. Automated fixture and browser-contract evidence remains separately identified above.
 
-Firefox desktop and Firefox Android validation have not begun. No claim is made regarding mobile LinkedIn Feed DOM support.
+### Later FX_P0 Firefox desktop validation
+
+Firefox validation occurred later in the FX_P0 Firefox distribution stage; it was not part of the original Chrome FEED_P0 implementation evidence.
+
+```text
+Firefox desktop Feed shell:
+EXECUTED BY USER — PASSED
+```
+
+The later user-executed Firefox desktop gate confirmed temporary installation, popup operation, Feed scanning, extraction results, observation and manual scrolling, duplicate suppression, stopping observation, local JSON export, clearing the in-memory snapshot, and no visible modification of LinkedIn.
+
+Firefox Android and the mobile LinkedIn Feed DOM remain unverified. Firefox Job Lens work has not started. F3B has not started.
 
 User-executed procedure:
 
@@ -230,11 +241,11 @@ Complete:
 
 Still unproven and not started by this gate:
 
-- Firefox desktop;
 - Firefox Android;
 - mobile LinkedIn Feed DOM;
 - mobile LinkedIn Jobs DOM;
 - mobile SEEK DOM;
+- Firefox Job Lens;
 - Feed filtering and actions;
 - Feed persistence and reports;
 - DOM Doctor;
@@ -252,6 +263,6 @@ Still unproven and not started by this gate:
 - Partially rendered placeholders with no meaningful evidence are unsupported.
 - No comments, reactions, actions, metrics policy, scoring, persistence, or repair behavior exists.
 
-## Evidence required before F3B
+## Historical FEED_P0 evidence boundary before F3B
 
-F3B must not begin automatically. The smallest justified next design task, after the real manual gate, is to compare the proven Job and Feed diagnostic observations and define a privacy-bounded, item-type-neutral diagnostic vocabulary. Repair schema, UI, activation, and migration should remain out of that first design task.
+At FEED_P0 completion, F3B was not permitted to begin automatically. Any future F3B design still requires comparison of the proven Job and Feed diagnostic observations and a privacy-bounded, item-type-neutral diagnostic vocabulary. Repair schema, UI, activation, and migration remain outside this historical proof.
