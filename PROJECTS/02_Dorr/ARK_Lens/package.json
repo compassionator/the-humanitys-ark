@@ -7,9 +7,15 @@
     "build:icons": "node tests/tools/build-icons.js",
     "package:alpha": "npm run build:icons && node tests/tools/build-peer-alpha-package.js",
     "build:linkedin-feed-proof": "node tests/tools/build-linkedin-feed-proof-package.js",
+    "build:linkedin-feed-proof:firefox": "node tests/tools/build-linkedin-feed-proof-firefox-package.js",
+    "lint:linkedin-feed-proof:firefox": "npm run build:linkedin-feed-proof:firefox && web-ext lint --source-dir dist/ark-lens-linkedin-feed-extraction-proof-firefox-v0.1 --warnings-as-errors",
+    "run:linkedin-feed-proof:firefox": "npm run build:linkedin-feed-proof:firefox && web-ext run --source-dir dist/ark-lens-linkedin-feed-extraction-proof-firefox-v0.1 --target firefox-desktop",
     "test": "npm run test:fast && npm run test:extraction",
     "test:fast": "node tests/smoke.test.js && node tests/matcher-contract.test.js && node tests/source-adapter-contract.test.js && node tests/adapter-diagnostics.test.js && node tests/lens-separation.test.js && node tests/feed-proof-contract.test.js && node tests/characterization.test.js && node tests/lens-pack-contract.test.js && node tests/lens-editor.test.js && node tests/adapter-doctor-safety.test.js && node tests/report-feedback.test.js && node tests/peer-alpha.test.js && node tests/package-isolation.test.js && node tests/session-indicator.test.js",
     "test:extraction": "node tests/real-world-extraction.test.js && node tests/report-browser.test.js && node tests/feed-proof-browser.test.js",
     "test:visual": "node tests/visual-smoke.js"
+  },
+  "devDependencies": {
+    "web-ext": "10.3.0"
   }
 }

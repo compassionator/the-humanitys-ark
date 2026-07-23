@@ -109,18 +109,22 @@ function validateZip(zipPath, releaseName, expectedFiles) {
   assert.equal(sidecarMatch[2], path.basename(zipPath), "ZIP SHA-256 sidecar filename");
   assert.equal(sidecarMatch[1].toLowerCase(), sha256Bytes(bytes), "ZIP SHA-256 sidecar bytes");
 
-  return { entryCount: archive.entryCount, hash: sha256Bytes(bytes) };
+  return { entriesByRelativePath, entryCount: archive.entryCount, hash: sha256Bytes(bytes) };
 }
 
 run("tests/tools/build-peer-alpha-package.js");
 run("tests/tools/build-linkedin-feed-proof-package.js");
+run("tests/tools/build-linkedin-feed-proof-firefox-package.js");
 
 const jobName = `ark-lens-v${packageJson.version}-peer-alpha`;
 const feedName = "ark-lens-linkedin-feed-extraction-proof-v0.1";
+const firefoxFeedName = "ark-lens-linkedin-feed-extraction-proof-firefox-v0.1";
 const jobDir = path.join(root, "dist", jobName);
 const feedDir = path.join(root, "dist", feedName);
+const firefoxFeedDir = path.join(root, "dist", firefoxFeedName);
 const jobFiles = list(jobDir);
 const feedFiles = list(feedDir);
+const firefoxFeedFiles = list(firefoxFeedDir);
 
 assert.equal(jobFiles.length, 51);
 assert.ok(jobFiles.includes("sources/jobs/job_source_catalogue.js"));
@@ -143,18 +147,77 @@ assert.equal(feedFiles.some((file) => /sources\/jobs|policies\/job|compatibility
 assert.equal(feedFiles.some((file) => /firefox|gecko/i.test(file)), false);
 assert.deepEqual(feedFiles, [...FEED_FILES].sort());
 
+assert.equal(firefoxFeedFiles.length, 17);
+assert.deepEqual(firefoxFeedFiles, [...FEED_FILES].sort());
+assert.equal(firefoxFeedFiles.some((file) => /(^|\/)(?:tests?|fixtures?)(\/|$)/i.test(file)), false);
+assert.equal(
+  firefoxFeedFiles.some((file) => /sources\/jobs|policies\/job|compatibility\/job|content_bundle|report\/|lens-packs\//i.test(file)),
+  false
+);
+assert.equal(firefoxFeedFiles.some((file) => /manifests\/|manifest\.firefox|manifest\.chrome/i.test(file)), false);
+
+const chromeSourceManifest = JSON.parse(fs.readFileSync(path.join(root, "proofs", "linkedin_feed", "manifest.json"), "utf8"));
+const firefoxSourceManifest = JSON.parse(
+  fs.readFileSync(path.join(root, "proofs", "linkedin_feed", "manifests", "manifest.firefox.json"), "utf8")
+);
+const chromeStagedManifest = JSON.parse(fs.readFileSync(path.join(feedDir, "manifest.json"), "utf8"));
+const firefoxStagedManifest = JSON.parse(fs.readFileSync(path.join(firefoxFeedDir, "manifest.json"), "utf8"));
+assert.deepEqual(chromeStagedManifest, chromeSourceManifest, "Chrome package must stage only the Chrome manifest");
+assert.equal("browser_specific_settings" in chromeStagedManifest, false, "Chrome package must contain no Firefox metadata");
+assert.deepEqual(firefoxStagedManifest, firefoxSourceManifest, "Firefox package must stage only the Firefox manifest");
+assert.notDeepEqual(firefoxStagedManifest, chromeSourceManifest, "Firefox package must not stage the Chrome manifest");
+assert.equal(firefoxStagedManifest.manifest_version, 3);
+assert.deepEqual(firefoxStagedManifest.permissions, ["activeTab", "scripting"]);
+[
+  "background",
+  "host_permissions",
+  "content_scripts",
+  "cookies",
+  "downloads",
+  "notifications",
+  "webRequest"
+].forEach((key) => assert.equal(key in firefoxStagedManifest, false, `Firefox manifest forbids ${key}`));
+assert.deepEqual(firefoxStagedManifest.browser_specific_settings, {
+  gecko: {
+    id: "@ark-linkedin-feed-proof",
+    strict_min_version: "140.0",
+    data_collection_permissions: {
+      required: ["none"]
+    }
+  },
+  gecko_android: {
+    strict_min_version: "142.0"
+  }
+});
+
 const jobZip = path.join(root, "dist", `${jobName}.zip`);
 const feedZip = path.join(root, "dist", `${feedName}.zip`);
+const firefoxFeedZip = path.join(root, "dist", `${firefoxFeedName}.zip`);
 assert.ok(fs.statSync(jobZip).size > 0);
 assert.ok(fs.statSync(feedZip).size > 0);
+assert.ok(fs.statSync(firefoxFeedZip).size > 0);
 assert.match(fs.readFileSync(`${jobZip}.sha256.txt`, "utf8"), new RegExp(sha256(jobZip), "i"));
 assert.match(fs.readFileSync(`${feedZip}.sha256.txt`, "utf8"), new RegExp(sha256(feedZip), "i"));
+assert.match(fs.readFileSync(`${firefoxFeedZip}.sha256.txt`, "utf8"), new RegExp(sha256(firefoxFeedZip), "i"));
 
 const jobArchive = validateZip(jobZip, jobName, jobFiles);
 const feedArchive = validateZip(feedZip, feedName, FEED_FILES);
+const firefoxFeedArchive = validateZip(firefoxFeedZip, firefoxFeedName, FEED_FILES);
 assert.equal(jobArchive.entryCount, 51);
 assert.equal(feedArchive.entryCount, 17);
+assert.equal(firefoxFeedArchive.entryCount, 17);
+assert.deepEqual(
+  JSON.parse(firefoxFeedArchive.entriesByRelativePath.get("manifest.json").toString("utf8")),
+  firefoxSourceManifest,
+  "Firefox ZIP manifest"
+);
+assert.equal(
+  "browser_specific_settings" in JSON.parse(feedArchive.entriesByRelativePath.get("manifest.json").toString("utf8")),
+  false,
+  "Chrome ZIP must contain no Firefox manifest metadata"
+);
 
-console.log("ARK Lens Job/Feed exact-file package isolation passed (51 Job, 17 Feed entries)");
+console.log("ARK Lens Job/Feed exact-file package isolation passed (51 Job, 17 Chrome Feed, 17 Firefox Feed entries)");
 console.log(`Job ZIP valid (${jobArchive.entryCount} files, SHA-256 ${jobArchive.hash})`);
-console.log(`Feed ZIP valid (${feedArchive.entryCount} files, SHA-256 ${feedArchive.hash})`);
+console.log(`Chrome Feed ZIP valid (${feedArchive.entryCount} files, SHA-256 ${feedArchive.hash})`);
+console.log(`Firefox Feed ZIP valid (${firefoxFeedArchive.entryCount} files, SHA-256 ${firefoxFeedArchive.hash})`);
