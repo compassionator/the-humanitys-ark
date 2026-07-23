@@ -1,5 +1,17 @@
 # ARK Lens changelog
 
+## Unreleased — architecture and proof milestones
+
+- Established the F0–F2.5 foundation, including shared architecture and explicit Job/Feed domain separation.
+- Added F3A source-adapter extraction for LinkedIn Jobs and SEEK Jobs.
+- Recorded the successful user-executed Job Search Lens browser gate.
+- Added the FEED_P0 read-only LinkedIn Feed extraction proof and its successful Chrome desktop gate.
+- Replaced platform-dependent proof archiving with portable in-process Node ZIP packaging.
+- Added the separate Firefox Manifest V3 Feed proof distribution and exact browser/package isolation.
+- Added the minimal native `browser || chrome` API binding without forking the canonical Feed runtime.
+- Recorded the successful user-executed Firefox desktop Feed gate.
+- Firefox Android Feed validation remains pending.
+
 ## Pre-import public-source readiness history
 
 This entry records readiness work completed before ARK Lens was imported into its current `PROJECTS/02_Dorr/ARK_Lens/` location. The destination and root repository licence are now resolved; the historical preparation facts below are preserved.
