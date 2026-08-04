@@ -31,8 +31,8 @@ Record `PASS`, `FAIL`, or `BLOCKED` and sanitized evidence for every check.
 3. The shared popup opens.
 4. Ordered injection loads every canonical Job runtime file successfully.
 5. Popup, content, and background message round-trips succeed.
-6. LinkedIn Jobs reports readiness and captures the expected local record.
-7. SEEK Jobs reports readiness and captures the expected local record on an available supported surface.
+6. LinkedIn Jobs reports the correct source readiness and captures the expected local record.
+7. SEEK Jobs reports the correct source readiness and captures the expected local record on an available supported surface.
 8. A session starts.
 9. The action icon and title reflect session state.
 10. Supported same-tab navigation restarts capture without duplicate listeners.
