@@ -9,6 +9,8 @@ const read = (relativePath) => fs.readFileSync(path.join(root, relativePath), "u
 const reportHtml = read("report/report.html");
 const reportCss = read("report/report.css");
 const reportSource = read("report/report.js");
+const browserCapabilitiesSource = read("platform/browser_capabilities.js");
+const jobContractsSource = read("contracts/job_contracts.js");
 const lensPackRuntimeSource = read("lens-packs/lens_pack_runtime.js");
 const bundledLensPackSource = read("lens-packs/bundled_lens_pack.js");
 const chromeCandidates = [
@@ -158,7 +160,7 @@ function chromeMock() {
         }
       },
       tabs: {
-        create() {}
+        async create() { return {}; }
       }
     };
   })();`;
@@ -287,8 +289,15 @@ function decodeHtml(value) {
 function buildHarness() {
   return reportHtml
     .replace('<link rel="stylesheet" href="report.css" />', () => `<style>${reportCss}</style>`)
-    .replace('<script src="../lens-packs/bundled_lens_pack.js"></script>', () => [
+    .replace('<script src="../platform/browser_capabilities.js"></script>', () => [
       `<script>${inlineScript(chromeMock())}</script>`,
+      `<script>${inlineScript(browserCapabilitiesSource)}</script>`
+    ].join("\n"))
+    .replace(
+      '<script src="../contracts/job_contracts.js"></script>',
+      () => `<script>${inlineScript(jobContractsSource)}</script>`
+    )
+    .replace('<script src="../lens-packs/bundled_lens_pack.js"></script>', () => [
       `<script>${inlineScript(bundledLensPackSource)}</script>`
     ].join("\n"))
     .replace(

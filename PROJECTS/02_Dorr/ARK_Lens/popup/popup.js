@@ -1,16 +1,20 @@
-const SESSION_KEY = "ark_lens_session";
-const RECORDS_KEY = "ark_lens_records";
-const LENS_PACKS_KEY = "ark_lens_packs";
-const ACTIVE_LENS_PACK_ID_KEY = "ark_lens_active_lens_pack_id";
-const ADAPTER_PROFILE_OVERRIDES_KEY = "ark_lens_adapter_profile_overrides";
-const ADAPTER_PROFILE_LAST_KNOWN_GOOD_KEY = "ark_lens_adapter_profile_last_known_good";
-const ADAPTER_PROFILE_ROLLBACKS_KEY = "ark_lens_adapter_profile_rollbacks";
+const BROWSER = globalThis.ARK_BROWSER_CAPABILITIES;
+const JOB_CONTRACTS = globalThis.ARK_JOB_CONTRACTS;
+const JOB_RUNTIME_ORDER = globalThis.ARK_JOB_RUNTIME_ORDER;
+const SESSION_KEY = JOB_CONTRACTS?.STORAGE_KEYS.SESSION;
+const RECORDS_KEY = JOB_CONTRACTS?.STORAGE_KEYS.RECORDS;
+const LENS_PACKS_KEY = JOB_CONTRACTS?.STORAGE_KEYS.LENS_PACKS;
+const ACTIVE_LENS_PACK_ID_KEY = JOB_CONTRACTS?.STORAGE_KEYS.ACTIVE_LENS_PACK_ID;
+const ADAPTER_PROFILE_OVERRIDES_KEY = JOB_CONTRACTS?.STORAGE_KEYS.ADAPTER_PROFILE_OVERRIDES;
+const ADAPTER_PROFILE_LAST_KNOWN_GOOD_KEY = JOB_CONTRACTS?.STORAGE_KEYS.ADAPTER_PROFILE_LAST_KNOWN_GOOD;
+const ADAPTER_PROFILE_ROLLBACKS_KEY = JOB_CONTRACTS?.STORAGE_KEYS.ADAPTER_PROFILE_ROLLBACKS;
+const MESSAGES = JOB_CONTRACTS?.MESSAGES;
 const LENS_PACK_RUNTIME = globalThis.ARK_LENS_PACK_RUNTIME;
 const BUNDLED_LENS_PACK = globalThis.ARK_BUNDLED_LENS_PACK;
 const SOURCE_ADAPTERS_RUNTIME = globalThis.ARK_SOURCE_ADAPTERS;
 
-if (!LENS_PACK_RUNTIME || !BUNDLED_LENS_PACK || !SOURCE_ADAPTERS_RUNTIME) {
-  throw new Error("ARK Lens Pack and source adapter runtimes were not loaded before the popup.");
+if (!BROWSER || !JOB_CONTRACTS || !JOB_RUNTIME_ORDER || !LENS_PACK_RUNTIME || !BUNDLED_LENS_PACK || !SOURCE_ADAPTERS_RUNTIME) {
+  throw new Error("ARK browser, Job contract, runtime-order, Lens Pack, and source adapter runtimes must load before the popup.");
 }
 const SOURCE_ADAPTERS = SOURCE_ADAPTERS_RUNTIME.listAdapterDefinitions();
 
@@ -22,13 +26,14 @@ let currentPopupSession = { active: false };
 let pendingDoctorHelpFile = null;
 let pendingRepairProfile = null;
 let pendingRepairTest = null;
+let removePopupStorageChangeListener = null;
 
 function normalizeLensPack(lensPack) {
   return LENS_PACK_RUNTIME.migrateLensPack(lensPack, BUNDLED_LENS_PACK);
 }
 
 async function ensureLensPackStorage() {
-  const result = await chrome.storage.local.get([
+  const result = await BROWSER.storage.get([
     LENS_PACKS_KEY,
     ACTIVE_LENS_PACK_ID_KEY
   ]);
@@ -39,7 +44,7 @@ async function ensureLensPackStorage() {
   );
 
   if (migrated.changed) {
-    await chrome.storage.local.set({
+    await BROWSER.storage.set({
       [LENS_PACKS_KEY]: migrated.packs,
       [ACTIVE_LENS_PACK_ID_KEY]: migrated.activeId
     });
@@ -67,7 +72,7 @@ async function saveLensPack(lensPack, makeActive = true) {
     updates[ACTIVE_LENS_PACK_ID_KEY] = normalized.id;
   }
 
-  await chrome.storage.local.set(updates);
+  await BROWSER.storage.set(updates);
 }
 
 function sourceLabel(sourceAdapter) {
@@ -152,47 +157,25 @@ function download(filename, content, mimeType) {
 }
 
 async function getActiveTab() {
-  const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  return tab;
+  return BROWSER.tabs.getActive();
 }
 
 async function ensureContentBundle(tabId) {
-  await chrome.scripting.executeScript({
-    target: { tabId },
-    files: [
-      "lens-packs/bundled_lens_pack.js",
-      "lens-packs/lens_pack_runtime.js",
-      "core/lens_item.js",
-      "core/deterministic_matcher.js",
-      "core/extraction_result.js",
-      "sources/source_adapter_registry.js",
-      "sources/jobs/job_source_catalogue.js",
-      "sources/dom_read_utils.js",
-      "sources/adapter_diagnostics.js",
-      "sources/jobs/job_extraction_builder.js",
-      "sources/jobs/job_adapter_result.js",
-      "sources/jobs/linkedin_jobs_adapter.js",
-      "sources/jobs/seek_jobs_adapter.js",
-      "compatibility/job_extraction_compat.js",
-      "policies/job_capture_policy.js",
-      "policies/job_policy_runtime.js",
-      "content_bundle.js"
-    ]
-  });
+  await BROWSER.scripting.injectOrdered(tabId, JOB_RUNTIME_ORDER.CONTENT_SCRIPT_FILES);
 }
 
 async function sendToTab(tabId, message) {
   await ensureContentBundle(tabId);
-  return chrome.tabs.sendMessage(tabId, message);
+  return BROWSER.tabs.sendMessage(tabId, message);
 }
 
 async function getSession() {
-  const result = await chrome.storage.local.get(SESSION_KEY);
+  const result = await BROWSER.storage.get(SESSION_KEY);
   return result[SESSION_KEY] || { active: false };
 }
 
 async function getRecordsCount() {
-  const result = await chrome.storage.local.get(RECORDS_KEY);
+  const result = await BROWSER.storage.get(RECORDS_KEY);
   const records = result[RECORDS_KEY] || {};
   return Object.keys(records).length;
 }
@@ -476,7 +459,7 @@ function renderDoctorStatus(status) {
 
 async function refreshAdapterDoctorStatus() {
   try {
-    const status = await sendDoctorMessage("ARK_ADAPTER_DOCTOR_STATUS");
+    const status = await sendDoctorMessage(MESSAGES.ADAPTER_DOCTOR_STATUS);
     renderDoctorStatus(status);
     await updateDoctorRollbackAvailability(status);
     return status;
@@ -566,7 +549,7 @@ function renderDoctorResult(value) {
 }
 
 async function runAdapterDoctorHealthCheck() {
-  const result = await sendDoctorMessage("ARK_ADAPTER_DOCTOR_HEALTH_CHECK");
+    const result = await sendDoctorMessage(MESSAGES.ADAPTER_DOCTOR_HEALTH_CHECK);
   renderDoctorHealth(result);
   renderDoctorResult(result);
   await updateDoctorRollbackAvailability(result?.status);
@@ -636,7 +619,7 @@ function renderRepairInspection(result, profile) {
 }
 
 async function getDoctorProfileStorage() {
-  const result = await chrome.storage.local.get([
+  const result = await BROWSER.storage.get([
     ADAPTER_PROFILE_OVERRIDES_KEY,
     ADAPTER_PROFILE_LAST_KNOWN_GOOD_KEY,
     ADAPTER_PROFILE_ROLLBACKS_KEY
@@ -723,7 +706,7 @@ async function startSession() {
 
   await ensureLensPackStorage();
 
-  const status = await sendToTab(tab.id, { type: "ARK_ADAPTER_DOCTOR_STATUS" });
+    const status = await sendToTab(tab.id, { type: MESSAGES.ADAPTER_DOCTOR_STATUS });
 
   if (!status?.source_adapter_id || status.adapter_status !== "implemented") {
     throw new Error("Open a supported LinkedIn or SEEK Jobs page before starting a session.");
@@ -736,7 +719,7 @@ async function startSession() {
   const now = new Date().toISOString();
   const session = {
     active: true,
-    session_id: `session_${Date.now()}`,
+    session_id: `${JOB_CONTRACTS.SESSION.ID_PREFIX}${Date.now()}`,
     started_at: now,
     stopped_at: null,
     tab_id: tab.id,
@@ -748,15 +731,15 @@ async function startSession() {
     last_capture_at: null
   };
 
-  await chrome.storage.local.set({ [SESSION_KEY]: session });
+  await BROWSER.storage.set({ [SESSION_KEY]: session });
   try {
-    const result = await sendToTab(tab.id, { type: "ARK_START_LISTENING" });
+    const result = await sendToTab(tab.id, { type: MESSAGES.START_LISTENING });
 
     if (result?.ok === false) {
       throw new Error(result.message || "The capture listener could not start.");
     }
   } catch (error) {
-    await chrome.storage.local.set({
+    await BROWSER.storage.set({
       [SESSION_KEY]: {
         ...session,
         active: false,
@@ -778,11 +761,11 @@ async function stopSession() {
     stopped_at: new Date().toISOString()
   };
 
-  await chrome.storage.local.set({ [SESSION_KEY]: stopped });
+  await BROWSER.storage.set({ [SESSION_KEY]: stopped });
 
   if (session.tab_id) {
     try {
-      await chrome.tabs.sendMessage(session.tab_id, { type: "ARK_STOP_LISTENING" });
+      await BROWSER.tabs.sendMessage(session.tab_id, { type: MESSAGES.STOP_LISTENING });
     } catch (error) {
       console.warn("[ARK Lens] stop listener message failed", error);
     }
@@ -793,7 +776,7 @@ async function stopSession() {
 }
 
 document.getElementById("lensSelect").addEventListener("change", async (event) => {
-  await chrome.storage.local.set({ [ACTIVE_LENS_PACK_ID_KEY]: event.target.value });
+  await BROWSER.storage.set({ [ACTIVE_LENS_PACK_ID_KEY]: event.target.value });
   await renderLensControls();
 });
 
@@ -826,11 +809,11 @@ document.getElementById("sourceOptions").addEventListener("change", async (event
 });
 
 document.getElementById("alphaGuide").addEventListener("click", () => {
-  chrome.tabs.create({ url: chrome.runtime.getURL("alpha/guide.html") });
+  BROWSER.openExtensionPage("alpha/guide.html");
 });
 
 document.getElementById("editLens").addEventListener("click", () => {
-  chrome.tabs.create({ url: chrome.runtime.getURL("lens-editor/editor.html") });
+  BROWSER.openExtensionPage("lens-editor/editor.html");
 });
 
 document.getElementById("sessionToggle").addEventListener("click", async () => {
@@ -875,7 +858,7 @@ document.getElementById("capture").addEventListener("click", async () => {
     }
 
     await ensureLensPackStorage();
-    const result = await sendToTab(tab.id, { type: "ARK_CAPTURE_NOW" });
+  const result = await sendToTab(tab.id, { type: MESSAGES.CAPTURE_NOW });
 
     if (!result?.ok) {
       throw new Error(result?.message || "No job was ready to capture.");
@@ -891,7 +874,7 @@ document.getElementById("capture").addEventListener("click", async () => {
 });
 
 document.getElementById("report").addEventListener("click", () => {
-  chrome.tabs.create({ url: chrome.runtime.getURL("report/report.html") });
+  BROWSER.openExtensionPage("report/report.html");
 });
 
 document.getElementById("adapterDoctor").addEventListener("toggle", async (event) => {
@@ -926,7 +909,7 @@ document.getElementById("doctorTest").addEventListener("click", async () => {
 
 document.getElementById("doctorExportDebug").addEventListener("click", async () => {
   try {
-    const result = await sendDoctorMessage("ARK_ADAPTER_DOCTOR_EXPORT_DEBUG");
+    const result = await sendDoctorMessage(MESSAGES.ADAPTER_DOCTOR_EXPORT_DEBUG);
 
     if (!result?.ok || !result.debug) {
       throw new Error(result?.message || "Adapter debug export failed.");
@@ -957,7 +940,7 @@ document.getElementById("doctorCancelHelp").addEventListener("click", clearDocto
 
 document.getElementById("doctorExportProfile").addEventListener("click", async () => {
   try {
-    const result = await sendDoctorMessage("ARK_ADAPTER_DOCTOR_EXPORT_PROFILE");
+    const result = await sendDoctorMessage(MESSAGES.ADAPTER_DOCTOR_EXPORT_PROFILE);
 
     if (!result?.ok || !result.profile) {
       throw new Error(result?.message || "Adapter profile export failed.");
@@ -978,9 +961,9 @@ document.getElementById("doctorExportProfile").addEventListener("click", async (
 document.getElementById("doctorPreviewRepair").addEventListener("click", async () => {
   try {
     const profile = JSON.parse(document.getElementById("doctorRepairJson").value || "{}");
-    const result = await sendDoctorMessage("ARK_ADAPTER_DOCTOR_VALIDATE_REPAIR", { profile });
+    const result = await sendDoctorMessage(MESSAGES.ADAPTER_DOCTOR_VALIDATE_REPAIR, { profile });
     if (result?.validation?.valid) {
-      const current = await sendDoctorMessage("ARK_ADAPTER_DOCTOR_EXPORT_PROFILE");
+      const current = await sendDoctorMessage(MESSAGES.ADAPTER_DOCTOR_EXPORT_PROFILE);
       result.change_summary = summarizeRepairChanges(current?.profile, profile);
     }
     renderRepairInspection(result, profile);
@@ -1004,7 +987,7 @@ document.getElementById("doctorTestRepair").addEventListener("click", async () =
 
     resultCopy.className = "doctor-stage-copy muted-copy";
     resultCopy.textContent = "Testing this repair on the current job…";
-    const result = await sendDoctorMessage("ARK_ADAPTER_DOCTOR_TEST_REPAIR", {
+    const result = await sendDoctorMessage(MESSAGES.ADAPTER_DOCTOR_TEST_REPAIR, {
       profile: pendingRepairProfile
     });
     pendingRepairTest = result;
@@ -1038,7 +1021,7 @@ document.getElementById("doctorActivateRepair").addEventListener("click", async 
       throw new Error("Return to the source where this Repair File was tested.");
     }
 
-    const current = await sendDoctorMessage("ARK_ADAPTER_DOCTOR_EXPORT_PROFILE");
+    const current = await sendDoctorMessage(MESSAGES.ADAPTER_DOCTOR_EXPORT_PROFILE);
     if (!current?.profile) throw new Error("The current capture setup could not be backed up.");
 
     const storage = await getDoctorProfileStorage();
@@ -1052,7 +1035,7 @@ document.getElementById("doctorActivateRepair").addEventListener("click", async 
       current.profile_source
     );
 
-    await chrome.storage.local.set({
+    await BROWSER.storage.set({
       [ADAPTER_PROFILE_OVERRIDES_KEY]: activation.overrides,
       [ADAPTER_PROFILE_ROLLBACKS_KEY]: activation.rollbacks
     });
@@ -1082,7 +1065,7 @@ document.getElementById("doctorRollback").addEventListener("click", async () => 
     );
     if (!rollback.restored) throw new Error("No previous capture setup is available.");
 
-    await chrome.storage.local.set({
+    await BROWSER.storage.set({
       [ADAPTER_PROFILE_OVERRIDES_KEY]: rollback.overrides,
       [ADAPTER_PROFILE_ROLLBACKS_KEY]: rollback.rollbacks
     });
@@ -1113,7 +1096,7 @@ document.getElementById("doctorResetProfile").addEventListener("click", async ()
       return;
     }
 
-    const current = await sendDoctorMessage("ARK_ADAPTER_DOCTOR_EXPORT_PROFILE");
+    const current = await sendDoctorMessage(MESSAGES.ADAPTER_DOCTOR_EXPORT_PROFILE);
     const storage = await getDoctorProfileStorage();
     const overrides = { ...storage.overrides };
     const rollbacks = {
@@ -1128,7 +1111,7 @@ document.getElementById("doctorResetProfile").addEventListener("click", async ()
     };
     delete overrides[adapterId];
 
-    await chrome.storage.local.set({
+    await BROWSER.storage.set({
       [ADAPTER_PROFILE_OVERRIDES_KEY]: overrides,
       [ADAPTER_PROFILE_ROLLBACKS_KEY]: rollbacks
     });
@@ -1159,10 +1142,11 @@ function handlePopupStorageChange(changes, areaName) {
 function cleanupPopup() {
   stopSessionTimer();
   clearTimeout(popupNoticeTimer);
-  chrome.storage.onChanged.removeListener(handlePopupStorageChange);
+  removePopupStorageChangeListener?.();
+  removePopupStorageChangeListener = null;
 }
 
-chrome.storage.onChanged.addListener(handlePopupStorageChange);
+removePopupStorageChangeListener = BROWSER.storage.onChanged(handlePopupStorageChange);
 window.addEventListener("unload", cleanupPopup, { once: true });
 
 refreshPopup();

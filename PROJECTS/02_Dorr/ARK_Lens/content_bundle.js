@@ -1,7 +1,14 @@
 // The async wrapper lets a reinjected bundle verify that the previous extension
 // context is genuinely usable before reusing its listener.
 (async () => {
-  const CONTENT_BUNDLE_VERSION = "v2026.06.019-fixed-fit-columns";
+  const BROWSER = globalThis.ARK_BROWSER_CAPABILITIES;
+  const JOB_CONTRACTS = globalThis.ARK_JOB_CONTRACTS;
+
+  if (!BROWSER || !JOB_CONTRACTS) {
+    throw new Error("ARK browser capabilities and Job contracts were not loaded before the content bundle.");
+  }
+
+  const CONTENT_BUNDLE_VERSION = JOB_CONTRACTS.VERSIONS.CONTENT_BUNDLE;
 
   const existingContextHealthy = await (async () => {
     try {
@@ -38,15 +45,15 @@
   // CONSTANTS
   // ============================================================
 
-  const SCHEMA_VERSION = "v2026.06.001";
-  const ADAPTER_VERSION = "v2026.06.003";
-
-  const SESSION_KEY = "ark_lens_session";
-  const RECORDS_KEY = "ark_lens_records";
-  const LENS_PACKS_KEY = "ark_lens_packs";
-  const ACTIVE_LENS_PACK_ID_KEY = "ark_lens_active_lens_pack_id";
-  const ADAPTER_PROFILE_OVERRIDES_KEY = "ark_lens_adapter_profile_overrides";
-  const ADAPTER_PROFILE_LAST_KNOWN_GOOD_KEY = "ark_lens_adapter_profile_last_known_good";
+  const SCHEMA_VERSION = JOB_CONTRACTS.VERSIONS.RECORD_SCHEMA;
+  const ADAPTER_VERSION = JOB_CONTRACTS.VERSIONS.ADAPTER;
+  const SESSION_KEY = JOB_CONTRACTS.STORAGE_KEYS.SESSION;
+  const RECORDS_KEY = JOB_CONTRACTS.STORAGE_KEYS.RECORDS;
+  const LENS_PACKS_KEY = JOB_CONTRACTS.STORAGE_KEYS.LENS_PACKS;
+  const ACTIVE_LENS_PACK_ID_KEY = JOB_CONTRACTS.STORAGE_KEYS.ACTIVE_LENS_PACK_ID;
+  const ADAPTER_PROFILE_OVERRIDES_KEY = JOB_CONTRACTS.STORAGE_KEYS.ADAPTER_PROFILE_OVERRIDES;
+  const ADAPTER_PROFILE_LAST_KNOWN_GOOD_KEY = JOB_CONTRACTS.STORAGE_KEYS.ADAPTER_PROFILE_LAST_KNOWN_GOOD;
+  const MESSAGES = JOB_CONTRACTS.MESSAGES;
   const LENS_PACK_RUNTIME = globalThis.ARK_LENS_PACK_RUNTIME;
   const BUNDLED_LENS_PACK = globalThis.ARK_BUNDLED_LENS_PACK;
   const DETERMINISTIC_MATCHER = globalThis.ARK_DETERMINISTIC_MATCHER;
@@ -83,7 +90,7 @@
 
   async function probeExtensionContext() {
     try {
-      await chrome.storage.local.get(SESSION_KEY);
+      await BROWSER.storage.get(SESSION_KEY);
       return true;
     } catch (_error) {
       return false;
@@ -100,7 +107,7 @@
 
   function isExtensionContextHealthy() {
     try {
-      return Boolean(chrome?.runtime?.id);
+      return BROWSER.runtime.isAvailable();
     } catch (_error) {
       return false;
     }
@@ -180,7 +187,7 @@
   // ============================================================
 
   async function getSession() {
-    const result = await chrome.storage.local.get(SESSION_KEY);
+    const result = await BROWSER.storage.get(SESSION_KEY);
 
     return result[SESSION_KEY] || {
       active: false,
@@ -190,7 +197,7 @@
   }
 
   async function getRecords() {
-    const result = await chrome.storage.local.get(RECORDS_KEY);
+    const result = await BROWSER.storage.get(RECORDS_KEY);
     return result[RECORDS_KEY] || {};
   }
 
@@ -479,7 +486,7 @@
     }
 
     try {
-      const result = await chrome.storage.local.get(ADAPTER_PROFILE_OVERRIDES_KEY);
+      const result = await BROWSER.storage.get(ADAPTER_PROFILE_OVERRIDES_KEY);
       const overrides = result[ADAPTER_PROFILE_OVERRIDES_KEY] || {};
       const override = overrides[adapterId];
 
@@ -515,7 +522,7 @@
   }
 
   async function ensureLensPackStorage() {
-    const result = await chrome.storage.local.get([
+    const result = await BROWSER.storage.get([
       LENS_PACKS_KEY,
       ACTIVE_LENS_PACK_ID_KEY
     ]);
@@ -526,7 +533,7 @@
     );
 
     if (migrated.changed) {
-      await chrome.storage.local.set({
+      await BROWSER.storage.set({
         [LENS_PACKS_KEY]: migrated.packs,
         [ACTIVE_LENS_PACK_ID_KEY]: migrated.activeId
       });
@@ -597,7 +604,7 @@
 
     records[record.record_id] = record;
 
-    await chrome.storage.local.set({
+    await BROWSER.storage.set({
       [RECORDS_KEY]: records
     });
 
@@ -611,7 +618,7 @@
       return;
     }
 
-    await chrome.storage.local.set({
+    await BROWSER.storage.set({
       [SESSION_KEY]: {
         ...session,
         last_captured_job_id: record.source?.source_item_id || null,
@@ -1344,10 +1351,10 @@
   async function rememberLastKnownGoodAdapterProfile(adapterId, profile, profileSource) {
     if (!adapterId || !profile) return;
 
-    const result = await chrome.storage.local.get(ADAPTER_PROFILE_LAST_KNOWN_GOOD_KEY);
+    const result = await BROWSER.storage.get(ADAPTER_PROFILE_LAST_KNOWN_GOOD_KEY);
     const profiles = result[ADAPTER_PROFILE_LAST_KNOWN_GOOD_KEY] || {};
 
-    await chrome.storage.local.set({
+    await BROWSER.storage.set({
       [ADAPTER_PROFILE_LAST_KNOWN_GOOD_KEY]: {
         ...profiles,
         [adapterId]: {
@@ -2049,7 +2056,7 @@
   window.__arkLensStopObserver = stopObserver;
 
   function handleArkLensMessage(message, _sender, sendResponse) {
-    if (message?.type === "ARK_START_LISTENING") {
+    if (message?.type === MESSAGES.START_LISTENING) {
       startObserver()
         .then(() => sendResponse({ ok: true }))
         .catch((error) => sendResponse({
@@ -2059,12 +2066,12 @@
       return true;
     }
 
-    if (message?.type === "ARK_STOP_LISTENING") {
+    if (message?.type === MESSAGES.STOP_LISTENING) {
       stopObserver();
       return;
     }
 
-    if (message?.type === "ARK_CAPTURE_NOW") {
+    if (message?.type === MESSAGES.CAPTURE_NOW) {
       captureCurrentJob("manual_capture")
         .then((record) => sendResponse({
           ok: Boolean(record),
@@ -2084,7 +2091,7 @@
       return true;
     }
 
-    if (message?.type === "ARK_ADAPTER_DOCTOR_STATUS") {
+    if (message?.type === MESSAGES.ADAPTER_DOCTOR_STATUS) {
       getAdapterDoctorStatus()
         .then(sendResponse)
         .catch((error) => sendResponse({
@@ -2094,7 +2101,7 @@
       return true;
     }
 
-    if (message?.type === "ARK_ADAPTER_DIAGNOSTICS") {
+    if (message?.type === MESSAGES.ADAPTER_DIAGNOSTICS) {
       getCurrentAdapterDiagnostic()
         .then(sendResponse)
         .catch((error) => sendResponse(ADAPTER_DIAGNOSTICS.createAdapterDiagnostic({
@@ -2111,7 +2118,7 @@
       return true;
     }
 
-    if (message?.type === "ARK_ADAPTER_DOCTOR_HEALTH_CHECK") {
+    if (message?.type === MESSAGES.ADAPTER_DOCTOR_HEALTH_CHECK) {
       runAdapterDoctorHealthCheck()
         .then(sendResponse)
         .catch((error) => sendResponse({
@@ -2123,7 +2130,7 @@
       return true;
     }
 
-    if (message?.type === "ARK_ADAPTER_DOCTOR_VALIDATE_REPAIR") {
+    if (message?.type === MESSAGES.ADAPTER_DOCTOR_VALIDATE_REPAIR) {
       try {
         sendResponse(inspectAdapterRepairProfile(message.profile));
       } catch (error) {
@@ -2137,7 +2144,7 @@
       return;
     }
 
-    if (message?.type === "ARK_ADAPTER_DOCTOR_TEST_REPAIR") {
+    if (message?.type === MESSAGES.ADAPTER_DOCTOR_TEST_REPAIR) {
       testAdapterRepairProfile(message.profile)
         .then(sendResponse)
         .catch((error) => sendResponse({
@@ -2149,7 +2156,7 @@
       return true;
     }
 
-    if (message?.type === "ARK_ADAPTER_DOCTOR_TEST_EXTRACTION") {
+    if (message?.type === MESSAGES.ADAPTER_DOCTOR_TEST_EXTRACTION) {
       testAdapterDoctorExtraction()
         .then(sendResponse)
         .catch((error) => sendResponse({
@@ -2159,7 +2166,7 @@
       return true;
     }
 
-    if (message?.type === "ARK_ADAPTER_DOCTOR_EXPORT_DEBUG") {
+    if (message?.type === MESSAGES.ADAPTER_DOCTOR_EXPORT_DEBUG) {
       exportAdapterDoctorDebug()
         .then(sendResponse)
         .catch((error) => sendResponse({
@@ -2169,7 +2176,7 @@
       return true;
     }
 
-    if (message?.type === "ARK_ADAPTER_DOCTOR_EXPORT_PROFILE") {
+    if (message?.type === MESSAGES.ADAPTER_DOCTOR_EXPORT_PROFILE) {
       getAdapterDoctorContext()
         .then(({ adapter, profile, profile_source }) => sendResponse({
           ok: Boolean(adapter && profile),
@@ -2188,11 +2195,11 @@
     }
   }
 
-  chrome.runtime.onMessage.addListener(handleArkLensMessage);
+  const removeArkLensMessageListener = BROWSER.runtime.onMessage(handleArkLensMessage);
 
   window.__arkLensRemoveMessageListener = () => {
     try {
-      chrome.runtime.onMessage.removeListener(handleArkLensMessage);
+      removeArkLensMessageListener();
     } catch (_error) {
       // The extension context may already be invalidated.
     }

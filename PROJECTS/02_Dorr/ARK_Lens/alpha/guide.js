@@ -1,13 +1,15 @@
-const RECORDS_KEY = "ark_lens_records";
-const SESSION_KEY = "ark_lens_session";
-const LENS_PACKS_KEY = "ark_lens_packs";
-const ACTIVE_LENS_PACK_ID_KEY = "ark_lens_active_lens_pack_id";
+const BROWSER = globalThis.ARK_BROWSER_CAPABILITIES;
+const JOB_CONTRACTS = globalThis.ARK_JOB_CONTRACTS;
+const RECORDS_KEY = JOB_CONTRACTS?.STORAGE_KEYS.RECORDS;
+const SESSION_KEY = JOB_CONTRACTS?.STORAGE_KEYS.SESSION;
+const LENS_PACKS_KEY = JOB_CONTRACTS?.STORAGE_KEYS.LENS_PACKS;
+const ACTIVE_LENS_PACK_ID_KEY = JOB_CONTRACTS?.STORAGE_KEYS.ACTIVE_LENS_PACK_ID;
 const LENS_PACK_RUNTIME = globalThis.ARK_LENS_PACK_RUNTIME;
 const BUNDLED_LENS_PACK = globalThis.ARK_BUNDLED_LENS_PACK;
 let currentAlphaSummary = null;
 
-if (!LENS_PACK_RUNTIME || !BUNDLED_LENS_PACK) {
-  throw new Error("ARK Lens Pack runtime was not loaded before the Alpha Guide.");
+if (!BROWSER || !JOB_CONTRACTS || !LENS_PACK_RUNTIME || !BUNDLED_LENS_PACK) {
+  throw new Error("ARK browser capabilities, Job contracts, and Lens Pack runtime must load before the Alpha Guide.");
 }
 
 function getFeedbackValue(record) {
@@ -89,7 +91,7 @@ function buildPeerTestSummary(manifest, activeLens, records, session, generatedA
 }
 
 async function ensureLensStorage() {
-  const stored = await chrome.storage.local.get([
+  const stored = await BROWSER.storage.get([
     LENS_PACKS_KEY,
     ACTIVE_LENS_PACK_ID_KEY
   ]);
@@ -100,7 +102,7 @@ async function ensureLensStorage() {
   );
 
   if (migrated.changed) {
-    await chrome.storage.local.set({
+    await BROWSER.storage.set({
       [LENS_PACKS_KEY]: migrated.packs,
       [ACTIVE_LENS_PACK_ID_KEY]: migrated.activeId
     });
@@ -129,11 +131,11 @@ function setNotice(message, isError = false) {
 async function loadAlphaState() {
   const [{ activeLens }, stored] = await Promise.all([
     ensureLensStorage(),
-    chrome.storage.local.get([RECORDS_KEY, SESSION_KEY])
+    BROWSER.storage.get([RECORDS_KEY, SESSION_KEY])
   ]);
   const records = Object.values(stored[RECORDS_KEY] || {});
   const session = stored[SESSION_KEY] || { active: false };
-  const manifest = chrome.runtime.getManifest();
+  const manifest = BROWSER.runtime.getManifest();
 
   return { activeLens, records, session, manifest };
 }
@@ -260,17 +262,17 @@ document.getElementById("refreshReadiness").addEventListener("click", async () =
 });
 
 document.getElementById("openLensEditor").addEventListener("click", () => {
-  chrome.tabs.create({ url: chrome.runtime.getURL("lens-editor/editor.html") });
+  BROWSER.openExtensionPage("lens-editor/editor.html");
 });
 
 document.getElementById("openReport").addEventListener("click", () => {
-  chrome.tabs.create({ url: chrome.runtime.getURL("report/report.html") });
+  BROWSER.openExtensionPage("report/report.html");
 });
 
 document.getElementById("downloadAlphaSummary").addEventListener("click", async () => {
   try {
     await refreshReadiness();
-    const version = chrome.runtime.getManifest().version;
+    const version = BROWSER.runtime.getManifest().version;
     downloadText(
       `ark-lens-v${version}-alpha-test-summary.json`,
       JSON.stringify(currentAlphaSummary, null, 2),
@@ -284,14 +286,14 @@ document.getElementById("downloadAlphaSummary").addEventListener("click", async 
 
 document.getElementById("copyFeedbackTemplate").addEventListener("click", async () => {
   try {
-    await copyText(getFeedbackTemplate(chrome.runtime.getManifest().version));
+    await copyText(getFeedbackTemplate(BROWSER.runtime.getManifest().version));
     setNotice("Feedback template copied.");
   } catch (error) {
     setNotice(error?.message || "The feedback template could not be copied.", true);
   }
 });
 
-chrome.storage.onChanged.addListener((changes, areaName) => {
+BROWSER.storage.onChanged((changes, areaName) => {
   if (
     areaName === "local" &&
     (

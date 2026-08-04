@@ -132,7 +132,10 @@ const feedFiles = list(feedDir);
 const firefoxFeedFiles = list(firefoxFeedDir);
 const safariFeedFiles = list(safariFeedDir);
 
-assert.equal(jobFiles.length, 51);
+assert.equal(jobFiles.length, 54);
+assert.ok(jobFiles.includes("platform/browser_capabilities.js"));
+assert.ok(jobFiles.includes("contracts/job_contracts.js"));
+assert.ok(jobFiles.includes("runtime/job_runtime_order.js"));
 assert.ok(jobFiles.includes("sources/jobs/job_source_catalogue.js"));
 assert.ok(jobFiles.includes("sources/jobs/linkedin_jobs_adapter.js"));
 assert.equal(jobFiles.some((file) => /(^|\/)feeds?(\/|[-_.])/i.test(file)), false);
@@ -257,7 +260,7 @@ const jobArchive = validateZip(jobZip, jobName, jobFiles);
 const feedArchive = validateZip(feedZip, feedName, FEED_FILES);
 const firefoxFeedArchive = validateZip(firefoxFeedZip, firefoxFeedName, FEED_FILES);
 const safariFeedArchive = validateZip(safariFeedZip, safariFeedName, FEED_FILES);
-assert.equal(jobArchive.entryCount, 51);
+assert.equal(jobArchive.entryCount, 54);
 assert.equal(feedArchive.entryCount, 17);
 assert.equal(firefoxFeedArchive.entryCount, 17);
 assert.equal(safariFeedArchive.entryCount, 17);
@@ -277,7 +280,7 @@ assert.deepEqual(
   "Safari ZIP manifest"
 );
 
-console.log("ARK Lens Job/Feed exact-file package isolation passed (51 Job, 17 Chrome Feed, 17 Firefox Feed, 17 Safari Feed entries)");
+console.log("ARK Lens Job/Feed exact-file package isolation passed (54 Job, 17 Chrome Feed, 17 Firefox Feed, 17 Safari Feed entries)");
 console.log(`Job ZIP valid (${jobArchive.entryCount} files, SHA-256 ${jobArchive.hash})`);
 console.log(`Chrome Feed ZIP valid (${feedArchive.entryCount} files, SHA-256 ${feedArchive.hash})`);
 console.log(`Firefox Feed ZIP valid (${firefoxFeedArchive.entryCount} files, SHA-256 ${firefoxFeedArchive.hash})`);

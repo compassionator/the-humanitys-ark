@@ -22,6 +22,9 @@ const { migrateLensPack } = require("../lens-packs/lens_pack_runtime.js");
 const { containsAny } = require("../core/deterministic_matcher.js");
 const { scoreSignals } = require("../policies/job_policy_runtime.js");
 const sourceAdaptersRuntime = require("../sources/jobs/job_source_catalogue.js");
+const { createBrowserCapabilities } = require("../platform/browser_capabilities.js");
+const jobContracts = require("../contracts/job_contracts.js");
+const jobRuntimeOrder = require("../runtime/job_runtime_order.js");
 
 function extractFunction(source, name) {
   const start = source.indexOf(`function ${name}(`);
@@ -75,39 +78,42 @@ function assertedDomIds(js, html, label) {
 
 function testBackgroundRouting() {
   const listeners = {};
+  const chrome = {
+    action: {
+      setIcon: async () => {},
+      setBadgeText: async () => {},
+      setBadgeBackgroundColor: async () => {},
+      setBadgeTextColor: async () => {},
+      setTitle: async () => {}
+    },
+    storage: {
+      local: {
+        get: async () => ({}),
+        set: async () => {}
+      },
+      onChanged: { addListener: (listener) => { listeners.storage = listener; } }
+    },
+    scripting: { executeScript: async () => {} },
+    tabs: {
+      get: async () => null,
+      create: async () => {},
+      sendMessage: async () => {},
+      onUpdated: { addListener: (listener) => { listeners.updated = listener; } },
+      onRemoved: { addListener: (listener) => { listeners.removed = listener; } }
+    },
+    runtime: {
+      getURL: (relativePath) => `chrome-extension://ark-lens/${relativePath}`,
+      onStartup: { addListener: (listener) => { listeners.startup = listener; } },
+      onInstalled: { addListener: (listener) => { listeners.installed = listener; } }
+    }
+  };
   const context = {
     URL,
     console,
     ARK_SOURCE_ADAPTERS: sourceAdaptersRuntime,
-    chrome: {
-      action: {
-        setIcon: async () => {},
-        setBadgeText: async () => {},
-        setBadgeBackgroundColor: async () => {},
-        setBadgeTextColor: async () => {},
-        setTitle: async () => {}
-      },
-      storage: {
-        local: {
-          get: async () => ({}),
-          set: async () => {}
-        },
-        onChanged: { addListener: (listener) => { listeners.storage = listener; } }
-      },
-      scripting: { executeScript: async () => {} },
-      tabs: {
-        get: async () => null,
-        create: async () => {},
-        sendMessage: async () => {},
-        onUpdated: { addListener: (listener) => { listeners.updated = listener; } },
-        onRemoved: { addListener: (listener) => { listeners.removed = listener; } }
-      },
-      runtime: {
-        getURL: (relativePath) => `chrome-extension://ark-lens/${relativePath}`,
-        onStartup: { addListener: (listener) => { listeners.startup = listener; } },
-        onInstalled: { addListener: (listener) => { listeners.installed = listener; } }
-      }
-    }
+    ARK_BROWSER_CAPABILITIES: createBrowserCapabilities({ chrome }),
+    ARK_JOB_CONTRACTS: jobContracts,
+    ARK_JOB_RUNTIME_ORDER: jobRuntimeOrder
   };
 
   vm.runInNewContext(
@@ -710,7 +716,7 @@ function testPopupSessionTimer() {
   assert.match(popupSource, /sessionTimerInterval = setInterval\(/);
   assert.match(popupSource, /clearInterval\(sessionTimerInterval\)/);
   assert.match(popupSource, /window\.addEventListener\("unload", cleanupPopup/);
-  assert.match(popupSource, /chrome\.storage\.onChanged\.removeListener\(handlePopupStorageChange\)/);
+  assert.match(popupSource, /removePopupStorageChangeListener\?\.\(\)/);
   assert.doesNotMatch(backgroundSource, /setInterval\(/);
 }
 
@@ -721,44 +727,20 @@ function testStaticContracts() {
   assert.equal("content_scripts" in manifest, false);
   assert.equal("web_accessible_resources" in manifest, false);
 
-  assert.match(contentSource, /const SCHEMA_VERSION = "v2026\.06\.001"/);
-  assert.match(contentSource, /const ADAPTER_VERSION = "v2026\.06\.003"/);
-  assert.match(
-    contentSource,
-    /const CONTENT_BUNDLE_VERSION = "v2026\.06\.019-fixed-fit-columns"/
-  );
+  assert.equal(jobContracts.VERSIONS.RECORD_SCHEMA, "v2026.06.001");
+  assert.equal(jobContracts.VERSIONS.ADAPTER, "v2026.06.003");
+  assert.equal(jobContracts.VERSIONS.CONTENT_BUNDLE, "v2026.06.019-fixed-fit-columns");
   assert.equal(canonicalLens.version, "v2026.06.019");
   assert.equal(canonicalLens.name, "My Job Search");
   assert.doesNotMatch(contentSource, /^\s*(?:import|export)\s/m);
   assert.doesNotMatch(contentSource, /function scoreSignals\(/);
   assert.doesNotMatch(contentSource, /function getMatchedSignals\(/);
   assert.match(contentSource, /JOB_POLICY\.classifyLensItem\(lensItem, activeLensPack\)/);
-  [backgroundSource, popupSource].forEach((source) => {
-    const itemIndex = source.indexOf('"core/lens_item.js"');
-    const matcherIndex = source.indexOf('"core/deterministic_matcher.js"');
-    const extractionIndex = source.indexOf('"core/extraction_result.js"');
-    const registryIndex = source.lastIndexOf('"sources/source_adapter_registry.js"');
-    const jobCatalogueIndex = source.lastIndexOf('"sources/jobs/job_source_catalogue.js"');
-    const domReadIndex = source.indexOf('"sources/dom_read_utils.js"');
-    const diagnosticsIndex = source.indexOf('"sources/adapter_diagnostics.js"');
-    const builderIndex = source.indexOf('"sources/jobs/job_extraction_builder.js"');
-    const resultIndex = source.indexOf('"sources/jobs/job_adapter_result.js"');
-    const linkedInIndex = source.indexOf('"sources/jobs/linkedin_jobs_adapter.js"');
-    const seekIndex = source.indexOf('"sources/jobs/seek_jobs_adapter.js"');
-    const compatibilityIndex = source.indexOf('"compatibility/job_extraction_compat.js"');
-    const capturePolicyIndex = source.indexOf('"policies/job_capture_policy.js"');
-    const policyIndex = source.indexOf('"policies/job_policy_runtime.js"');
-    const contentIndex = source.indexOf('"content_bundle.js"');
-    assert.ok(itemIndex >= 0 && itemIndex < matcherIndex);
-    assert.ok(matcherIndex < extractionIndex && extractionIndex < registryIndex);
-    assert.ok(registryIndex < jobCatalogueIndex && jobCatalogueIndex < domReadIndex);
-    assert.ok(domReadIndex < diagnosticsIndex);
-    assert.ok(diagnosticsIndex < builderIndex && builderIndex < resultIndex);
-    assert.ok(resultIndex < linkedInIndex && linkedInIndex < seekIndex);
-    assert.ok(seekIndex < compatibilityIndex);
-    assert.ok(compatibilityIndex < capturePolicyIndex && capturePolicyIndex < policyIndex);
-    assert.ok(policyIndex < contentIndex);
-  });
+  assert.equal(jobRuntimeOrder.CONTENT_SCRIPT_FILES[0], "platform/browser_capabilities.js");
+  assert.equal(jobRuntimeOrder.CONTENT_SCRIPT_FILES[1], "contracts/job_contracts.js");
+  assert.equal(jobRuntimeOrder.CONTENT_SCRIPT_FILES.at(-1), "content_bundle.js");
+  assert.match(backgroundSource, /JOB_RUNTIME_ORDER\.CONTENT_SCRIPT_FILES/);
+  assert.match(popupSource, /JOB_RUNTIME_ORDER\.CONTENT_SCRIPT_FILES/);
   assert.match(popupHtml, /\.\.\/sources\/source_adapter_registry\.js/);
   assert.match(popupHtml, /\.\.\/sources\/jobs\/job_source_catalogue\.js/);
   assert.doesNotMatch(contentSource, /\.innerHTML\s*=/);

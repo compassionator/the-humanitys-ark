@@ -62,12 +62,12 @@ function testSessionIndicatorContract() {
     title: "ARK Lens"
   });
 
-  assert.match(backgroundSource, /chrome\.action\.setIcon/);
-  assert.match(backgroundSource, /chrome\.action\.setBadgeText/);
-  assert.doesNotMatch(backgroundSource, /chrome\.action\.setBadgeBackgroundColor/);
-  assert.match(backgroundSource, /chrome\.storage\.onChanged\.addListener/);
-  assert.match(backgroundSource, /chrome\.runtime\.onStartup\.addListener/);
-  assert.match(backgroundSource, /chrome\.runtime\.onInstalled\.addListener/);
+assert.match(backgroundSource, /BROWSER\.action\.setIcon/);
+assert.match(backgroundSource, /BROWSER\.action\.setBadgeText/);
+assert.doesNotMatch(backgroundSource, /setBadgeBackgroundColor/);
+assert.match(backgroundSource, /BROWSER\.storage\.onChanged/);
+assert.match(backgroundSource, /BROWSER\.runtime\.onStartup/);
+assert.match(backgroundSource, /BROWSER\.runtime\.onInstalled/);
   assert.match(backgroundSource, /details\?\.reason === "install"/);
   assert.match(backgroundSource, /alpha\/guide\.html/);
   assert.equal(manifest.action.default_icon[16], "icons/ark-lens-16.png");

@@ -65,18 +65,6 @@ const EXPECTED_FOUNDATION_RUNTIME_ORDER = Object.freeze([
   ...EXPECTED_RUNTIME_ORDER
 ]);
 
-function uniqueLiterals(pattern) {
-  return [...new Set(
-    Object.values(sources).flatMap((source) => [...source.matchAll(pattern)].map((match) => match[1]))
-  )].sort();
-}
-
-function extractInjectedFiles(source) {
-  const match = source.match(/files:\s*\[([\s\S]*?)\]\s*\n\s*\}/);
-  assert.ok(match, "Expected a Job executeScript file list");
-  return [...match[1].matchAll(/"([^"]+\.js)"/g)].map((entry) => entry[1]);
-}
-
 assert.deepEqual(manifest.permissions, ["activeTab", "scripting", "storage"]);
 assert.deepEqual(manifest.host_permissions, [
   "https://www.linkedin.com/*",
@@ -98,24 +86,56 @@ assert.deepEqual(jobContracts.SESSION, {
   STOPPED_REASON_BROWSER_RESTART: "browser_restart"
 });
 
-assert.deepEqual(extractInjectedFiles(sources["background.js"]), EXPECTED_RUNTIME_ORDER);
-assert.deepEqual(extractInjectedFiles(sources["popup/popup.js"]), EXPECTED_RUNTIME_ORDER);
-assert.deepEqual(uniqueLiterals(/"(ark_lens_[^"]+)"/g), EXPECTED_STORAGE_KEYS);
-assert.deepEqual(uniqueLiterals(/"(ARK_[A-Z0-9_]+)"/g), EXPECTED_MESSAGES);
-assert.match(sources["background.js"], /stopped_reason:\s*"browser_restart"/);
-assert.match(sources["popup/popup.js"], /session_id:\s*`session_\$\{Date\.now\(\)\}`/);
+assert.match(sources["background.js"], /JOB_RUNTIME_ORDER\.CONTENT_SCRIPT_FILES/);
+assert.match(sources["popup/popup.js"], /JOB_RUNTIME_ORDER\.CONTENT_SCRIPT_FILES/);
+assert.doesNotMatch(sources["background.js"], /files:\s*\[/);
+assert.doesNotMatch(sources["popup/popup.js"], /files:\s*\[/);
+assert.match(sources["background.js"], /JOB_CONTRACTS\.SESSION\.STOPPED_REASON_BROWSER_RESTART/);
+assert.match(sources["popup/popup.js"], /JOB_CONTRACTS\.SESSION\.ID_PREFIX/);
 
 const rawApiPattern = /\b(?:chrome|browser)(?:\?\.|\.)(?:storage|tabs|scripting|runtime|action|windows)\b/g;
 const rawApiCounts = Object.fromEntries(
   Object.entries(sources).map(([file, source]) => [file, [...source.matchAll(rawApiPattern)].length])
 );
 assert.deepEqual(rawApiCounts, {
-  "background.js": 16,
-  "content_bundle.js": 13,
-  "popup/popup.js": 25,
-  "report/report.js": 5,
-  "lens-editor/editor.js": 4,
-  "alpha/guide.js": 11
+  "background.js": 0,
+  "content_bundle.js": 0,
+  "popup/popup.js": 0,
+  "report/report.js": 0,
+  "lens-editor/editor.js": 0,
+  "alpha/guide.js": 0
 });
+
+const protectedRoots = [
+  "alpha", "compatibility", "core", "domains", "lens-editor", "lens-packs",
+  "orchestration", "policies", "popup", "proofs", "report", "schemas", "sources"
+];
+const protectedFiles = ["background.js", "content_bundle.js"];
+for (const directory of protectedRoots) {
+  const directoryPath = path.join(root, directory);
+  if (!fs.existsSync(directoryPath)) continue;
+  const visit = (current) => {
+    for (const entry of fs.readdirSync(current, { withFileTypes: true })) {
+      const fullPath = path.join(current, entry.name);
+      if (entry.isDirectory()) visit(fullPath);
+      else if (entry.name.endsWith(".js")) protectedFiles.push(path.relative(root, fullPath).replace(/\\/g, "/"));
+    }
+  };
+  visit(directoryPath);
+}
+const violations = [...new Set(protectedFiles)]
+  .filter((file) => file !== "platform/browser_capabilities.js")
+  .flatMap((file) => {
+    const source = read(file);
+    return [...source.matchAll(rawApiPattern)].map((match) => `${file}:${match.index}:${match[0]}`);
+  });
+assert.deepEqual(violations, [], "Raw browser calls must remain inside the approved capability boundary");
+
+for (const html of ["popup/popup.html", "report/report.html", "lens-editor/editor.html", "alpha/guide.html"]) {
+  const source = read(html);
+  assert.match(source, /\.\.\/platform\/browser_capabilities\.js/);
+  assert.match(source, /\.\.\/contracts\/job_contracts\.js/);
+}
+assert.match(read("popup/popup.html"), /\.\.\/runtime\/job_runtime_order\.js/);
 
 console.log("ARK Lens JOB_XB1 baseline browser, runtime, storage, and message contracts characterized");

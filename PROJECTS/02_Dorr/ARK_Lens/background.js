@@ -1,13 +1,22 @@
-if (!globalThis.ARK_SOURCE_ADAPTERS && typeof importScripts === "function") {
-  importScripts("sources/source_adapter_registry.js");
-  importScripts("sources/jobs/job_source_catalogue.js");
+if (typeof importScripts === "function") {
+  if (!globalThis.ARK_BROWSER_CAPABILITIES) importScripts("platform/browser_capabilities.js");
+  if (!globalThis.ARK_JOB_CONTRACTS) importScripts("contracts/job_contracts.js");
+  if (!globalThis.ARK_JOB_RUNTIME_ORDER) importScripts("runtime/job_runtime_order.js");
+  if (!globalThis.ARK_SOURCE_ADAPTERS) {
+    importScripts("sources/source_adapter_registry.js");
+    importScripts("sources/jobs/job_source_catalogue.js");
+  }
 }
 
-const SESSION_KEY = "ark_lens_session";
+const BROWSER = globalThis.ARK_BROWSER_CAPABILITIES;
+const JOB_CONTRACTS = globalThis.ARK_JOB_CONTRACTS;
+const JOB_RUNTIME_ORDER = globalThis.ARK_JOB_RUNTIME_ORDER;
+const SESSION_KEY = JOB_CONTRACTS?.STORAGE_KEYS.SESSION;
+const MESSAGES = JOB_CONTRACTS?.MESSAGES;
 const SOURCE_ADAPTERS_RUNTIME = globalThis.ARK_SOURCE_ADAPTERS;
 
-if (!SOURCE_ADAPTERS_RUNTIME) {
-  throw new Error("ARK source adapter registry was not loaded before the background worker.");
+if (!BROWSER || !JOB_CONTRACTS || !JOB_RUNTIME_ORDER || !SOURCE_ADAPTERS_RUNTIME) {
+  throw new Error("ARK browser, Job contract, runtime-order, and source runtimes must load before the background worker.");
 }
 
 function getSessionIndicatorState(session) {
@@ -25,10 +34,10 @@ function getSessionIndicatorState(session) {
 async function applySessionIndicator(session) {
   const state = getSessionIndicatorState(session);
 
-  await chrome.action.setIcon({ path: state.icon_paths });
+  await BROWSER.action.setIcon({ path: state.icon_paths });
   // Clear the legacy v14 corner badge when users update to the icon-swap release.
-  await chrome.action.setBadgeText({ text: "" });
-  await chrome.action.setTitle({ title: state.title });
+  await BROWSER.action.setBadgeText({ text: "" });
+  await BROWSER.action.setTitle({ title: state.title });
 }
 
 async function syncSessionIndicator(sessionOverride) {
@@ -45,7 +54,7 @@ function isSupportedSourceUrl(url) {
 }
 
 async function getSession() {
-  const result = await chrome.storage.local.get(SESSION_KEY);
+  const result = await BROWSER.storage.get(SESSION_KEY);
   return result[SESSION_KEY] || { active: false };
 }
 
@@ -57,36 +66,15 @@ async function restartSessionListener(tabId, url) {
   }
 
   try {
-    await chrome.scripting.executeScript({
-      target: { tabId },
-      files: [
-        "lens-packs/bundled_lens_pack.js",
-        "lens-packs/lens_pack_runtime.js",
-        "core/lens_item.js",
-        "core/deterministic_matcher.js",
-        "core/extraction_result.js",
-        "sources/source_adapter_registry.js",
-        "sources/jobs/job_source_catalogue.js",
-        "sources/dom_read_utils.js",
-        "sources/adapter_diagnostics.js",
-        "sources/jobs/job_extraction_builder.js",
-        "sources/jobs/job_adapter_result.js",
-        "sources/jobs/linkedin_jobs_adapter.js",
-        "sources/jobs/seek_jobs_adapter.js",
-        "compatibility/job_extraction_compat.js",
-        "policies/job_capture_policy.js",
-        "policies/job_policy_runtime.js",
-        "content_bundle.js"
-      ]
-    });
-    await chrome.tabs.sendMessage(tabId, { type: "ARK_START_LISTENING" });
+    await BROWSER.scripting.injectOrdered(tabId, JOB_RUNTIME_ORDER.CONTENT_SCRIPT_FILES);
+    await BROWSER.tabs.sendMessage(tabId, { type: MESSAGES.START_LISTENING });
     console.log("[ARK Lens] same-tab listener restarted after navigation", { tabId, url });
   } catch (error) {
     console.warn("[ARK Lens] same-tab listener restart failed", { tabId, url, error });
   }
 }
 
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+BROWSER.tabs.onUpdated((tabId, changeInfo, tab) => {
   const url = changeInfo.url || tab?.url;
 
   if (!url || !isSupportedSourceUrl(url)) {
@@ -100,7 +88,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   restartSessionListener(tabId, url);
 });
 
-chrome.tabs.onRemoved.addListener(async (tabId) => {
+BROWSER.tabs.onRemoved(async (tabId) => {
   try {
     const session = await getSession();
 
@@ -108,7 +96,7 @@ chrome.tabs.onRemoved.addListener(async (tabId) => {
       return;
     }
 
-    await chrome.storage.local.set({
+    await BROWSER.storage.set({
       [SESSION_KEY]: {
         ...session,
         active: false,
@@ -120,27 +108,27 @@ chrome.tabs.onRemoved.addListener(async (tabId) => {
   }
 });
 
-chrome.storage.onChanged.addListener((changes, areaName) => {
+BROWSER.storage.onChanged((changes, areaName) => {
   if (areaName === "local" && changes[SESSION_KEY]) {
     syncSessionIndicator(changes[SESSION_KEY].newValue || { active: false });
   }
 });
 
-chrome.runtime.onStartup.addListener(async () => {
+BROWSER.runtime.onStartup(async () => {
   const session = await getSession();
 
   if (session.active && session.tab_id) {
     try {
-      const tab = await chrome.tabs.get(session.tab_id);
+      const tab = await BROWSER.tabs.get(session.tab_id);
       if (!isSupportedSourceUrl(tab?.url)) throw new Error("Session tab is unavailable");
     } catch (_error) {
       const stopped = {
         ...session,
         active: false,
         stopped_at: new Date().toISOString(),
-        stopped_reason: "browser_restart"
+        stopped_reason: JOB_CONTRACTS.SESSION.STOPPED_REASON_BROWSER_RESTART
       };
-      await chrome.storage.local.set({ [SESSION_KEY]: stopped });
+      await BROWSER.storage.set({ [SESSION_KEY]: stopped });
       await syncSessionIndicator(stopped);
       return;
     }
@@ -149,11 +137,11 @@ chrome.runtime.onStartup.addListener(async () => {
   await syncSessionIndicator(session);
 });
 
-chrome.runtime.onInstalled.addListener(async (details) => {
+BROWSER.runtime.onInstalled(async (details) => {
   await syncSessionIndicator();
 
   if (details?.reason === "install") {
-    await chrome.tabs.create({ url: chrome.runtime.getURL("alpha/guide.html") });
+    await BROWSER.openExtensionPage("alpha/guide.html");
   }
 });
 

@@ -7,6 +7,11 @@ const { spawnSync } = require("node:child_process");
 const root = path.resolve(__dirname, "..");
 const fixtureDir = path.join(root, "tests", "fixtures", "real-world");
 const contentSource = fs.readFileSync(path.join(root, "content_bundle.js"), "utf8");
+const browserCapabilitiesSource = fs.readFileSync(
+  path.join(root, "platform", "browser_capabilities.js"),
+  "utf8"
+);
+const jobContractsSource = fs.readFileSync(path.join(root, "contracts", "job_contracts.js"), "utf8");
 const lensPackRuntimeSource = fs.readFileSync(
   path.join(root, "lens-packs", "lens_pack_runtime.js"),
   "utf8"
@@ -257,6 +262,8 @@ function runFixture(testCase, options = {}) {
       globalThis.__arkMockLocation = ${JSON.stringify(testCase.mock_location)};
       ${makeChromeMock()}
     </script>
+    <script>${browserCapabilitiesSource}</script>
+    <script>${jobContractsSource}</script>
     <script>${transformedBundle}</script>
     <script>${makeRunner(testCase)}</script>
   </body></html>`;

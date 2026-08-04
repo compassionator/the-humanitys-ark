@@ -22,6 +22,8 @@ const PACKAGE_BOUNDARIES = Object.freeze({
     "lens-packs/lens_pack_runtime.js"
   ]),
   job_lens_runtime: Object.freeze([
+    "contracts/job_contracts.js",
+    "runtime/job_runtime_order.js",
     "content_bundle.js",
     "sources/jobs/job_source_catalogue.js",
     "sources/jobs/job_extraction_builder.js",
@@ -39,7 +41,8 @@ const PACKAGE_BOUNDARIES = Object.freeze({
   combined_runtime: Object.freeze([]),
   browser_orchestration: Object.freeze([
     "manifest.json",
-    "background.js"
+    "background.js",
+    "platform/browser_capabilities.js"
   ]),
   job_ui_and_reports: Object.freeze([
     "alpha/guide.css",
@@ -173,6 +176,9 @@ function verifyPackageFiles(files) {
 
   [
     "manifest.json",
+    "platform/browser_capabilities.js",
+    "contracts/job_contracts.js",
+    "runtime/job_runtime_order.js",
     "core/lens_item.js",
     "core/deterministic_matcher.js",
     "core/extraction_result.js",
