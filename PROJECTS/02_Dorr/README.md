@@ -10,7 +10,7 @@ Preserve Dorr as the Ark’s decentralized reasoning, rating, routing, and learn
 Dorr is broader than one app screen. It is the framework that helps turn noisy inputs into timed, scoped, meaningful frames without collapsing into a compulsory system.
 
 ## Current next step
-Validate the read-only LinkedIn Feed proof on Firefox Android and Safari macOS in parallel while preserving Dorr as the canonical shared grammar and Job Search Lens as the current working product Lens.
+Wait for the owner-approved mobile and desktop Feed popup/report designs while Firefox Android and Safari device validation resume when the required hardware is available.
 
 ## Status
 Canonical grammar locked at v1.6; broader Dorr framework Draft; Job Search Lens in controlled peer alpha; cross-domain Feed extraction proof validated on Chrome and Firefox desktop, with Firefox Android and Safari P0.1 automated staging awaiting device validation.
@@ -19,9 +19,9 @@ Canonical grammar locked at v1.6; broader Dorr framework Draft; Job Search Lens 
 
 [ARK Lens Job Search](ARK_Lens/README.md) remains the current controlled-alpha product Lens. It provides the working local-first product surface while Dorr remains the canonical shared grammar.
 
-The separate read-only LinkedIn Feed extraction proof demonstrates that ARK Lens can apply the shared architecture to a non-Job domain without redefining Dorr or entering the Job runtime. It remains extraction evidence, not a completed Feed Lens product. Its user-executed Chrome and Firefox desktop gates passed. Firefox Android is packaged and automated-gated but awaits device evidence; the thin Safari P0.1 shell reuses the same canonical 14 runtime/UI files and has passed automated package isolation, but Safari macOS/iOS execution remains unverified.
+The separate read-only LinkedIn Feed extraction proof demonstrates that ARK Lens can apply the shared architecture to a non-Job domain without redefining Dorr or entering the Job runtime. Feed proof code exists across the Chrome, Firefox, and Safari shells, with user-executed desktop gates passed on Chrome and Firefox. Firefox Android and Safari device validation remain pending.
 
-Firefox Android and Safari device validation are now parallel tracks. Safari containing-app generation, signing, and App Store distribution remain pending Apple hardware/tooling. Feed filtering, F3B, Firefox Job Lens, and Safari Job Lens work have not begun.
+The Feed proof is not a completed Feed Lens product. Full Feed Lens work waits for the owner-approved designs. Chrome Job Search Lens remains the current product; Firefox Job Search Lens and Safari Job Search Lens are not implemented.
 
 ## Canonical references
 - [Dorr Grammar v1.6](DORR_GRAMMAR.md) — canonical colour/time semantic meaning
