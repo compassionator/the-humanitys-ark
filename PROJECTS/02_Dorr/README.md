@@ -10,10 +10,10 @@ Preserve Dorr as the Ark’s decentralized reasoning, rating, routing, and learn
 Dorr is broader than one app screen. It is the framework that helps turn noisy inputs into timed, scoped, meaningful frames without collapsing into a compulsory system.
 
 ## Current next step
-Review and merge the shared JOB_XB1 foundation, then build thin Firefox and Safari Job shells in parallel while Feed Lens implementation waits for owner-approved popup/report designs.
+Run the JOB_XB4 package/manual-gate readiness audit, then validate the thin Firefox and Safari Job shells on real browsers and devices while Feed Lens implementation waits for owner-approved popup/report designs.
 
 ## Status
-Canonical grammar locked at v1.6; broader Dorr framework Draft; Chrome Job Search Lens in controlled peer alpha with its shared cross-browser foundation implemented; Firefox and Safari Job shells remain unimplemented; cross-domain Feed extraction proof validated on Chrome and Firefox desktop, with Firefox Android and Safari P0.1 automated staging awaiting device validation.
+Canonical grammar locked at v1.6; broader Dorr framework Draft; Chrome Job Search Lens in controlled peer alpha; thin Firefox and Safari Job code/packages now reuse the shared Job implementation but await live validation; the cross-domain Feed extraction proof is validated on Chrome and Firefox desktop, with Firefox Android and Safari P0.1 staging awaiting device validation.
 
 ## Current implementation
 
@@ -21,7 +21,7 @@ Canonical grammar locked at v1.6; broader Dorr framework Draft; Chrome Job Searc
 
 The separate read-only LinkedIn Feed extraction proof demonstrates that ARK Lens can apply the shared architecture to a non-Job domain without redefining Dorr or entering the Job runtime. Feed proof code exists across the Chrome, Firefox, and Safari shells, with user-executed desktop gates passed on Chrome and Firefox. Firefox Android and Safari device validation remain pending.
 
-The Feed proof is not a completed Feed Lens product. Full Feed Lens work waits for the owner-approved designs. Chrome Job Search Lens remains the current product; Firefox Job Search Lens and Safari Job Search Lens are not implemented.
+The Feed proof is not a completed Feed Lens product. Full Feed Lens work waits for owner-approved designs. Chrome Job Search Lens remains the manually tested product; Firefox and Safari Job shells are implemented and automated-gated but are not yet manually validated.
 
 ## Canonical references
 - [Dorr Grammar v1.6](DORR_GRAMMAR.md) — canonical colour/time semantic meaning
