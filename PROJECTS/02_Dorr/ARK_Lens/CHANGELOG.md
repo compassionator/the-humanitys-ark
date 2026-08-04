@@ -2,6 +2,7 @@
 
 ## Unreleased — architecture and proof milestones
 
+- Established JOB_XB1 with a shared browser-capability boundary, canonical Job runtime order, and centralized storage/session contracts; all Chrome behavior and persisted data shapes remain protected, and this is the prerequisite for thin Firefox and Safari Job shells.
 - Prepared the Firefox Android manual gate, completed the Safari compatibility audit, added the thin Safari staging shell, and extended exact package isolation across the Chrome, Firefox, and Safari Feed artifacts; Firefox Android and Safari macOS/iOS device validation remain pending.
 - Established the F0–F2.5 foundation, including shared architecture and explicit Job/Feed domain separation.
 - Added F3A source-adapter extraction for LinkedIn Jobs and SEEK Jobs.

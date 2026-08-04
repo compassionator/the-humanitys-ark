@@ -22,6 +22,12 @@ It runs the fast contracts first, followed by browser extraction against sanitiz
 
 `tests/lens-separation.test.js` protects domain-neutral core imports, Job-owned partial eligibility, optional generic text/URL fields, extensible namespaced capabilities, opaque adapter compatibility data, policy-free source registration, absence of Feed imports/implementations, and the exact-file Job peer-alpha package boundary.
 
+### JOB_XB1 cross-browser foundation
+
+`tests/browser-capabilities.test.js` exercises both Promise-based `browser` and callback-based `chrome` mocks for active tabs, tab queries, ordered injection, tab/runtime messaging, local storage, extension URLs/pages, action state, lifecycle subscriptions, namespace precedence, and clear missing-capability failures.
+
+`tests/job-browser-foundation.test.js` protects the canonical Job runtime order, unchanged storage/message/session/version values, unchanged manifest permissions and hosts, required UI dependency order, and the rule that raw browser APIs may appear only inside the approved capability boundary. Package isolation independently proves that the three deliberate foundation files are present in the Job alpha and absent from every Feed artifact.
+
 ### Real-world characterization
 
 `tests/characterization.test.js` protects:

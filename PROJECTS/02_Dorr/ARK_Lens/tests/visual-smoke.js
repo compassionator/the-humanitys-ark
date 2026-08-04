@@ -8,6 +8,8 @@ const { spawn } = require("node:child_process");
 
 const root = path.resolve(__dirname, "..");
 const contentSource = fs.readFileSync(path.join(root, "content_bundle.js"), "utf8");
+const browserCapabilitiesSource = fs.readFileSync(path.join(root, "platform", "browser_capabilities.js"), "utf8");
+const jobContractsSource = fs.readFileSync(path.join(root, "contracts", "job_contracts.js"), "utf8");
 const lensPackRuntimeSource = fs.readFileSync(path.join(root, "lens-packs", "lens_pack_runtime.js"), "utf8");
 const bundledLensPackSource = fs.readFileSync(path.join(root, "lens-packs", "bundled_lens_pack.js"), "utf8");
 const lensItemRuntimeSource = fs.readFileSync(path.join(root, "core", "lens_item.js"), "utf8");
@@ -406,6 +408,8 @@ async function runAdapterFixture(client, {
       ${jobCompatibilityRuntimeSource}
       ${jobCapturePolicyRuntimeSource}
       ${jobPolicyRuntimeSource}
+      ${browserCapabilitiesSource}
+      ${jobContractsSource}
       ${transformedBundle}
     `,
     awaitPromise: true,

@@ -235,8 +235,8 @@ function testNonTechnicalDoctorSurface() {
   assert.match(popupHtml, /Repair File/);
   assert.match(popupHtml, /Preview Help File/);
   assert.doesNotMatch(popupHtml, /id="doctorImportProfile"/);
-  assert.match(popupSource, /ARK_ADAPTER_DOCTOR_VALIDATE_REPAIR/);
-  assert.match(popupSource, /ARK_ADAPTER_DOCTOR_TEST_REPAIR/);
+  assert.match(popupSource, /MESSAGES\.ADAPTER_DOCTOR_VALIDATE_REPAIR/);
+  assert.match(popupSource, /MESSAGES\.ADAPTER_DOCTOR_TEST_REPAIR/);
   assert.match(popupSource, /can_activate/);
   assert.match(contentSource, /health === "pass"/);
 }

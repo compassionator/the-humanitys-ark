@@ -1,10 +1,12 @@
-const LENS_PACKS_KEY = "ark_lens_packs";
-const ACTIVE_LENS_PACK_ID_KEY = "ark_lens_active_lens_pack_id";
+const BROWSER = globalThis.ARK_BROWSER_CAPABILITIES;
+const JOB_CONTRACTS = globalThis.ARK_JOB_CONTRACTS;
+const LENS_PACKS_KEY = JOB_CONTRACTS?.STORAGE_KEYS.LENS_PACKS;
+const ACTIVE_LENS_PACK_ID_KEY = JOB_CONTRACTS?.STORAGE_KEYS.ACTIVE_LENS_PACK_ID;
 const LENS_PACK_RUNTIME = globalThis.ARK_LENS_PACK_RUNTIME;
 const BUNDLED_LENS_PACK = globalThis.ARK_BUNDLED_LENS_PACK;
 
-if (!LENS_PACK_RUNTIME || !BUNDLED_LENS_PACK) {
-  throw new Error("ARK Lens Pack runtime was not loaded before the editor.");
+if (!BROWSER || !JOB_CONTRACTS || !LENS_PACK_RUNTIME || !BUNDLED_LENS_PACK) {
+  throw new Error("ARK browser capabilities, Job contracts, and Lens Pack runtime must load before the editor.");
 }
 
 const SOURCE_ADAPTERS = [
@@ -131,7 +133,7 @@ function normalizeLensPack(lensPack) {
 }
 
 async function loadEditorStorage() {
-  const result = await chrome.storage.local.get([
+  const result = await BROWSER.storage.get([
     LENS_PACKS_KEY,
     ACTIVE_LENS_PACK_ID_KEY
   ]);
@@ -142,7 +144,7 @@ async function loadEditorStorage() {
   );
 
   if (migrated.changed) {
-    await chrome.storage.local.set({
+    await BROWSER.storage.set({
       [LENS_PACKS_KEY]: migrated.packs,
       [ACTIVE_LENS_PACK_ID_KEY]: migrated.activeId
     });
@@ -156,7 +158,7 @@ async function loadEditorStorage() {
 }
 
 async function persistPacks(packs, activeId) {
-  await chrome.storage.local.set({
+  await BROWSER.storage.set({
     [LENS_PACKS_KEY]: packs,
     [ACTIVE_LENS_PACK_ID_KEY]: activeId
   });
@@ -579,7 +581,7 @@ document.getElementById("deleteLens").addEventListener("click", async () => {
   setNotice("Lens deleted.");
 });
 
-chrome.storage.onChanged.addListener((changes, areaName) => {
+BROWSER.storage.onChanged((changes, areaName) => {
   if (areaName !== "local") return;
   if (!changes[LENS_PACKS_KEY] && !changes[ACTIVE_LENS_PACK_ID_KEY]) return;
 

@@ -1,11 +1,13 @@
-const RECORDS_KEY = "ark_lens_records";
-const LENS_PACKS_KEY = "ark_lens_packs";
-const ACTIVE_LENS_PACK_ID_KEY = "ark_lens_active_lens_pack_id";
+const BROWSER = globalThis.ARK_BROWSER_CAPABILITIES;
+const JOB_CONTRACTS = globalThis.ARK_JOB_CONTRACTS;
+const RECORDS_KEY = JOB_CONTRACTS?.STORAGE_KEYS.RECORDS;
+const LENS_PACKS_KEY = JOB_CONTRACTS?.STORAGE_KEYS.LENS_PACKS;
+const ACTIVE_LENS_PACK_ID_KEY = JOB_CONTRACTS?.STORAGE_KEYS.ACTIVE_LENS_PACK_ID;
 const LENS_PACK_RUNTIME = globalThis.ARK_LENS_PACK_RUNTIME;
 const BUNDLED_LENS_PACK = globalThis.ARK_BUNDLED_LENS_PACK;
 
-if (!LENS_PACK_RUNTIME || !BUNDLED_LENS_PACK) {
-  throw new Error("ARK Lens Pack runtime was not loaded before the report.");
+if (!BROWSER || !JOB_CONTRACTS || !LENS_PACK_RUNTIME || !BUNDLED_LENS_PACK) {
+  throw new Error("ARK browser capabilities, Job contracts, and Lens Pack runtime must load before the report.");
 }
 
 
@@ -18,13 +20,13 @@ let selectedFeedbackValue = "unrated";
 let renderGeneration = 0;
 
 async function loadRecords() {
-  const result = await chrome.storage.local.get(RECORDS_KEY);
+  const result = await BROWSER.storage.get(RECORDS_KEY);
   recordsMap = result[RECORDS_KEY] || {};
   return Object.values(recordsMap);
 }
 
 async function saveRecords() {
-  await chrome.storage.local.set({ [RECORDS_KEY]: recordsMap });
+  await BROWSER.storage.set({ [RECORDS_KEY]: recordsMap });
 }
 
 function cloneDefaultLensPack() {
@@ -36,7 +38,7 @@ function normalizeLensPack(lensPack) {
 }
 
 async function ensureLensPackStorage() {
-  const result = await chrome.storage.local.get([
+  const result = await BROWSER.storage.get([
     LENS_PACKS_KEY,
     ACTIVE_LENS_PACK_ID_KEY
   ]);
@@ -47,7 +49,7 @@ async function ensureLensPackStorage() {
   );
 
   if (migrated.changed) {
-    await chrome.storage.local.set({
+    await BROWSER.storage.set({
       [LENS_PACKS_KEY]: migrated.packs,
       [ACTIVE_LENS_PACK_ID_KEY]: migrated.activeId
     });
@@ -1492,7 +1494,7 @@ async function openSelected() {
     const url = getRecordOpenUrl(record);
 
     if (url) {
-      chrome.tabs.create({ url });
+      BROWSER.tabs.create({ url });
     }
   });
 }

@@ -6,6 +6,9 @@ const vm = require("node:vm");
 const root = path.resolve(__dirname, "..");
 const backgroundSource = fs.readFileSync(path.join(root, "background.js"), "utf8");
 const sourceAdaptersRuntime = require("../sources/jobs/job_source_catalogue.js");
+const { createBrowserCapabilities } = require("../platform/browser_capabilities.js");
+const jobContracts = require("../contracts/job_contracts.js");
+const jobRuntimeOrder = require("../runtime/job_runtime_order.js");
 
 function plain(value) {
   return JSON.parse(JSON.stringify(value));
@@ -65,7 +68,9 @@ async function flush() {
     }
   };
   const context = vm.createContext({
-    chrome,
+    ARK_BROWSER_CAPABILITIES: createBrowserCapabilities({ chrome }),
+    ARK_JOB_CONTRACTS: jobContracts,
+    ARK_JOB_RUNTIME_ORDER: jobRuntimeOrder,
     URL,
     console,
     ARK_SOURCE_ADAPTERS: sourceAdaptersRuntime
