@@ -10,10 +10,10 @@ Preserve Dorr as the Ark’s decentralized reasoning, rating, routing, and learn
 Dorr is broader than one app screen. It is the framework that helps turn noisy inputs into timed, scoped, meaningful frames without collapsing into a compulsory system.
 
 ## Current next step
-Run the JOB_XB4 package/manual-gate readiness audit, then validate the thin Firefox and Safari Job shells on real browsers and devices while Feed Lens implementation waits for owner-approved popup/report designs.
+Run the pending Firefox and Safari Job manual gates when hardware is available while the owner completes and freezes the Feed popup/report journey before Feed implementation begins.
 
 ## Status
-Canonical grammar locked at v1.6; broader Dorr framework Draft; Chrome Job Search Lens in controlled peer alpha; thin Firefox and Safari Job code/packages now reuse the shared Job implementation but await live validation; the cross-domain Feed extraction proof is validated on Chrome and Firefox desktop, with Firefox Android and Safari P0.1 staging awaiting device validation.
+Canonical grammar locked at v1.6; broader Dorr framework Draft; Chrome Job Search Lens in controlled peer alpha; JOB_XB4 confirms that Chrome, Firefox, and Safari package one shared Job implementation with exact automated parity, while Firefox and Safari await live validation; the cross-domain Feed extraction proof remains separate and no Feed Lens implementation has started.
 
 ## Current implementation
 

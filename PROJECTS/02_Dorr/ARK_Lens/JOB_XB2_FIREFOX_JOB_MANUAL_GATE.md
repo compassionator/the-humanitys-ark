@@ -29,25 +29,25 @@ Record `PASS`, `FAIL`, or `BLOCKED` and sanitized evidence for every check.
 1. Temporary installation succeeds and the extension remains enabled.
 2. The extension action is visible.
 3. The shared popup opens.
-4. LinkedIn Jobs reports the correct source-readiness state.
-5. SEEK Jobs reports the correct source-readiness state on an available supported surface.
-6. A session starts.
-7. The action icon and title reflect session state.
-8. Manual capture produces the expected local record.
-9. Supported same-tab navigation restarts capture without duplicate listeners.
-10. The session stops.
-11. Local storage persists the existing keys and shapes.
-12. Lens selection works.
-13. The shared Lens editor opens and behaves as on the protected Chrome baseline.
-14. The shared report opens and renders stored records.
-15. Notes and relevance feedback persist locally.
-16. JSON and CSV exports behave as recorded by the browser.
-17. Fix Capture produces sanitized diagnostics.
-18. Repair File preview, validation, and test extraction behave as expected.
-19. Repair activation and last-known-good rollback work.
-20. Browser restart/session recovery stops or restores state according to the existing contract.
-21. Reopening views and navigating do not duplicate listeners.
-22. The package contains no Feed runtime and does not load Feed code.
+4. Ordered injection loads every canonical Job runtime file successfully.
+5. Popup, content, and background message round-trips succeed.
+6. LinkedIn Jobs reports the correct source readiness and captures the expected local record.
+7. SEEK Jobs reports the correct source readiness and captures the expected local record on an available supported surface.
+8. A session starts.
+9. The action icon and title reflect session state.
+10. Supported same-tab navigation restarts capture without duplicate listeners.
+11. The session stops.
+12. Local storage persists the existing keys and shapes.
+13. Lens selection works.
+14. The shared Lens editor opens and behaves as on the protected Chrome baseline.
+15. The shared report opens and renders stored records.
+16. The shared Alpha Guide opens.
+17. Notes and relevance feedback persist locally.
+18. JSON and CSV exports behave as recorded by the browser.
+19. Fix Capture produces sanitized diagnostics.
+20. Repair File preview, validation, test extraction, activation, and last-known-good rollback work.
+21. Browser restart/session recovery follows the existing contract.
+22. Reopening views and navigating do not duplicate listeners, and no Feed runtime loads.
 23. No network transmission or telemetry was added.
 
 ## Firefox desktop record
