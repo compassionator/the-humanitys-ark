@@ -14,7 +14,8 @@ const requiredFiles = [
   "peer-alpha/FEEDBACK_TEMPLATE.md",
   "peer-alpha/KNOWN_LIMITATIONS.md",
   "peer-alpha/PRIVACY.md",
-  "tests/tools/build-peer-alpha-package.js"
+  "tests/tools/build-peer-alpha-package.js",
+  "tests/tools/job-lens-package.js"
 ];
 
 [16, 32, 48, 128].forEach((size) => {
@@ -32,7 +33,7 @@ const popupHtml = read("popup/popup.html");
 const popupSource = read("popup/popup.js");
 const alphaHtml = read("alpha/guide.html");
 const alphaSource = read("alpha/guide.js");
-const packageSource = read("tests/tools/build-peer-alpha-package.js");
+const packageSource = read("tests/tools/job-lens-package.js");
 const manifest = JSON.parse(read("manifest.json"));
 
 function idsFromHtml(html) {
@@ -182,12 +183,13 @@ function testRepeatablePackageContract() {
   assert.match(packageSource, /compatibility\/job_extraction_compat\.js/);
   assert.match(packageSource, /policies\/job_capture_policy\.js/);
   assert.match(packageSource, /policies\/job_policy_runtime\.js/);
-  assert.match(packageSource, /feed_lens_runtime:\s*Object\.freeze\(\[\]\)/);
-  assert.match(packageSource, /outside the Job peer-alpha allow-list/i);
+  assert.match(packageSource, /const SHARED_JOB_ENTRIES/);
+  assert.match(packageSource, /outside the Job Lens allow-list/i);
   assert.match(packageSource, /Feed implementation is forbidden/i);
   assert.doesNotMatch(packageSource, /^\s*"(?:core|sources|policies)",?$/m);
-  assert.match(packageSource, /tests\/fixtures/);
-  assert.match(packageSource, /must not be packaged/i);
+  assert.match(packageSource, /const FORBIDDEN_PACKAGE_PATHS/);
+  assert.match(packageSource, /"tests"/);
+  assert.match(packageSource, /"fixtures"/);
 
   [
     "peer-alpha/TESTER_GUIDE.md",
