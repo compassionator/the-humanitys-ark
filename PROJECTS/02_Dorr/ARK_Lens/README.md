@@ -1,161 +1,201 @@
 # ARK Lens
 
-> See the web through your own rules.
+ARK Lens is a local-first browser system that turns supported web pages into inspectable, user-controlled views without requiring a hosted backend or AI provider.
+
+## Start here
+
+**Job Search Lens** is the current working product. It runs on Chrome desktop, supports LinkedIn Jobs and SEEK Jobs, and is available as a controlled peer alpha.
 
 **Current release:** v2026.6.19
 
-**Status:** Controlled peer alpha
+The **LinkedIn Feed extraction proof** is separate evidence that ARK Lens can read visible Feed posts through the shared architecture. It is not the completed **Feed Lens** product and does not filter, rank, park, persist, or modify Feed content.
 
-**Current product Lens:** Job Search Lens
+ARK Lens is local-first. It requires no ARK account, telemetry service, remote backend, or built-in AI provider.
 
-**Supported production/alpha sources:** LinkedIn Jobs and SEEK Jobs
+## Platform status
 
-**Current extraction proof:** LinkedIn Feed read-only extraction proof
+| Platform | Job Search Lens | LinkedIn Feed extraction proof |
+|---|---|---|
+| Chrome desktop | Implemented and controlled-alpha tested | Implemented and manually tested |
+| Firefox desktop | Not implemented | Implemented and manually tested |
+| Firefox Android | Not implemented | Code/package implemented; device validation pending |
+| Safari macOS | Not implemented | Thin shell/package implemented; device validation pending |
+| Safari iPhone/iPad | Not implemented | Thin shell/package implemented; device validation pending |
 
-## Role
+“Implemented but device validation pending” means repository code and automated package gates exist, but the browser/device behavior has not passed its required manual gate.
 
-ARK Lens is the shared browser implementation and interface under Dorr. It applies user-controlled Lens Packs to supported web sources while keeping canonical Dorr and Microkernel meaning outside this project.
+## Privacy summary
 
-Job Search Lens is the first working product Lens. The LinkedIn Feed work is a separate read-only extraction proof, not a completed Feed Lens product.
+- Local-first; there is no required ARK account or cloud service.
+- No telemetry, analytics, advertising, or data brokerage.
+- No CV or resume upload, API key, or model provider is required.
+- No captured browsing data is sent automatically to an AI provider.
+- The LinkedIn Feed extraction proof keeps its snapshot only in page memory and uses no persistent extension storage.
+- Files are created only when the user explicitly exports them.
+- Job Search Lens data remains in extension-local storage unless the user exports it.
+- LinkedIn and SEEK may still require their own website accounts; ARK Lens does not replace those services.
 
-## Goal
+## Where to begin
 
-Turn noisy web surfaces into local, explainable views shaped by the user's own rules. The current release captures job listings, evaluates them with a deterministic Lens Pack, and presents the result for review without requiring a hosted service.
+I want to:
 
-## Why it matters
+- [Test Chrome Job Search Lens](#1-chrome-job-search-lens)
+- [Run the Chrome Feed proof](#2-chrome-linkedin-feed-extraction-proof)
+- [Run the Firefox Feed proof](#3-firefox-desktop-linkedin-feed-extraction-proof)
+- [Build the Safari Feed staging package](#5-safari-staging-and-manual-gate)
+- [Understand the architecture](#architecture)
+- [Read the current roadmap](#roadmap)
 
-Job platforms optimize for platform discovery. ARK Lens gives the user a separate, inspectable layer for deciding what deserves attention. The same browser boundary can later support feeds, news, notifications, messages, media, and marketplaces.
+## What works now
 
-## Status
-
-The project is stable enough for controlled testing with trusted peers. It is not a public beta or a finished semantic-ranking product.
-
-The required release gate currently covers 37 frozen scoring cases and seven sanitized browser-extraction fixtures. This directory is now the canonical ARK Lens source under Dorr.
-
-### Current product Lens
-
-**Job Search Lens** is the current controlled-alpha product. Its supported sources are:
-
-- LinkedIn Jobs;
-- SEEK Jobs.
-
-### Current extraction proof
-
-The **LinkedIn Feed read-only extraction proof** demonstrates that the shared ARK Lens architecture can support a non-Job domain without entering the Job runtime or package.
-
-Validated environments:
-
-- Chrome desktop — user-executed manual gate passed;
-- Firefox desktop — user-executed manual gate passed.
-
-Automated staging only:
-
-- Firefox Android — package, lint, and automated gates passed; device validation is pending;
-- Safari P0.1 — thin staging shell and automated package gates passed; macOS and iOS/iPadOS runtime validation is pending.
-
-Pending product/runtime work:
-
-- mobile LinkedIn Feed DOM;
-- Safari signing, containing-app generation, and App Store distribution on Apple hardware/tooling;
-- Feed filtering, scoring, persistence, and reports;
-- Firefox Job Lens;
-- Safari Job Lens.
-
-## Canonical references
-
-ARK Lens references canonical meaning; it does not copy or redefine the full Dorr matrix or Microkernel contract.
-
-- Dorr grammar: [canonical v1.6 semantics](../DORR_GRAMMAR.md)
-- Dorr project: [framework and ownership boundary](../README.md)
-- ARK Architecture: [canonical Kernel wrapper](../../01_Kernel/01_ARK_ARCHITECTURE.md)
-- Microkernel: [repository reference](../../01_Kernel/02_MICROKERNEL_SPEC.md)
-- Browser add-on boundary: [historical engineering specification](../MVP/Browser_Addon.md)
-- Witness proof: [historical proof definition](../MVP/Witness_Proof.md)
-
-## Current implementation
-
-- **Capture:** LinkedIn Jobs and SEEK Jobs through source-specific adapters, session controls, source readiness, and a popup-scoped session timer.
-- **Lens Pack:** one bundled JSON source of truth validated by `schemas/lens-pack.schema.json`; rules declare keywords, match scope, weights, penalties, blockers, caps, role-fit behavior, and explanations.
-- **Matching:** a source-neutral `LensItem`, DOM-free deterministic lexical matcher, and separate Job policy preserve whole-term and phrase scoring. Semantic matching is not implemented yet.
-- **Lens editor:** Basic fields for common preferences plus Advanced JSON paste, validation, save, export, and bundled restore. Users can create, rename, duplicate, and delete Lenses.
-- **Report:** match percentage, fit state, positive and negative evidence, blockers, captured description, capture quality, private notes, manual decisions, and separate relevance feedback.
+- **Chrome Job Search Lens:** captures supported LinkedIn Jobs and SEEK Jobs pages through source-owned adapters.
+- **Deterministic Lens Packs:** inspectable keywords, match scopes, weights, penalties, blockers, caps, workflow behavior, and explanations. Semantic matching is not implemented.
+- **Local sessions and reports:** source readiness, session controls, captured records, match evidence, workflow state, notes, decisions, relevance feedback, and JSON/CSV export.
+- **Lens editor:** Basic fields plus Advanced JSON validation, save, export, bundled restore, create, rename, duplicate, and delete.
 - **Fix Capture:** redacted Help Files and schema-validated Repair Files with preview, live-page testing, activation only after a pass, and rollback.
-- **Exports:** report JSON/CSV, Lens JSON, Fix Capture files, and a privacy-limited alpha test summary.
-- **Feed extraction proof:** a separate read-only, in-memory LinkedIn Feed probe using the canonical Feed adapter, mapper, capture policy, and probe.
-- **Proof distributions:** separate Chrome, Firefox, and Safari Feed proof packages consume the same canonical 14-file runtime/UI allow-list and are protected by exact package-isolation tests. Safari is automated staging only, not a validated runtime.
-- **Release packaging:** repeatable controlled-alpha and proof ZIPs with SHA-256 checksums generated from explicit runtime allowlists.
+- **LinkedIn Feed extraction proof:** read-only, in-memory scanning, observation, duplicate suppression, stop, clear, diagnostics, and explicit local JSON export.
+- **Desktop Feed evidence:** Chrome and Firefox desktop manual gates passed.
+- **Package isolation:** Chrome, Firefox, and Safari Feed artifacts stage the same canonical runtime/UI files; the Job package contains no Feed implementation and Feed packages contain no Job implementation.
+- **Repeatable packaging:** controlled-alpha and proof ZIPs are generated from explicit allow-lists with per-file checksums and separate ZIP SHA-256 files.
+- **Privacy-limited alpha feedback:** testers can explicitly export a constrained test summary for review.
 
-The bundled template is displayed as `My Job Search`. Its historical `bob_job_search` file name and internal ID remain only for storage and migration compatibility.
+The bundled Job Search Lens template is displayed as `My Job Search`. Its historical `bob_job_search` file name and internal ID remain only for storage and migration compatibility.
 
-## Core boundary / negative scope
+## Not implemented yet
 
-ARK Lens is local-first. Job Search Lens records, Lens Packs, feedback, notes, sessions, and repair profiles use the Chrome extension profile's local storage unless the user deliberately exports a file.
+- A completed Feed Lens product.
+- Feed rules, parking, persistence, filtering, scoring, or ranking.
+- Firefox Job Search Lens.
+- Safari Job Search Lens.
+- Firefox Android Feed device validation.
+- Safari macOS or iPhone/iPad Feed device validation.
+- Safari containing-app generation, signing, or App Store distribution.
+- Signed public browser distribution.
+- A remote ARK backend or cloud synchronization.
+- Built-in AI provider integration.
 
-The separate LinkedIn Feed proof is read-only and retains its snapshot only in memory. It uses no extension storage and performs no network transmission. A local JSON file is created only when the user explicitly exports the current snapshot.
+Users may separately use a local or external AI to prepare Lens Pack JSON or Fix Capture Repair Files. ARK Lens validates imported files before saving or activation and never sends captured jobs, Feed records, CV data, or browsing data automatically.
 
-There is no required:
+## Terminology
 
-- ARK account or sign-in;
-- backend, cloud synchronization, or telemetry;
-- analytics, advertising, or data brokerage;
-- CV or resume upload;
-- automatic AI connection;
-- API key or model provider.
+- **Job Search Lens:** the current Chrome-only working product.
+- **LinkedIn Feed extraction proof:** the current read-only extraction and observer proof.
+- **Feed Lens:** the future completed product after owner-approved popup/report designs and later rule work.
+- **Implemented but device validation pending:** code and automated packaging exist, but live device behavior is unverified.
+- **Not implemented:** no product shell or validated product behavior exists for that platform/capability.
 
-Users may optionally use their own local or external AI to prepare Lens Pack JSON or Fix Capture repair files. The user pastes Lens JSON into Advanced mode or selects a Repair File, and ARK Lens validates it before saving or activation. ARK Lens does not send a CV, captured job, or browsing data to an AI automatically.
+## Install and validate
 
-Relevance feedback never silently retrains or rewrites deterministic scoring. Dorr meaning remains canonical elsewhere.
+Run commands from `PROJECTS/02_Dorr/ARK_Lens`.
 
-## Install
-
-### Chrome Job Search Lens
+### 1. Chrome Job Search Lens
 
 For local development or controlled testing:
 
 1. Open `chrome://extensions`.
 2. Enable **Developer mode**.
 3. Select **Load unpacked**.
-4. Choose this project root, which contains `manifest.json`.
+4. Choose this ARK Lens project directory, which contains the root `manifest.json`.
 5. Pin ARK Lens and open **Getting Started & Alpha Guide** from the popup.
 
-For peers, generate the allowlisted package first:
+For a controlled peer package:
 
 ```powershell
 npm.cmd run package:alpha
 ```
 
-Send the generated ZIP privately with its separate SHA-256 checksum. `dist/` is generated locally and is not committed.
+Share the generated ZIP privately with its separate SHA-256 checksum. `dist/` is generated locally and is not committed.
 
-### Firefox LinkedIn Feed extraction proof
+### 2. Chrome LinkedIn Feed extraction proof
 
-The Firefox package is a separate read-only Feed extraction proof. It is not the Job Search Lens distribution.
+Build the separate read-only Chrome proof:
 
-Build and lint its exact staging package:
+```powershell
+npm.cmd run build:linkedin-feed-proof
+```
+
+Then:
+
+1. Open `chrome://extensions` and enable **Developer mode**.
+2. Select **Load unpacked**.
+3. Choose `dist/ark-lens-linkedin-feed-extraction-proof-v0.1/`.
+4. Open the LinkedIn home Feed and use the proof popup to scan or start observation.
+
+This is not the Job Search Lens package and does not modify LinkedIn.
+
+### 3. Firefox desktop LinkedIn Feed extraction proof
+
+Build and lint the exact Firefox staging package:
 
 ```powershell
 npm.cmd run build:linkedin-feed-proof:firefox
 npm.cmd run lint:linkedin-feed-proof:firefox
 ```
 
-Temporarily run the generated staging directory in Firefox desktop:
+Temporarily run it in Firefox desktop:
 
 ```powershell
 npm.cmd run run:linkedin-feed-proof:firefox
 ```
 
-Firefox desktop installation and interactive Feed behavior have passed user-executed manual gates. Firefox Android remains unvalidated.
+Firefox desktop installation and interactive Feed behavior passed a user-executed manual gate. This does not implement Firefox Job Search Lens.
 
-### Safari LinkedIn Feed extraction-proof staging
+### 4. Firefox Android device gate
 
-Build the thin Safari staging package from the same canonical Feed runtime and popup:
+The Firefox Android code/package and automated gates exist, but live validation is blocked until Android Platform Tools, ADB, a suitable device or emulator, and Firefox Android are available.
+
+Follow the [Firefox Android 23-point manual gate](FX_P0_FIREFOX_ANDROID_FEED_GATE.md). Do not change mobile selectors, permissions, CSS, or runtime behavior without sanitized device evidence.
+
+### 5. Safari staging and manual gate
+
+Build the thin Safari WebExtension staging package:
 
 ```powershell
 npm.cmd run build:linkedin-feed-proof:safari
 ```
 
-The automated package gate passes with the exact 17-file Safari artifact: one Safari manifest, the shared 14 runtime/UI files, `BUILD_INFO.json`, and `SHA256SUMS.txt`. The Safari shell adds no storage, network transmission, page mutation, background process, or selectors.
+The generated ZIP proves repository structure and package isolation only. Safari execution is not validated.
 
-Safari execution is not validated. macOS/iOS runtime behavior, Apple containing-app generation, signing, and App Store distribution require Apple hardware and tooling. Use the [Safari P0.1 manual validation gate](SAFARI_P0_1_MANUAL_GATE.md) on an Apple host; do not treat successful Windows staging as Safari support.
+A Safari ZIP cannot be installed directly on an iPhone or iPad. macOS Safari testing and Apple containing-app generation require a Mac, Safari, Xcode, and Safari Web Extension tooling. Physical iPhone/iPad testing additionally requires the appropriate Apple signing and device setup.
+
+Read:
+
+- [Safari compatibility and distribution audit](SAFARI_FEED_COMPATIBILITY_AUDIT.md)
+- [Safari P0.1 manual validation gate](SAFARI_P0_1_MANUAL_GATE.md)
+
+## Architecture
+
+```text
+Visible page
+  → source-owned adapter
+  → canonical extraction evidence
+  → Job or Feed policy
+  → browser-neutral runtime/view model
+  → thin Chrome, Firefox or Safari shell
+```
+
+- Feed packaging uses one canonical 14-file runtime/UI set plus the selected browser manifest and two generated metadata/checksum files.
+- Chrome, Firefox, and Safari manifests remain separate browser-owned shells.
+- Job and Feed domain policies remain separate.
+- Browser-specific copies of source adapters, selectors, domain policy, or canonical runtime logic are forbidden.
+- The dedicated browser-neutral Feed view-model contract is roadmap work; the current extraction records and in-memory snapshot are already browser-neutral data.
+
+ARK Lens consumes canonical meaning rather than redefining it:
+
+- [Dorr Grammar v1.6](../DORR_GRAMMAR.md)
+- [Dorr ownership and project boundary](../README.md)
+- [ARK Architecture](../../01_Kernel/01_ARK_ARCHITECTURE.md)
+- [Microkernel repository reference](../../01_Kernel/02_MICROKERNEL_SPEC.md)
+
+Detailed proof and gate records:
+
+- [FEED_P0 LinkedIn Feed extraction proof](FEED_P0_LINKEDIN_EXTRACTION_PROOF.md)
+- [Firefox desktop Feed shell](FX_P0_FIREFOX_FEED_SHELL.md)
+- [Firefox Android Feed gate](FX_P0_FIREFOX_ANDROID_FEED_GATE.md)
+- [Safari compatibility audit](SAFARI_FEED_COMPATIBILITY_AUDIT.md)
+- [Safari manual gate](SAFARI_P0_1_MANUAL_GATE.md)
+
+Historical design lineage is preserved in [Browser Add-on](../MVP/Browser_Addon.md) and [Witness Proof](../MVP/Witness_Proof.md); neither describes the current implementation status.
 
 ## Tests
 
@@ -165,7 +205,16 @@ Run the required offline gate:
 npm.cmd test
 ```
 
-It runs fast contracts followed by headless-browser extraction and report interaction tests. See `tests/TEST_PLAN.md` for the protected behavior and fixture policy.
+It covers:
+
+- 37 frozen Job scoring cases;
+- seven sanitized Job extraction fixtures;
+- ten synthetic LinkedIn Feed structures;
+- Job/Feed separation and exact package isolation;
+- Feed observer, duplicate suppression, privacy, and browser API boundaries;
+- Lens Pack validation/migration, Lens editor, Fix Capture, sessions, reports, feedback, and active-session behavior.
+
+See [tests/TEST_PLAN.md](tests/TEST_PLAN.md) for protected behavior and the approved fixture boundary.
 
 Optional visual smoke coverage is separate:
 
@@ -173,61 +222,33 @@ Optional visual smoke coverage is separate:
 npm.cmd run test:visual
 ```
 
-## Project structure
-
-```text
-alpha/          Getting Started and controlled-alpha guide
-core/           source-neutral LensItem and deterministic lexical matcher
-domains/feed/   Feed-owned mapping and read-only capture policy
-icons/          inactive and active extension icons
-lens-editor/    Basic and Advanced Lens editor
-lens-packs/     canonical bundled Lens Pack, generated bundle, runtime
-orchestration/feed/ in-memory Feed probe and observer lifecycle
-peer-alpha/     tester, privacy, limitation, feedback, and owner guidance
-popup/          capture and session controller
-policies/       domain policy; currently the frozen Job Lens score/workflow policy
-proofs/linkedin_feed/ separate Chrome, Firefox, and Safari Feed proof shells sharing one runtime
-report/         report table, details drawer, feedback, notes, exports
-schemas/        Lens, repair-profile, and relevance-feedback contracts
-sources/feed/   canonical LinkedIn Feed catalogue and adapter
-sources/jobs/   Job source catalogue and source-specific adapters
-tests/          contracts, browser tests, sanitized fixtures, build tools
-background.js   session lifecycle and extension icon state
-content_bundle.js source extraction, storage, sessions, and Fix Capture runtime
-manifest.json   Manifest V3 permissions and supported hosts
-```
-
 ## Roadmap
 
-1. Firefox Android device validation and Safari macOS validation in parallel
-2. Safari iOS/iPadOS validation
-3. Minimal evidence-based browser capability boundary
-4. Shared mobile/desktop Feed popup and report design
-5. Source decipherer contract
-6. Local DORR preferences, rules, and Feed parking
-7. Controlled source expansion
-8. Optional user-controlled AI provider broker
-9. Firefox/Safari Job Lens later
-10. F3B only after foundations are stable
+1. Owner prepares mobile and desktop Feed popup/report designs.
+2. Firefox Android and Safari device validation continue when hardware is available.
+3. Define the browser-neutral Feed view-model contract.
+4. Define the minimum evidence-based browser capability boundary.
+5. Implement one shared responsive Feed popup/report.
+6. Connect that shared experience to Chrome, Firefox, and Safari.
+7. Add local DORR preferences, rules, and Feed parking.
+8. Add source decipherers one at a time.
+9. Port Job Search Lens to Firefox and Safari without copying the Chrome runtime.
+10. Add an optional user-controlled AI broker later.
+11. F3B only after the foundations are stable.
 
 ## Current limitations
 
 - Job Search Lens supports only LinkedIn Jobs and SEEK Jobs.
-- Source markup changes can still require a Repair File or extension update.
-- Matching is lexical, not semantic, and differently worded concepts are not inferred automatically.
-- Feedback is reviewable context; it does not currently generate or apply Lens changes.
-- Job Lens storage belongs to its Chrome extension profile and has no built-in synchronization or backup.
-- The Feed proof is a separate read-only, in-memory proof with no storage or network transmission.
-- Chrome and Firefox desktop Feed proof behavior is manually validated.
-- Firefox Android is packaged and automated-gated but still requires device validation.
-- Safari P0.1 is an automated thin staging shell, not a supported or validated Safari runtime; macOS/iOS execution, containing-app generation, signing, and distribution remain pending.
-- Firefox and Safari Job Lens distributions are not implemented.
+- Source markup changes can require a Repair File or extension update.
+- Matching is lexical, not semantic; differently worded concepts are not inferred automatically.
+- Relevance feedback does not silently retrain or rewrite deterministic scoring.
+- Job data has no built-in synchronization or backup beyond explicit export.
+- The Feed proof is read-only and in-memory; it has no completed report, persistence, rules, ranking, or parking.
+- Firefox Android and Safari behavior remain unverified until their device gates run.
 - Native social applications are outside the browser-extension boundary.
-- Chrome Job Lens controlled-alpha installation uses Chrome Developer mode and an unpacked extension.
-- Real-world fixtures retain sanitized public job text solely for reproducible regression coverage; see `tests/TEST_PLAN.md` for the fixture boundary.
+- Chrome Job Search Lens controlled-alpha installation uses Developer mode and an unpacked extension.
+- Sanitized public fixture text is retained only for reproducible regression coverage under [tests/TEST_PLAN.md](tests/TEST_PLAN.md).
 
 ## License
 
-Unless otherwise noted, ARK Lens and the source code in this repository are licensed under the terms of the root LICENSE file.
-
-See the root [LICENSE](../../../LICENSE) file.
+Unless otherwise noted, ARK Lens and the source in this repository use the root [LICENSE](../../../LICENSE).
