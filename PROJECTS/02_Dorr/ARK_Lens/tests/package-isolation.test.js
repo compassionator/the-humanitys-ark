@@ -290,6 +290,11 @@ for (const [browserName, manifest] of [
   ["Safari", safariJobStagedManifest]
 ]) {
   assert.equal(manifest.manifest_version, 3, `${browserName} Job manifest version`);
+  assert.equal(manifest.name, chromeJobStagedManifest.name, `${browserName} Job product name`);
+  assert.equal(manifest.version, chromeJobStagedManifest.version, `${browserName} Job product version`);
+  assert.equal(manifest.description, chromeJobStagedManifest.description, `${browserName} Job product description`);
+  assert.deepEqual(manifest.icons, chromeJobStagedManifest.icons, `${browserName} Job icons`);
+  assert.deepEqual(manifest.action, chromeJobStagedManifest.action, `${browserName} Job action and popup`);
   assert.deepEqual(manifest.permissions, expectedJobPermissions, `${browserName} Job permissions`);
   assert.deepEqual(manifest.host_permissions, expectedJobHosts, `${browserName} Job supported hosts`);
   [
