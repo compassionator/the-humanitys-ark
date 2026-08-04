@@ -225,6 +225,22 @@ User-executed procedure:
 14. Confirm comments were neither opened nor extracted.
 15. Confirm the normal Job Lens extension/package remains unaffected.
 
+### Later SAFARI_P0.1 thin staging
+
+Safari P0.1 occurred after the original FEED_P0 proof and does not change its historical evidence or release hashes.
+
+The thin Safari staging shell now exists at `proofs/linkedin_feed/manifests/manifest.safari.json` and is built with:
+
+```powershell
+npm.cmd run build:linkedin-feed-proof:safari
+```
+
+Automated package isolation passes across the Chrome, Firefox, and Safari Feed artifacts. Each stages exactly 17 files: its selected root manifest, the same canonical 14 runtime/UI files, generated `BUILD_INFO.json`, and generated `SHA256SUMS.txt`. The shared runtime remains unchanged and byte-identical across all three staged packages.
+
+Safari P0.1 adds no storage, network transmission, page mutation, background process, host permission, downloads permission, or selectors. This is repository and packaging evidence only: Safari macOS and iOS/iPadOS execution remain unverified. Apple containing-app generation, signing, physical-device validation, and App Store distribution remain pending Apple hardware/tooling. See [Safari P0.1 Manual Gate](SAFARI_P0_1_MANUAL_GATE.md).
+
+Firefox Android is likewise packaged and automated-gated, but its 23-point runtime gate still requires real device evidence. Neither Firefox Job Lens nor Safari Job Lens is implemented.
+
 ## FEED_P0 completion gate
 
 **FEED P0 COMPLETE — CROSS-DOMAIN EVIDENCE READY**

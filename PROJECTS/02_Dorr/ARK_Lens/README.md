@@ -48,12 +48,18 @@ Validated environments:
 - Chrome desktop — user-executed manual gate passed;
 - Firefox desktop — user-executed manual gate passed.
 
-Pending:
+Automated staging only:
 
-- Firefox Android;
+- Firefox Android — package, lint, and automated gates passed; device validation is pending;
+- Safari P0.1 — thin staging shell and automated package gates passed; macOS and iOS/iPadOS runtime validation is pending.
+
+Pending product/runtime work:
+
 - mobile LinkedIn Feed DOM;
+- Safari signing, containing-app generation, and App Store distribution on Apple hardware/tooling;
 - Feed filtering, scoring, persistence, and reports;
-- Firefox Job Lens.
+- Firefox Job Lens;
+- Safari Job Lens.
 
 ## Canonical references
 
@@ -76,7 +82,7 @@ ARK Lens references canonical meaning; it does not copy or redefine the full Dor
 - **Fix Capture:** redacted Help Files and schema-validated Repair Files with preview, live-page testing, activation only after a pass, and rollback.
 - **Exports:** report JSON/CSV, Lens JSON, Fix Capture files, and a privacy-limited alpha test summary.
 - **Feed extraction proof:** a separate read-only, in-memory LinkedIn Feed probe using the canonical Feed adapter, mapper, capture policy, and probe.
-- **Proof distributions:** separate Chrome and Firefox Feed proof packages consume one canonical Feed runtime and are protected by exact package-isolation tests.
+- **Proof distributions:** separate Chrome, Firefox, and Safari Feed proof packages consume the same canonical 14-file runtime/UI allow-list and are protected by exact package-isolation tests. Safari is automated staging only, not a validated runtime.
 - **Release packaging:** repeatable controlled-alpha and proof ZIPs with SHA-256 checksums generated from explicit runtime allowlists.
 
 The bundled template is displayed as `My Job Search`. Its historical `bob_job_search` file name and internal ID remain only for storage and migration compatibility.
@@ -139,6 +145,18 @@ npm.cmd run run:linkedin-feed-proof:firefox
 
 Firefox desktop installation and interactive Feed behavior have passed user-executed manual gates. Firefox Android remains unvalidated.
 
+### Safari LinkedIn Feed extraction-proof staging
+
+Build the thin Safari staging package from the same canonical Feed runtime and popup:
+
+```powershell
+npm.cmd run build:linkedin-feed-proof:safari
+```
+
+The automated package gate passes with the exact 17-file Safari artifact: one Safari manifest, the shared 14 runtime/UI files, `BUILD_INFO.json`, and `SHA256SUMS.txt`. The Safari shell adds no storage, network transmission, page mutation, background process, or selectors.
+
+Safari execution is not validated. macOS/iOS runtime behavior, Apple containing-app generation, signing, and App Store distribution require Apple hardware and tooling. Use the [Safari P0.1 manual validation gate](SAFARI_P0_1_MANUAL_GATE.md) on an Apple host; do not treat successful Windows staging as Safari support.
+
 ## Tests
 
 Run the required offline gate:
@@ -168,7 +186,7 @@ orchestration/feed/ in-memory Feed probe and observer lifecycle
 peer-alpha/     tester, privacy, limitation, feedback, and owner guidance
 popup/          capture and session controller
 policies/       domain policy; currently the frozen Job Lens score/workflow policy
-proofs/linkedin_feed/ separate Chrome and Firefox Feed proof distributions
+proofs/linkedin_feed/ separate Chrome, Firefox, and Safari Feed proof shells sharing one runtime
 report/         report table, details drawer, feedback, notes, exports
 schemas/        Lens, repair-profile, and relevance-feedback contracts
 sources/feed/   canonical LinkedIn Feed catalogue and adapter
@@ -181,12 +199,16 @@ manifest.json   Manifest V3 permissions and supported hosts
 
 ## Roadmap
 
-1. Firefox Android LinkedIn Feed proof validation
-2. Evidence-driven mobile selector corrections, only if required
-3. Firefox Job Lens distribution
-4. F3B diagnostic design
-5. Future Feed filtering and actions
-6. Optional user-controlled AI later
+1. Firefox Android device validation and Safari macOS validation in parallel
+2. Safari iOS/iPadOS validation
+3. Minimal evidence-based browser capability boundary
+4. Shared mobile/desktop Feed popup and report design
+5. Source decipherer contract
+6. Local DORR preferences, rules, and Feed parking
+7. Controlled source expansion
+8. Optional user-controlled AI provider broker
+9. Firefox/Safari Job Lens later
+10. F3B only after foundations are stable
 
 ## Current limitations
 
@@ -196,7 +218,10 @@ manifest.json   Manifest V3 permissions and supported hosts
 - Feedback is reviewable context; it does not currently generate or apply Lens changes.
 - Job Lens storage belongs to its Chrome extension profile and has no built-in synchronization or backup.
 - The Feed proof is a separate read-only, in-memory proof with no storage or network transmission.
-- Firefox desktop Feed proof behavior is validated; Firefox Android is not yet validated.
+- Chrome and Firefox desktop Feed proof behavior is manually validated.
+- Firefox Android is packaged and automated-gated but still requires device validation.
+- Safari P0.1 is an automated thin staging shell, not a supported or validated Safari runtime; macOS/iOS execution, containing-app generation, signing, and distribution remain pending.
+- Firefox and Safari Job Lens distributions are not implemented.
 - Native social applications are outside the browser-extension boundary.
 - Chrome Job Lens controlled-alpha installation uses Chrome Developer mode and an unpacked extension.
 - Real-world fixtures retain sanitized public job text solely for reproducible regression coverage; see `tests/TEST_PLAN.md` for the fixture boundary.
