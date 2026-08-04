@@ -8,6 +8,7 @@
     "package:alpha": "npm run build:icons && node tests/tools/build-peer-alpha-package.js",
     "build:linkedin-feed-proof": "node tests/tools/build-linkedin-feed-proof-package.js",
     "build:linkedin-feed-proof:firefox": "node tests/tools/build-linkedin-feed-proof-firefox-package.js",
+    "build:linkedin-feed-proof:safari": "node tests/tools/build-linkedin-feed-proof-safari-package.js",
     "lint:linkedin-feed-proof:firefox": "npm run build:linkedin-feed-proof:firefox && web-ext lint --source-dir dist/ark-lens-linkedin-feed-extraction-proof-firefox-v0.1 --warnings-as-errors",
     "run:linkedin-feed-proof:firefox": "npm run build:linkedin-feed-proof:firefox && web-ext run --source-dir dist/ark-lens-linkedin-feed-extraction-proof-firefox-v0.1 --target firefox-desktop",
     "test": "npm run test:fast && npm run test:extraction",

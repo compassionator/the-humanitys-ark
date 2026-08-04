@@ -9,6 +9,7 @@ const {
   LOCAL_FILE_SIGNATURE,
   inspectZip
 } = require("./tools/portable-zip");
+const { SHARED_ENTRIES } = require("./tools/linkedin-feed-proof-package");
 
 const root = path.resolve(__dirname, "..");
 const packageJson = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8"));
@@ -31,6 +32,7 @@ const FEED_FILES = Object.freeze([
   "sources/feed/linkedin_feed_adapter.js",
   "sources/source_adapter_registry.js"
 ]);
+const SHARED_FEED_FILES = Object.freeze(SHARED_ENTRIES.map(([, target]) => target).sort());
 
 function run(relativePath) {
   const result = spawnSync(process.execPath, [path.join(root, relativePath)], {
@@ -115,16 +117,20 @@ function validateZip(zipPath, releaseName, expectedFiles) {
 run("tests/tools/build-peer-alpha-package.js");
 run("tests/tools/build-linkedin-feed-proof-package.js");
 run("tests/tools/build-linkedin-feed-proof-firefox-package.js");
+run("tests/tools/build-linkedin-feed-proof-safari-package.js");
 
 const jobName = `ark-lens-v${packageJson.version}-peer-alpha`;
 const feedName = "ark-lens-linkedin-feed-extraction-proof-v0.1";
 const firefoxFeedName = "ark-lens-linkedin-feed-extraction-proof-firefox-v0.1";
+const safariFeedName = "ark-lens-linkedin-feed-extraction-proof-safari-v0.1";
 const jobDir = path.join(root, "dist", jobName);
 const feedDir = path.join(root, "dist", feedName);
 const firefoxFeedDir = path.join(root, "dist", firefoxFeedName);
+const safariFeedDir = path.join(root, "dist", safariFeedName);
 const jobFiles = list(jobDir);
 const feedFiles = list(feedDir);
 const firefoxFeedFiles = list(firefoxFeedDir);
+const safariFeedFiles = list(safariFeedDir);
 
 assert.equal(jobFiles.length, 51);
 assert.ok(jobFiles.includes("sources/jobs/job_source_catalogue.js"));
@@ -156,12 +162,25 @@ assert.equal(
 );
 assert.equal(firefoxFeedFiles.some((file) => /manifests\/|manifest\.firefox|manifest\.chrome/i.test(file)), false);
 
+assert.equal(safariFeedFiles.length, 17);
+assert.deepEqual(safariFeedFiles, [...FEED_FILES].sort());
+assert.equal(safariFeedFiles.some((file) => /(^|\/)(?:tests?|fixtures?)(\/|$)/i.test(file)), false);
+assert.equal(
+  safariFeedFiles.some((file) => /sources\/jobs|policies\/job|compatibility\/job|content_bundle|report\/|lens-packs\//i.test(file)),
+  false
+);
+assert.equal(safariFeedFiles.some((file) => /manifests\/|manifest\.(?:chrome|firefox|safari)/i.test(file)), false);
+
 const chromeSourceManifest = JSON.parse(fs.readFileSync(path.join(root, "proofs", "linkedin_feed", "manifest.json"), "utf8"));
 const firefoxSourceManifest = JSON.parse(
   fs.readFileSync(path.join(root, "proofs", "linkedin_feed", "manifests", "manifest.firefox.json"), "utf8")
 );
+const safariSourceManifest = JSON.parse(
+  fs.readFileSync(path.join(root, "proofs", "linkedin_feed", "manifests", "manifest.safari.json"), "utf8")
+);
 const chromeStagedManifest = JSON.parse(fs.readFileSync(path.join(feedDir, "manifest.json"), "utf8"));
 const firefoxStagedManifest = JSON.parse(fs.readFileSync(path.join(firefoxFeedDir, "manifest.json"), "utf8"));
+const safariStagedManifest = JSON.parse(fs.readFileSync(path.join(safariFeedDir, "manifest.json"), "utf8"));
 assert.deepEqual(chromeStagedManifest, chromeSourceManifest, "Chrome package must stage only the Chrome manifest");
 assert.equal("browser_specific_settings" in chromeStagedManifest, false, "Chrome package must contain no Firefox metadata");
 assert.deepEqual(firefoxStagedManifest, firefoxSourceManifest, "Firefox package must stage only the Firefox manifest");
@@ -190,22 +209,58 @@ assert.deepEqual(firefoxStagedManifest.browser_specific_settings, {
   }
 });
 
+assert.deepEqual(safariStagedManifest, safariSourceManifest, "Safari package must stage only the Safari manifest");
+assert.notDeepEqual(safariStagedManifest, chromeSourceManifest, "Safari package must not stage the Chrome manifest");
+assert.notDeepEqual(safariStagedManifest, firefoxSourceManifest, "Safari package must not stage the Firefox manifest");
+assert.equal(safariStagedManifest.manifest_version, 3);
+assert.deepEqual(safariStagedManifest.permissions, ["activeTab", "scripting"]);
+[
+  "background",
+  "host_permissions",
+  "optional_host_permissions",
+  "optional_permissions",
+  "content_scripts",
+  "browser_specific_settings",
+  "externally_connectable",
+  "cookies",
+  "downloads",
+  "notifications",
+  "storage",
+  "webRequest"
+].forEach((key) => assert.equal(key in safariStagedManifest, false, `Safari manifest forbids ${key}`));
+
+assert.deepEqual(
+  SHARED_FEED_FILES,
+  FEED_FILES.filter((file) => !["BUILD_INFO.json", "SHA256SUMS.txt", "manifest.json"].includes(file)).sort(),
+  "Feed package test must cover the canonical shared runtime allow-list"
+);
+SHARED_FEED_FILES.forEach((file) => {
+  const chromeBytes = fs.readFileSync(path.join(feedDir, file));
+  assert.deepEqual(fs.readFileSync(path.join(firefoxFeedDir, file)), chromeBytes, `Firefox shared entry drift: ${file}`);
+  assert.deepEqual(fs.readFileSync(path.join(safariFeedDir, file)), chromeBytes, `Safari shared entry drift: ${file}`);
+});
+
 const jobZip = path.join(root, "dist", `${jobName}.zip`);
 const feedZip = path.join(root, "dist", `${feedName}.zip`);
 const firefoxFeedZip = path.join(root, "dist", `${firefoxFeedName}.zip`);
+const safariFeedZip = path.join(root, "dist", `${safariFeedName}.zip`);
 assert.ok(fs.statSync(jobZip).size > 0);
 assert.ok(fs.statSync(feedZip).size > 0);
 assert.ok(fs.statSync(firefoxFeedZip).size > 0);
+assert.ok(fs.statSync(safariFeedZip).size > 0);
 assert.match(fs.readFileSync(`${jobZip}.sha256.txt`, "utf8"), new RegExp(sha256(jobZip), "i"));
 assert.match(fs.readFileSync(`${feedZip}.sha256.txt`, "utf8"), new RegExp(sha256(feedZip), "i"));
 assert.match(fs.readFileSync(`${firefoxFeedZip}.sha256.txt`, "utf8"), new RegExp(sha256(firefoxFeedZip), "i"));
+assert.match(fs.readFileSync(`${safariFeedZip}.sha256.txt`, "utf8"), new RegExp(sha256(safariFeedZip), "i"));
 
 const jobArchive = validateZip(jobZip, jobName, jobFiles);
 const feedArchive = validateZip(feedZip, feedName, FEED_FILES);
 const firefoxFeedArchive = validateZip(firefoxFeedZip, firefoxFeedName, FEED_FILES);
+const safariFeedArchive = validateZip(safariFeedZip, safariFeedName, FEED_FILES);
 assert.equal(jobArchive.entryCount, 51);
 assert.equal(feedArchive.entryCount, 17);
 assert.equal(firefoxFeedArchive.entryCount, 17);
+assert.equal(safariFeedArchive.entryCount, 17);
 assert.deepEqual(
   JSON.parse(firefoxFeedArchive.entriesByRelativePath.get("manifest.json").toString("utf8")),
   firefoxSourceManifest,
@@ -216,8 +271,14 @@ assert.equal(
   false,
   "Chrome ZIP must contain no Firefox manifest metadata"
 );
+assert.deepEqual(
+  JSON.parse(safariFeedArchive.entriesByRelativePath.get("manifest.json").toString("utf8")),
+  safariSourceManifest,
+  "Safari ZIP manifest"
+);
 
-console.log("ARK Lens Job/Feed exact-file package isolation passed (51 Job, 17 Chrome Feed, 17 Firefox Feed entries)");
+console.log("ARK Lens Job/Feed exact-file package isolation passed (51 Job, 17 Chrome Feed, 17 Firefox Feed, 17 Safari Feed entries)");
 console.log(`Job ZIP valid (${jobArchive.entryCount} files, SHA-256 ${jobArchive.hash})`);
 console.log(`Chrome Feed ZIP valid (${feedArchive.entryCount} files, SHA-256 ${feedArchive.hash})`);
 console.log(`Firefox Feed ZIP valid (${firefoxFeedArchive.entryCount} files, SHA-256 ${firefoxFeedArchive.hash})`);
+console.log(`Safari Feed ZIP valid (${safariFeedArchive.entryCount} files, SHA-256 ${safariFeedArchive.hash})`);
