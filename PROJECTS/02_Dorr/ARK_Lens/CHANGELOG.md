@@ -2,6 +2,7 @@
 
 ## Unreleased — architecture and proof milestones
 
+- Added JOB_XB2/XB3 thin Firefox and Safari Job shells over one shared 51-file Job payload, with exact 54-file package/ZIP/checksum parity gates; Chrome behavior is preserved and live Firefox/Safari validation remains pending.
 - Established JOB_XB1 with a shared browser-capability boundary, canonical Job runtime order, and centralized storage/session contracts; all Chrome behavior and persisted data shapes remain protected, and this is the prerequisite for thin Firefox and Safari Job shells.
 - Prepared the Firefox Android manual gate, completed the Safari compatibility audit, added the thin Safari staging shell, and extended exact package isolation across the Chrome, Firefox, and Safari Feed artifacts; Firefox Android and Safari macOS/iOS device validation remain pending.
 - Established the F0–F2.5 foundation, including shared architecture and explicit Job/Feed domain separation.

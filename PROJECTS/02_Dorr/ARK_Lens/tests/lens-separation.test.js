@@ -164,12 +164,10 @@ function testOpaqueCompatibilityPayload() {
 }
 
 function testJobPackageIsolation() {
-  const packageSource = read("tests/tools/build-peer-alpha-package.js");
-  assert.match(packageSource, /const PACKAGE_BOUNDARIES/);
-  assert.match(packageSource, /feed_lens_runtime:\s*Object\.freeze\(\[\]\)/);
-  assert.match(packageSource, /combined_runtime:\s*Object\.freeze\(\[\]\)/);
-  assert.match(packageSource, /File is outside the Job peer-alpha allow-list/);
-  assert.match(packageSource, /Feed implementation is forbidden in the Job peer-alpha/);
+  const packageSource = read("tests/tools/job-lens-package.js");
+  assert.match(packageSource, /const SHARED_JOB_ENTRIES/);
+  assert.match(packageSource, /File is outside the Job Lens allow-list/);
+  assert.match(packageSource, /Feed implementation is forbidden in the Job Lens package/);
   assert.doesNotMatch(packageSource, /^\s*"(?:core|sources|policies|compatibility)",?$/m);
 
   assert.doesNotMatch(packageSource, /"(?:sources|domains|orchestration|proofs)\/feed/);

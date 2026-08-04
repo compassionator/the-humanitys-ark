@@ -4,9 +4,9 @@ ARK Lens is a local-first browser system that turns supported web pages into ins
 
 ## Start here
 
-**Job Search Lens** is the current working product. It runs on Chrome desktop, supports LinkedIn Jobs and SEEK Jobs, and is available as a controlled peer alpha.
+**Job Search Lens** is the current working product. Its manually tested controlled peer alpha runs on Chrome desktop and supports LinkedIn Jobs and SEEK Jobs.
 
-JOB_XB1 now gives that product one shared browser-capability boundary, one canonical runtime order, and one canonical storage/session contract in preparation for thin Firefox and Safari shells. Chrome behavior is unchanged; Firefox and Safari Job Search Lens shells are still not implemented.
+JOB_XB1 established one shared browser-capability boundary, canonical runtime order, and canonical storage/session contract. JOB_XB2/XB3 now package that same implementation behind thin Firefox and Safari manifests. Chrome behavior is unchanged; Firefox and Safari runtime/device validation is still pending.
 
 **Current release:** v2026.6.19
 
@@ -19,10 +19,10 @@ ARK Lens is local-first. It requires no ARK account, telemetry service, remote b
 | Platform | Job Search Lens | LinkedIn Feed extraction proof |
 |---|---|---|
 | Chrome desktop | Implemented and controlled-alpha tested | Implemented and manually tested |
-| Firefox desktop | Not implemented | Implemented and manually tested |
-| Firefox Android | Not implemented | Code/package implemented; device validation pending |
-| Safari macOS | Not implemented | Thin shell/package implemented; device validation pending |
-| Safari iPhone/iPad | Not implemented | Thin shell/package implemented; device validation pending |
+| Firefox desktop | Code/package implemented; manual validation pending | Implemented and manually tested |
+| Firefox Android | Code/package implemented; device validation pending | Code/package implemented; device validation pending |
+| Safari macOS | Thin shell/package implemented; device validation pending | Thin shell/package implemented; device validation pending |
+| Safari iPhone/iPad | Thin shell/package implemented; device validation pending | Thin shell/package implemented; device validation pending |
 
 “Implemented but device validation pending” means repository code and automated package gates exist, but the browser/device behavior has not passed its required manual gate.
 
@@ -42,23 +42,25 @@ ARK Lens is local-first. It requires no ARK account, telemetry service, remote b
 I want to:
 
 - [Test Chrome Job Search Lens](#1-chrome-job-search-lens)
-- [Run the Chrome Feed proof](#2-chrome-linkedin-feed-extraction-proof)
-- [Run the Firefox Feed proof](#3-firefox-desktop-linkedin-feed-extraction-proof)
-- [Build the Safari Feed staging package](#5-safari-staging-and-manual-gate)
+- [Build and validate the Firefox Job shell](#2-firefox-job-search-lens-shell)
+- [Build the Safari Job staging shell](#3-safari-job-search-lens-staging-shell)
+- [Run the Chrome Feed proof](#4-chrome-linkedin-feed-extraction-proof)
+- [Run the Firefox Feed proof](#5-firefox-desktop-linkedin-feed-extraction-proof)
+- [Build the Safari Feed staging package](#7-safari-feed-staging-and-manual-gate)
 - [Understand the architecture](#architecture)
 - [Read the current roadmap](#roadmap)
 
 ## What works now
 
 - **Chrome Job Search Lens:** captures supported LinkedIn Jobs and SEEK Jobs pages through source-owned adapters.
-- **Cross-browser Job foundation:** browser capabilities, runtime order, storage keys, session messages, and lifecycle constants have canonical ownership while the existing Chrome behavior remains protected.
+- **Cross-browser Job foundation and shells:** browser capabilities, runtime order, storage keys, session messages, and lifecycle constants have canonical ownership; Chrome, Firefox, and Safari packages consume the same shared 51-file Job payload.
 - **Deterministic Lens Packs:** inspectable keywords, match scopes, weights, penalties, blockers, caps, workflow behavior, and explanations. Semantic matching is not implemented.
 - **Local sessions and reports:** source readiness, session controls, captured records, match evidence, workflow state, notes, decisions, relevance feedback, and JSON/CSV export.
 - **Lens editor:** Basic fields plus Advanced JSON validation, save, export, bundled restore, create, rename, duplicate, and delete.
 - **Fix Capture:** redacted Help Files and schema-validated Repair Files with preview, live-page testing, activation only after a pass, and rollback.
 - **LinkedIn Feed extraction proof:** read-only, in-memory scanning, observation, duplicate suppression, stop, clear, diagnostics, and explicit local JSON export.
 - **Desktop Feed evidence:** Chrome and Firefox desktop manual gates passed.
-- **Package isolation:** Chrome, Firefox, and Safari Feed artifacts stage the same canonical runtime/UI files; the Job package contains no Feed implementation and Feed packages contain no Job implementation.
+- **Package isolation:** Chrome, Firefox, and Safari Job artifacts each contain 54 exact files with 51 byte-identical shared files; all three Feed artifacts retain their separate 17-file boundary.
 - **Repeatable packaging:** controlled-alpha and proof ZIPs are generated from explicit allow-lists with per-file checksums and separate ZIP SHA-256 files.
 - **Privacy-limited alpha feedback:** testers can explicitly export a constrained test summary for review.
 
@@ -68,8 +70,9 @@ The bundled Job Search Lens template is displayed as `My Job Search`. Its histor
 
 - A completed Feed Lens product.
 - Feed rules, parking, persistence, filtering, scoring, or ranking.
-- Firefox Job Search Lens.
-- Safari Job Search Lens.
+- Manual Firefox desktop Job Search Lens validation.
+- Firefox Android Job Search Lens device validation.
+- Safari macOS or iPhone/iPad Job Search Lens runtime validation.
 - Firefox Android Feed device validation.
 - Safari macOS or iPhone/iPad Feed device validation.
 - Safari containing-app generation, signing, or App Store distribution.
@@ -81,7 +84,7 @@ Users may separately use a local or external AI to prepare Lens Pack JSON or Fix
 
 ## Terminology
 
-- **Job Search Lens:** the current Chrome-only working product.
+- **Job Search Lens:** one shared implementation; Chrome is manually tested, while Firefox and Safari currently have automated-gated thin packages awaiting live validation.
 - **LinkedIn Feed extraction proof:** the current read-only extraction and observer proof.
 - **Feed Lens:** the future completed product after owner-approved popup/report designs and later rule work.
 - **Implemented but device validation pending:** code and automated packaging exist, but live device behavior is unverified.
@@ -109,7 +112,34 @@ npm.cmd run package:alpha
 
 Share the generated ZIP privately with its separate SHA-256 checksum. `dist/` is generated locally and is not committed.
 
-### 2. Chrome LinkedIn Feed extraction proof
+### 2. Firefox Job Search Lens shell
+
+Build and lint the exact Firefox package:
+
+```powershell
+npm.cmd run build:job:firefox
+npm.cmd run lint:job:firefox
+```
+
+Launch the staging directory temporarily in Firefox desktop:
+
+```powershell
+npm.cmd run run:job:firefox
+```
+
+Repository automation passes, but no Firefox desktop or Android Job runtime success is claimed. Follow the separate [Firefox Job manual gate](JOB_XB2_FIREFOX_JOB_MANUAL_GATE.md); Android uses the same Firefox shell and additionally requires device evidence.
+
+### 3. Safari Job Search Lens staging shell
+
+Build the exact Safari WebExtension staging package:
+
+```powershell
+npm.cmd run build:job:safari
+```
+
+This package reuses the shared Job implementation and proves repository/package structure only. Follow the [Safari Job manual gate](JOB_XB3_SAFARI_JOB_MANUAL_GATE.md) on Apple hardware. A Windows-built ZIP cannot be installed directly on an iPhone or iPad; containing-app generation, signing, and device validation remain separate Apple-tooling gates.
+
+### 4. Chrome LinkedIn Feed extraction proof
 
 Build the separate read-only Chrome proof:
 
@@ -126,7 +156,7 @@ Then:
 
 This is not the Job Search Lens package and does not modify LinkedIn.
 
-### 3. Firefox desktop LinkedIn Feed extraction proof
+### 5. Firefox desktop LinkedIn Feed extraction proof
 
 Build and lint the exact Firefox staging package:
 
@@ -141,15 +171,15 @@ Temporarily run it in Firefox desktop:
 npm.cmd run run:linkedin-feed-proof:firefox
 ```
 
-Firefox desktop installation and interactive Feed behavior passed a user-executed manual gate. This does not implement Firefox Job Search Lens.
+Firefox desktop installation and interactive Feed behavior passed a user-executed manual gate. That Feed result does not validate the Firefox Job Search Lens shell.
 
-### 4. Firefox Android device gate
+### 6. Firefox Android Feed device gate
 
 The Firefox Android code/package and automated gates exist, but live validation is blocked until Android Platform Tools, ADB, a suitable device or emulator, and Firefox Android are available.
 
 Follow the [Firefox Android 23-point manual gate](FX_P0_FIREFOX_ANDROID_FEED_GATE.md). Do not change mobile selectors, permissions, CSS, or runtime behavior without sanitized device evidence.
 
-### 5. Safari staging and manual gate
+### 7. Safari Feed staging and manual gate
 
 Build the thin Safari WebExtension staging package:
 
@@ -177,7 +207,7 @@ Visible Job page
   → thin Chrome, Firefox or Safari shell
 ```
 
-- Job Search Lens has one shared implementation; Firefox and Safari will consume it through thin shells rather than copies.
+- Job Search Lens has one shared implementation consumed by thin Chrome, Firefox, and Safari shells; Firefox and Safari live validation remains pending.
 - [`platform/browser_capabilities.js`](platform/browser_capabilities.js) owns the evidenced tabs, scripting, messaging, local-storage, extension-page, action-state, and lifecycle capabilities.
 - [`runtime/job_runtime_order.js`](runtime/job_runtime_order.js) owns Job content-script execution order.
 - [`contracts/job_contracts.js`](contracts/job_contracts.js) owns existing storage keys, message names, session identifiers, lifecycle reasons, and record/runtime versions without changing their values or stored shapes.
@@ -202,6 +232,8 @@ Detailed proof and gate records:
 - [Safari compatibility audit](SAFARI_FEED_COMPATIBILITY_AUDIT.md)
 - [Safari manual gate](SAFARI_P0_1_MANUAL_GATE.md)
 - [JOB_XB1 browser foundation](JOB_XB1_BROWSER_FOUNDATION.md)
+- [JOB_XB2 Firefox Job manual gate](JOB_XB2_FIREFOX_JOB_MANUAL_GATE.md)
+- [JOB_XB3 Safari Job manual gate](JOB_XB3_SAFARI_JOB_MANUAL_GATE.md)
 
 Historical design lineage is preserved in [Browser Add-on](../MVP/Browser_Addon.md) and [Witness Proof](../MVP/Witness_Proof.md); neither describes the current implementation status.
 
@@ -218,7 +250,7 @@ It covers:
 - 37 frozen Job scoring cases;
 - seven sanitized Job extraction fixtures;
 - ten synthetic LinkedIn Feed structures;
-- Job/Feed separation and exact package isolation;
+- Job/Feed separation, three exact 54-file Job packages, three exact 17-file Feed packages, and byte-identical shared payloads;
 - Feed observer, duplicate suppression, privacy, and browser API boundaries;
 - Job browser-capability, runtime-order, storage/message, and direct-API ownership contracts;
 - Lens Pack validation/migration, Lens editor, Fix Capture, sessions, reports, feedback, and active-session behavior.
@@ -233,13 +265,14 @@ npm.cmd run test:visual
 
 ## Roadmap
 
-Immediate Job cross-browser stages:
+1. `JOB_XB4` — run the cross-browser Job package and manual-gate readiness audit.
+2. Friends perform Firefox and Safari live Job validation on real browsers/devices.
+3. The owner finishes the mobile and desktop Feed popup/report designs.
+4. Define the browser-neutral Feed view-model contract.
+5. Implement one shared responsive Feed experience after design approval.
+6. Add local DORR rules, Feed parking, and controlled source expansion later.
 
-1. `JOB_XB2` — add a thin Firefox Job shell.
-2. `JOB_XB3` — add a thin Safari Job shell in parallel with `JOB_XB2`.
-3. `JOB_XB4` — run the cross-browser Job package-parity gate.
-
-Feed Lens implementation remains paused while the owner prepares mobile and desktop popup/report designs. After design approval, the Feed track continues with its browser-neutral view-model contract, minimum evidence-based capability boundary, one shared responsive experience, local DORR rules and parking, and controlled source expansion. Optional AI integration and F3B remain later work.
+No Feed Lens implementation was added by JOB_XB2/XB3. Optional AI integration and F3B remain later work.
 
 ## Current limitations
 
@@ -249,7 +282,8 @@ Feed Lens implementation remains paused while the owner prepares mobile and desk
 - Relevance feedback does not silently retrain or rewrite deterministic scoring.
 - Job data has no built-in synchronization or backup beyond explicit export.
 - The Feed proof is read-only and in-memory; it has no completed report, persistence, rules, ranking, or parking.
-- Firefox Android and Safari behavior remain unverified until their device gates run.
+- Firefox Job desktop/Android and Safari Job macOS/iOS behavior remain unverified until their manual/device gates run.
+- Firefox Android Feed and Safari Feed behavior remain unverified until their device gates run.
 - Native social applications are outside the browser-extension boundary.
 - Chrome Job Search Lens controlled-alpha installation uses Developer mode and an unpacked extension.
 - Sanitized public fixture text is retained only for reproducible regression coverage under [tests/TEST_PLAN.md](tests/TEST_PLAN.md).

@@ -257,7 +257,7 @@ function testDependencyBoundaries() {
   const backgroundSource = read("background.js");
   const popupSource = read("popup/popup.js");
   const popupHtml = read("popup/popup.html");
-  const packageSource = read("tests/tools/build-peer-alpha-package.js");
+  const packageSource = read("tests/tools/job-lens-package.js");
 
   [matcherSource, itemSource, resultSource].forEach((source) => {
     assert.doesNotMatch(source, /\b(?:window|document|chrome|storage|session|report|selector|profile|fetch|XMLHttpRequest)\b/);
