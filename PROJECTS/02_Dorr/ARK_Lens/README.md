@@ -6,6 +6,8 @@ ARK Lens is a local-first browser system that turns supported web pages into ins
 
 **Job Search Lens** is the current working product. It runs on Chrome desktop, supports LinkedIn Jobs and SEEK Jobs, and is available as a controlled peer alpha.
 
+JOB_XB1 now gives that product one shared browser-capability boundary, one canonical runtime order, and one canonical storage/session contract in preparation for thin Firefox and Safari shells. Chrome behavior is unchanged; Firefox and Safari Job Search Lens shells are still not implemented.
+
 **Current release:** v2026.6.19
 
 The **LinkedIn Feed extraction proof** is separate evidence that ARK Lens can read visible Feed posts through the shared architecture. It is not the completed **Feed Lens** product and does not filter, rank, park, persist, or modify Feed content.
@@ -49,6 +51,7 @@ I want to:
 ## What works now
 
 - **Chrome Job Search Lens:** captures supported LinkedIn Jobs and SEEK Jobs pages through source-owned adapters.
+- **Cross-browser Job foundation:** browser capabilities, runtime order, storage keys, session messages, and lifecycle constants have canonical ownership while the existing Chrome behavior remains protected.
 - **Deterministic Lens Packs:** inspectable keywords, match scopes, weights, penalties, blockers, caps, workflow behavior, and explanations. Semantic matching is not implemented.
 - **Local sessions and reports:** source readiness, session controls, captured records, match evidence, workflow state, notes, decisions, relevance feedback, and JSON/CSV export.
 - **Lens editor:** Basic fields plus Advanced JSON validation, save, export, bundled restore, create, rename, duplicate, and delete.
@@ -166,14 +169,18 @@ Read:
 ## Architecture
 
 ```text
-Visible page
-  → source-owned adapter
+Visible Job page
+  → source-owned Job adapter
   → canonical extraction evidence
-  → Job or Feed policy
-  → browser-neutral runtime/view model
+  → shared Job policy/runtime
+  → shared browser capability boundary
   → thin Chrome, Firefox or Safari shell
 ```
 
+- Job Search Lens has one shared implementation; Firefox and Safari will consume it through thin shells rather than copies.
+- [`platform/browser_capabilities.js`](platform/browser_capabilities.js) owns the evidenced tabs, scripting, messaging, local-storage, extension-page, action-state, and lifecycle capabilities.
+- [`runtime/job_runtime_order.js`](runtime/job_runtime_order.js) owns Job content-script execution order.
+- [`contracts/job_contracts.js`](contracts/job_contracts.js) owns existing storage keys, message names, session identifiers, lifecycle reasons, and record/runtime versions without changing their values or stored shapes.
 - Feed packaging uses one canonical 14-file runtime/UI set plus the selected browser manifest and two generated metadata/checksum files.
 - Chrome, Firefox, and Safari manifests remain separate browser-owned shells.
 - Job and Feed domain policies remain separate.
@@ -194,6 +201,7 @@ Detailed proof and gate records:
 - [Firefox Android Feed gate](FX_P0_FIREFOX_ANDROID_FEED_GATE.md)
 - [Safari compatibility audit](SAFARI_FEED_COMPATIBILITY_AUDIT.md)
 - [Safari manual gate](SAFARI_P0_1_MANUAL_GATE.md)
+- [JOB_XB1 browser foundation](JOB_XB1_BROWSER_FOUNDATION.md)
 
 Historical design lineage is preserved in [Browser Add-on](../MVP/Browser_Addon.md) and [Witness Proof](../MVP/Witness_Proof.md); neither describes the current implementation status.
 
@@ -212,6 +220,7 @@ It covers:
 - ten synthetic LinkedIn Feed structures;
 - Job/Feed separation and exact package isolation;
 - Feed observer, duplicate suppression, privacy, and browser API boundaries;
+- Job browser-capability, runtime-order, storage/message, and direct-API ownership contracts;
 - Lens Pack validation/migration, Lens editor, Fix Capture, sessions, reports, feedback, and active-session behavior.
 
 See [tests/TEST_PLAN.md](tests/TEST_PLAN.md) for protected behavior and the approved fixture boundary.
@@ -224,17 +233,13 @@ npm.cmd run test:visual
 
 ## Roadmap
 
-1. Owner prepares mobile and desktop Feed popup/report designs.
-2. Firefox Android and Safari device validation continue when hardware is available.
-3. Define the browser-neutral Feed view-model contract.
-4. Define the minimum evidence-based browser capability boundary.
-5. Implement one shared responsive Feed popup/report.
-6. Connect that shared experience to Chrome, Firefox, and Safari.
-7. Add local DORR preferences, rules, and Feed parking.
-8. Add source decipherers one at a time.
-9. Port Job Search Lens to Firefox and Safari without copying the Chrome runtime.
-10. Add an optional user-controlled AI broker later.
-11. F3B only after the foundations are stable.
+Immediate Job cross-browser stages:
+
+1. `JOB_XB2` — add a thin Firefox Job shell.
+2. `JOB_XB3` — add a thin Safari Job shell in parallel with `JOB_XB2`.
+3. `JOB_XB4` — run the cross-browser Job package-parity gate.
+
+Feed Lens implementation remains paused while the owner prepares mobile and desktop popup/report designs. After design approval, the Feed track continues with its browser-neutral view-model contract, minimum evidence-based capability boundary, one shared responsive experience, local DORR rules and parking, and controlled source expansion. Optional AI integration and F3B remain later work.
 
 ## Current limitations
 
