@@ -47,7 +47,7 @@ Record `PASS`, `FAIL`, or `BLOCKED` and sanitized evidence for every check.
 10. Session start and stop work.
 11. Existing local-storage keys and shapes persist.
 12. The action icon and title reflect session state.
-13. Manual and automatic capture behave as on the protected Chrome baseline.
+13. Manual and automatic capture on LinkedIn Jobs and SEEK Jobs behave as on the protected Chrome baseline.
 14. Supported same-tab navigation restarts capture without duplicate listeners.
 15. The shared report opens and renders stored records.
 16. The shared Lens editor opens and preserves Lens Pack behavior.

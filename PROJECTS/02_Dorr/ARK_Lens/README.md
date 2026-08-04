@@ -6,7 +6,7 @@ ARK Lens is a local-first browser system that turns supported web pages into ins
 
 **Job Search Lens** is the current working product. Its manually tested controlled peer alpha runs on Chrome desktop and supports LinkedIn Jobs and SEEK Jobs.
 
-JOB_XB1 established one shared browser-capability boundary, canonical runtime order, and canonical storage/session contract. JOB_XB2/XB3 now package that same implementation behind thin Firefox and Safari manifests. Chrome behavior is unchanged; Firefox and Safari runtime/device validation is still pending.
+JOB_XB1 established one shared browser-capability boundary, canonical runtime order, and canonical storage/session contract. JOB_XB2/XB3 package that same implementation behind thin Chrome, Firefox, and Safari shells. JOB_XB4 confirms exact 54-file package parity with 51 byte-identical shared files. Chrome behavior and manual evidence remain unchanged; Firefox and Safari runtime/device validation is still pending.
 
 **Current release:** v2026.6.19
 
@@ -234,6 +234,7 @@ Detailed proof and gate records:
 - [JOB_XB1 browser foundation](JOB_XB1_BROWSER_FOUNDATION.md)
 - [JOB_XB2 Firefox Job manual gate](JOB_XB2_FIREFOX_JOB_MANUAL_GATE.md)
 - [JOB_XB3 Safari Job manual gate](JOB_XB3_SAFARI_JOB_MANUAL_GATE.md)
+- [JOB_XB4 cross-browser Job parity audit](JOB_XB4_CROSS_BROWSER_JOB_PARITY.md)
 
 Historical design lineage is preserved in [Browser Add-on](../MVP/Browser_Addon.md) and [Witness Proof](../MVP/Witness_Proof.md); neither describes the current implementation status.
 
@@ -265,14 +266,14 @@ npm.cmd run test:visual
 
 ## Roadmap
 
-1. `JOB_XB4` — run the cross-browser Job package and manual-gate readiness audit.
-2. Friends perform Firefox and Safari live Job validation on real browsers/devices.
-3. The owner finishes the mobile and desktop Feed popup/report designs.
-4. Define the browser-neutral Feed view-model contract.
+1. Friends run the Firefox and Safari Job manual gates when hardware is available.
+2. The owner completes the mobile and desktop Feed popup/report designs.
+3. Review and freeze the Feed UX states.
+4. Start the browser-neutral Feed view-model contract.
 5. Implement one shared responsive Feed experience after design approval.
 6. Add local DORR rules, Feed parking, and controlled source expansion later.
 
-No Feed Lens implementation was added by JOB_XB2/XB3. Optional AI integration and F3B remain later work.
+No Feed Lens implementation has started. Optional AI integration and F3B remain later work.
 
 ## Current limitations
 
