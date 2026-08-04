@@ -15,6 +15,8 @@ const productionFiles = [
 ];
 const sources = Object.fromEntries(productionFiles.map((file) => [file, read(file)]));
 const manifest = JSON.parse(read("manifest.json"));
+const jobContracts = require("../contracts/job_contracts.js");
+const jobRuntimeOrder = require("../runtime/job_runtime_order.js");
 
 const EXPECTED_RUNTIME_ORDER = Object.freeze([
   "lens-packs/bundled_lens_pack.js",
@@ -57,6 +59,11 @@ const EXPECTED_MESSAGES = Object.freeze([
   "ARK_START_LISTENING",
   "ARK_STOP_LISTENING"
 ]);
+const EXPECTED_FOUNDATION_RUNTIME_ORDER = Object.freeze([
+  "platform/browser_capabilities.js",
+  "contracts/job_contracts.js",
+  ...EXPECTED_RUNTIME_ORDER
+]);
 
 function uniqueLiterals(pattern) {
   return [...new Set(
@@ -77,6 +84,19 @@ assert.deepEqual(manifest.host_permissions, [
   "https://au.seek.com/*"
 ]);
 assert.equal("content_scripts" in manifest, false);
+
+assert.deepEqual(jobRuntimeOrder.CONTENT_SCRIPT_FILES, EXPECTED_FOUNDATION_RUNTIME_ORDER);
+assert.deepEqual(Object.values(jobContracts.STORAGE_KEYS).sort(), EXPECTED_STORAGE_KEYS);
+assert.deepEqual(Object.values(jobContracts.MESSAGES).sort(), EXPECTED_MESSAGES);
+assert.deepEqual(jobContracts.VERSIONS, {
+  ADAPTER: "v2026.06.003",
+  CONTENT_BUNDLE: "v2026.06.019-fixed-fit-columns",
+  RECORD_SCHEMA: "v2026.06.001"
+});
+assert.deepEqual(jobContracts.SESSION, {
+  ID_PREFIX: "session_",
+  STOPPED_REASON_BROWSER_RESTART: "browser_restart"
+});
 
 assert.deepEqual(extractInjectedFiles(sources["background.js"]), EXPECTED_RUNTIME_ORDER);
 assert.deepEqual(extractInjectedFiles(sources["popup/popup.js"]), EXPECTED_RUNTIME_ORDER);
