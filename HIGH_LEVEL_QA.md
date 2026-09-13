@@ -49,7 +49,7 @@ Let the fly commit.
 
 Because Dorr is not just a tool for reducing doomscrolling.
 
-At a high level, Dorr is the Ark’s decentralized framework for reasoning, rating, routing, and learning across seeds.
+At a high level, Dorr is the Ark’s minimal semantic state language. It expresses meaning, tension, time, scope, and action-state when those semantics matter.
 
 It can be applied to:
 - social media filtering
@@ -62,6 +62,20 @@ It can be applied to:
 - personal reflection and community growth
 
 Dorr is broader than one app screen or one use case.
+
+## What is the difference between ARK and Dorr?
+
+ARK preserves records, sources, ownership, provenance, and history.
+
+Dorr is the compact semantic language used when those records need meaningful state. Not every ARK record needs Dorr.
+
+Natural language and raw source remain the rich evidence. ARK preserves them. Dorr expresses state where useful.
+
+## Can an AI write directly into durable memory?
+
+AI may propose a claim or memory update.
+
+A proposed interpretation should not silently become durable truth. The human controls what becomes durable, with future user-defined policies potentially allowing automatic commitment for low-risk cases.
 
 ---
 
@@ -158,7 +172,7 @@ At the high level, mercy appears through:
 The system should remember enough to learn,
 but not so rigidly that it becomes a cage.
 
-The exact mechanics of decay, forgiveness, weighting, and recovery belong in Dorr implementation.
+The exact mechanics of memory retention, supersession, decay, and recovery belong in ARK memory/provenance design. Dorr may express the semantic state of a change where useful, but it does not own the underlying record or history.
 
 ---
 
@@ -212,7 +226,7 @@ The long-term direction is that much of the system lives as:
 - local device memory
 - distributed copies
 
-This reduces dependency on central actors and makes survival less tied to one institution. That direction is aligned with Dorr’s local-storage and P2P design goals.
+This reduces dependency on central actors and makes survival less tied to one institution. That direction is aligned with ARK’s local-first, portable, and peer-held data goals.
 
 ---
 

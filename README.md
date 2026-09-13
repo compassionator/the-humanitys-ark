@@ -14,9 +14,17 @@ It is a repository of foundations, texts, and projects intended to carry forward
 6. `PROJECTS/01_Kernel/README.md`
 7. `PROJECTS/01_Kernel/01_ARK_ARCHITECTURE.md`
 8. `PROJECTS/01_Kernel/02_MICROKERNEL_SPEC.md`
-9. `PROJECTS/02_Dorr/README.md`
-10. `PROJECTS/02_Dorr/DORR_GRAMMAR.md`
-11. `PROJECTS/02_Dorr/ARK_Lens/README.md`
+9. `PROJECTS/01_Kernel/09_MEMORY_PROVENANCE.md`
+10. `PROJECTS/02_Dorr/README.md`
+11. `PROJECTS/02_Dorr/DORR_GRAMMAR.md`
+12. `PROJECTS/02_Dorr/ARK_Lens/README.md`
+
+## Core separation
+
+- ARK remembers and routes.
+- Dorr expresses state.
+- LLMs propose interpretations.
+- Humans control durable commitment.
 
 ## Structure
 
