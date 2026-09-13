@@ -4,10 +4,36 @@ A sovereign anti-noise system: microkernel + cartridges + gauntlet + courier + i
 
 ## 1) What ARK is
 
-ARK is a filter and router that turns chaotic inputs — doomscroll feeds, message dumps, project ideas, and sensor logs — into timed, scoped, testable frames so a human can regain attention, direction, and non-harm.
+ARK is a sovereign, local-first memory, provenance, filtering, routing, and context layer.
+
+It preserves source, ownership, and history; filters and packages relevant context; and may attach Dorr state when semantic or action meaning is required. A fact or raw record can remain in ARK without a Dorr state.
+
+```text
+Raw Source
+→ ARK Record
+→ optional Dorr State
+→ Context Package
+→ Model / Agent / Interface
+```
+
+This lets ARK turn chaotic inputs — doomscroll feeds, message dumps, project ideas, and sensor logs — into inspectable context so a human can regain attention, direction, and non-harm.
 
 Its goal is to reduce harm, reduce lies, and reduce compulsive loops.
 It is not designed to "win arguments."
+
+### Claim before memory
+
+**AI output begins as a claim, not as durable memory.**
+
+- Models may propose claims or state changes.
+- Proposed claims do not automatically become durable truth.
+- Humans control what becomes durable.
+- Future implementations may allow user-defined auto-commit policies for low-risk cases.
+- High-value project and identity decisions should remain explicitly inspectable and attributable.
+
+**Derived state must not silently replace its source.** An ARK-derived record should preserve a reference back to its original source evidence where possible.
+
+These are architectural rules, not a final storage schema. See [09_MEMORY_PROVENANCE.md](09_MEMORY_PROVENANCE.md).
 
 ## 2) The Microkernel
 

@@ -4,10 +4,12 @@
 Seed / Tool
 
 ## Goal
-Preserve Dorr as the Ark’s decentralized reasoning, rating, routing, and learning layer, while keeping the first practical bridge narrowly focused.
+Preserve Dorr as ARK’s minimal semantic state language, while keeping the first practical bridge narrowly focused.
 
 ## Why it matters
-Dorr is broader than one app screen. It is the framework that helps turn noisy inputs into timed, scoped, meaningful frames without collapsing into a compulsory system.
+Dorr is broader than one app screen. It expresses meaning, tension, time, scope, and action-state when those semantics matter, without collapsing into a compulsory system.
+
+Dorr is not ARK’s general memory store. Facts, raw records, sources, provenance, ownership, and revision history belong to ARK. A record may exist in ARK without any Dorr state.
 
 ## Current next step
 Run the pending Firefox and Safari Job manual gates when hardware is available while the owner completes and freezes the Feed popup/report journey before Feed implementation begins.
@@ -31,11 +33,12 @@ The Feed proof is not a completed Feed Lens product. Full Feed Lens work waits f
 
 ## Ownership boundary
 
-- Dorr owns colour/time semantic meaning in `DORR_GRAMMAR.md`.
-- Kernel owns governance, routing, Council nodes, citation/refusal, integrity, and orchestration rules.
+- ARK owns durable records, sources, ownership, provenance, history, routing, and context packaging.
+- Dorr owns semantic state: Red / Yellow / Purple, Blue / Green, Orange, Negation, Scope, and Time semantics. `DORR_GRAMMAR.md` remains the canonical definition.
+- Kernel governs, routes, and enforces boundaries, including Council nodes, citation/refusal, integrity, and orchestration rules.
 - Kernel references and enforces Dorr; it does not redefine Dorr semantics.
-- ARK Lens consumes Dorr as the browser-facing product.
-- Job Search Lens applies Dorr within ARK Lens.
+- ARK Lens consumes these layers in browser-facing interfaces.
+- Individual Lens implementations, including Job Search Lens, must not redefine Dorr semantics.
 
 ## Why Dorr is separate
 Dorr touches many projects, but it should still stay distinct as a core framework.
@@ -54,7 +57,7 @@ For Genesis, plain **Dorr** is still acceptable because it is shorter and alread
 
 ## Longer-range Dorr directions
 Beyond the first browser bridge, Dorr may later grow into:
-- a structured memory layer
+- a semantic-state layer over ARK-held memory and records
 - a rating and ranking layer
 - an automation and IoT bridge
 - an AR-first interface layer

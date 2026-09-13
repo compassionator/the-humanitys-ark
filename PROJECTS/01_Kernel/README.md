@@ -21,6 +21,7 @@ Governor, router, validator, and anti-noise boundary.
 - `06_TEST_GAUNTLET.md` — the noise library and pass/fail log format.
 - `07_CARTRIDGES_INDEX.md` — cartridge structure, naming, and integrity rules.
 - `08_ROADMAP.md` — the execution roadmap from Fuel to Interface.
+- `09_MEMORY_PROVENANCE.md` — memory/provenance doctrine: claim-before-memory, source preservation, ownership, supersession, and the human durable-commit boundary.
 - `cartridges/` — the citeable source corpus for strict mode, including active cartridge batches, source files, templates, and future expansions.
 - `corpus/` — supporting raw source texts used to ground cartridge chunks and preserve provenance.
 
@@ -34,8 +35,9 @@ Governor, router, validator, and anti-noise boundary.
 7. `06_TEST_GAUNTLET.md`
 8. `07_CARTRIDGES_INDEX.md`
 9. `08_ROADMAP.md`
-10. `cartridges/`
-11. `corpus/` (only when provenance or source grounding needs inspection)
+10. `09_MEMORY_PROVENANCE.md`
+11. `cartridges/`
+12. `corpus/` (only when provenance or source grounding needs inspection)
 
 ## Strict rule
 **External Claim = Must Cite.**
