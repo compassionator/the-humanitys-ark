@@ -25,6 +25,8 @@ It is not designed to "win arguments."
 
 **AI output begins as a claim, not as durable memory.**
 
+**Citation is provenance, not proof. Repeated descendants of one source do not become independent witnesses.**
+
 - Models may propose claims or state changes.
 - Proposed claims do not automatically become durable truth.
 - Humans control what becomes durable.
@@ -168,6 +170,7 @@ Pass condition: citation or standardized refusal. Never bluff.
 - hypocrisy bait
 - urgency bait
 - nice-sounding lie
+- Consensus Mirage — many copied/derived sources presenting one ancestor claim as independent agreement
 
 ### System traps
 - Blue Rot — promises decay into Red pain if unfulfilled

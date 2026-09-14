@@ -79,6 +79,18 @@ MODEL / AGENT / INTERFACE
 
 Derived interpretation should preserve a path to the source. Derived state must not silently replace its evidence.
 
+## Source lineage and false consensus
+
+A citation proves where a claim came from; it does not make the claim true.
+
+Multiple sources that copy, inherit, translate, paraphrase, or derive from the same ancestor must not be treated as independent corroboration.
+
+**Consensus must not be inferred from repetition or citation count.**
+
+Where sources conflict, ARK should preserve the competing claims, their provenance paths, and uncertainty rather than silently normalizing them into one truth.
+
+Reasoning, internal coherence, and empirical evidence may challenge a cited claim. Source authority must not override observable contradiction.
+
 ## Durable commit
 
 Models may propose. Humans may:
