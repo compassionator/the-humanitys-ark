@@ -1,6 +1,6 @@
 # ARK Lens
 
-ARK Lens is a local-first browser system that turns supported web pages into inspectable, user-controlled views without requiring a hosted backend or AI provider.
+ARK Lens is a local-first browser system for applying optional, user-owned views over supported web pages while keeping the underlying source inspectable. It requires no hosted backend or built-in AI provider.
 
 ## Start here
 
