@@ -177,6 +177,7 @@ Pass condition: citation or standardized refusal. Never bluff.
 - Gym Paradox — “pain” can be productive depending on context
 - Screaming Sensor — IoT floods must be compressed without invented causes
 - Bystander Effect — visible pain without proper routing or incentive scaling
+- Mask Capture — a Lens hides or replaces the underlying source, or presents its interpretation as unquestionable truth
 
 ### Log format
 ```text
@@ -201,8 +202,7 @@ To stop ARK from becoming the beast it opposes:
 
 ## 7) Interface target
 
-Input passes through the kernel neck.
-Output becomes Dorr frames, not raw opinion.
+The interface may apply an optional user-owned Lens over raw sources. The underlying source remains inspectable; ARK preserves provenance and context, while Dorr is attached only where semantic or action state is useful. A Lens is a view, not the source of truth.
 
 Users should eventually be able to save and share Lens Packs.
 

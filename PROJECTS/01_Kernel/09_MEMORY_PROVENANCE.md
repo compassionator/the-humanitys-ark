@@ -141,4 +141,4 @@ These names are illustrative only. They are not a canonical schema.
 
 ## Anti-rot rule
 
-**No model should silently become the sole author of the user’s past.**
+**No source, model, institution, crowd, or user-owned Lens should silently become the sole authority over a durable record.**
