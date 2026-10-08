@@ -32,7 +32,7 @@ Draft
 - `Caravan_Details.md`
 
 ## Living references
-- [44 Human Problems — 44 Persian Pearls](https://medium.com/@bahadori/37-human-problems-37-persian-replies-8f22f39b54de) — Persian and global voices mapped to recurring human problems.
+- [44 Human Problems — 44 Persian Pearls](https://medium.com/@bahadori/44-human-problems-44-persian-pearls-94e1eace8e10) — Persian and global voices mapped to recurring human problems.
 
 ## Canonical references
 - `../../HIGH_LEVEL_QA.md`
